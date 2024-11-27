@@ -1,5 +1,4 @@
-{% assign default_paths = site.pages | map: "path" %}
-{% assign page_paths = site.header_pages | default: default_paths %}
+{% assign page_paths = site.header_pages %}
 
 {% for path in page_paths %}
     
