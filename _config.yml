@@ -7,8 +7,6 @@ baseurl:     ""
 url:         "https:/jonlitwack.com"
 date_format: "%b %-d, %Y"
 header_pages:
- - about.md
- - contact.html
 
 # Google services
 google_verification:
@@ -107,7 +105,7 @@ text:
       sending:  'sending..'
       sent:     'Message sent!'
       error:    'Error!'
-  thanks: 'Thanks for contacting us. We will reply as soon as possible.'
+  thanks: 'Thanks for contacting me. I'll reply as soon as possible.'
   og_locale: 'en_US'
 
 # Build settings
