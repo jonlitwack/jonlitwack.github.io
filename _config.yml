@@ -6,7 +6,7 @@ description: "Thoughts direct from my brain to your eyeballs."
 baseurl:     ""
 url:         "https:/jonlitwack.com"
 date_format: "%b %-d, %Y"
-header_pages:
+header_pages: ''
 
 # Google services
 google_verification:
