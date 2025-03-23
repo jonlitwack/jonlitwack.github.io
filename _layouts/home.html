@@ -3,69 +3,173 @@
 layout: default
 ---
 
-<!-- Hero Section -->
 <section class="hero">
+  <!-- Background & Data Visualization -->
   <div class="hero-bg"></div>
-  
-  {% include data-visualization.html %}
+  <div class="data-viz">
+    {% include data-visualization.html %}
+  </div>
   
   <div class="container">
     <div class="hero-content">
-      <p class="tagline">{{ page.tagline }}</p>
-      <p>{{ page.hero_text }}</p>
-    </div>
-    <div class="scroll-indicator">
-      <a href="#thought-leadership" aria-label="Scroll to insights">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
+      <!-- Name -->
+      <div class="hero-name">
+        <h1>
+          <span class="first-name">JON</span>
+          <span class="last-name">LITWACK</span>
+        </h1>
+      </div>
+      
+      <!-- Tagline -->
+      <div class="tagline">APPLIED ARTIFICIAL INTELLIGENCE</div>
+      
+      <!-- Contact Information -->
+      <div class="hero-contact">
+        <div class="website">jonlitwack.com</div>
+        <div class="email"><a href="mailto:jon@litwack.com">jon@litwack.com</a></div>
+      </div>
     </div>
   </div>
-</section>
-
-<!-- Featured Insights Section -->
-<section id="thought-leadership" class="insights-section">
-  <div class="container">
-    <div class="articles-grid featured-insights">
-      {% for post in site.posts limit:6 %}
-      <div class="card insight-card">
-        <div class="card-meta">
-          <span class="post-date">{{ post.date | date: site.date_format }}</span>
-          {% if post.categories %}
-          <span class="categories">
-            {% for category in post.categories %}
-            <span class="category">{{ category }}</span>
-            {% endfor %}
-          </span>
-          {% endif %}
-        </div>
-        <h3 class="post-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-        <div class="post-excerpt">
-          {% if post.summary %}
-            {{ post.summary }}
-          {% else %}
-            {{ post.excerpt | strip_html | truncatewords: 30 }}
-          {% endif %}
-        </div>
-        <a href="{{ post.url | relative_url }}" class="read-more">Read More</a>
-      </div>
-      {% endfor %}
-    </div>
-    <div class="view-all-insights">
-      <a href="/insights/">View All Insights</a>
-    </div>
+  
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator">
+    <a href="#about">
+      <span>Scroll</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M19 12L12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
   </div>
 </section>
 
 <!-- About Section -->
-<section id="about">
+<section id="about" class="section about">
   <div class="container">
-    <div class="section-header">
-      <h2>{{ page.about_title }}</h2>
+    <h2 class="section-title">About</h2>
+    
+    <div class="content">
+      <p>{{ site.description }}</p>
+      
+      {% if site.resume_url %}
+      <a href="{{ site.resume_url }}" class="button" target="_blank">Download Resume</a>
+      {% endif %}
     </div>
-    <div class="about-content">
-      {{ page.about_content | markdownify }}
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="section projects">
+  <div class="container">
+    <h2 class="section-title">Projects</h2>
+    
+    <div class="projects-grid">
+      {% for project in site.projects %}
+      <div class="project-card">
+        {% if project.image %}
+        <div class="project-image">
+          <img src="{{ project.image | relative_url }}" alt="{{ project.title }}">
+        </div>
+        {% endif %}
+        
+        <div class="project-content">
+          <h3 class="project-title">{{ project.title }}</h3>
+          <p class="project-description">{{ project.description }}</p>
+          
+          {% if project.technologies %}
+          <div class="project-technologies">
+            {% for tech in project.technologies %}
+            <span class="tech-tag">{{ tech }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          <div class="project-links">
+            {% if project.github %}
+            <a href="{{ project.github }}" class="project-link github" target="_blank">GitHub</a>
+            {% endif %}
+            
+            {% if project.demo %}
+            <a href="{{ project.demo }}" class="project-link demo" target="_blank">Live Demo</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience" class="section experience">
+  <div class="container">
+    <h2 class="section-title">Experience</h2>
+    
+    <div class="timeline">
+      {% for job in site.experience %}
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        
+        <div class="timeline-content">
+          <div class="job-header">
+            <h3 class="job-title">{{ job.title }}</h3>
+            <div class="job-company">{{ job.company }}</div>
+            <div class="job-period">{{ job.period }}</div>
+          </div>
+          
+          <div class="job-description">
+            {{ job.content }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section contact">
+  <div class="container">
+    <h2 class="section-title">Contact</h2>
+    
+    <div class="contact-content">
+      <p>Feel free to reach out to me through any of the following channels:</p>
+      
+      <div class="contact-methods">
+        <div class="contact-method">
+          <div class="method-icon">
+            <i class="far fa-envelope"></i>
+          </div>
+          <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
+        </div>
+        
+        {% if site.author.linkedin %}
+        <div class="contact-method">
+          <div class="method-icon">
+            <i class="fab fa-linkedin"></i>
+          </div>
+          <a href="{{ site.author.linkedin }}" target="_blank">LinkedIn</a>
+        </div>
+        {% endif %}
+        
+        {% if site.author.github %}
+        <div class="contact-method">
+          <div class="method-icon">
+            <i class="fab fa-github"></i>
+          </div>
+          <a href="{{ site.author.github }}" target="_blank">GitHub</a>
+        </div>
+        {% endif %}
+        
+        {% if site.author.twitter %}
+        <div class="contact-method">
+          <div class="method-icon">
+            <i class="fab fa-twitter"></i>
+          </div>
+          <a href="{{ site.author.twitter }}" target="_blank">Twitter</a>
+        </div>
+        {% endif %}
+      </div>
     </div>
   </div>
 </section>

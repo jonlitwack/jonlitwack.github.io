@@ -1,8 +1,8 @@
 # Site settings
-title: JON LITWACK - Applied Artificial Intelligence
+title: Jon Litwack
 email: jon@jonlitwack.com
-author: JON LITWACK
-description: "JON LITWACK - Global experience design leader with expertise in data strategy and AI-powered development. Transforming organizations through data-informed experience design and AI-powered development."
+author: Jon Litwack
+description: "Global experience design leader with expertise in data strategy and AI-powered development. Transforming organizations through data-informed experience design and AI-powered development."
 baseurl: ""
 url: "https://jonlitwack.com"
 date_format: "%b %-d, %Y"
@@ -10,7 +10,7 @@ lang: en
 
 # Author information
 author:
-  name: JON LITWACK
+  name: Jon Litwack
   bio: >-
     Global experience design leader with dual expertise in 
     data strategy and AI-powered development.
@@ -75,7 +75,7 @@ defaults:
       layout: "default"
 
 # Dark mode default (true = dark, false = light)
-dark_mode_default: true
+dark_mode_default: false
 
 # Pagination settings
 paginate: 4

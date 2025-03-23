@@ -7,54 +7,60 @@ $text-secondary-dark: rgba(255, 255, 255, 0.7);
 $text-muted: rgba(255, 255, 255, 0.6);
 
 // Light Mode Colors
-$background-light: #F8F9FA;
-$paper-light: #F5F5F7;
-$gray-light: #F2F3F5;
-$navy-dark: #0F172A;
-$charcoal: #1E293B;
+$background-light: #FFFFFF;
+$paper-light: #FFFFFF;
+$gray-light: #F9FAFB;
+$navy-dark: #1A202C;
+$charcoal: #4A5568;
 $indigo-dark: #1E1B4B;
 
 // Text colors that respond to theme
 $text-color: $text-primary-dark;
 $text-color-light: $navy-dark;
-$text-heading-light: $charcoal;
+$text-heading-light: $navy-dark;
 
 // Typography structure
 $font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 $font-primary: $font-family-primary; // For backward compatibility
+$font-family-heading: $font-family-primary; // Use Inter for headings too
+$font-family-body: $font-family-primary; // Use Inter for body text
 $font-size-base: 16px;
 $line-height-base: 1.65; // Optimal for Inter body text
-$line-height-heading: 1.2;
-$font-size-h1: 3rem;
-$font-size-h2: 2rem;
-$font-size-h3: 1.5rem;
+$line-height-heading: 1.1;
+$font-size-h1: 3.5rem;
+$font-size-h2: 2.25rem;
+$font-size-h3: 1.75rem;
 $letter-spacing-body: -0.011em; // Very slight negative tracking for Inter
-$letter-spacing-heading: -0.02em; // Tighter letter spacing for headlines
+$letter-spacing-heading: -0.025em; // Tighter letter spacing for headlines
 
-// Background colors
-$bg-color-dark: $background-dark;
-$bg-color-light: $background-light;
+// Font Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
 
 // Accent Colors (same for both themes)
 $accent-blue: #3B82F6;
 $accent-purple: #7E22CE;
 $accent-teal: #0CA5E9;
 
-// Font Weights
-$font-weight-light: 300;
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-bold: 700;
+// Spacing
+$spacing-xs: 0.25rem; // 4px
+$spacing-sm: 0.5rem;  // 8px
+$spacing-md: 1rem;    // 16px
+$spacing-lg: 1.5rem;  // 24px
+$spacing-xl: 2rem;    // 32px
+$spacing-2xl: 3rem;   // 48px
+$spacing-3xl: 4rem;   // 64px
+
+// Background colors
+$bg-color-dark: $background-dark;
+$bg-color-light: $background-light;
 
 // Button styles
 $button-font-family: $font-primary;
-
-// Spacing
-$spacing-xs: 0.25rem;
-$spacing-sm: 0.5rem;
-$spacing-md: 1rem;
-$spacing-lg: 2rem;
-$spacing-xl: 4rem;
 
 // Layout
 $container-width: 1200px;
@@ -68,6 +74,8 @@ $breakpoint-sm: 576px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
+$on-palm: $breakpoint-sm;
+$on-laptop: $breakpoint-md;
 
 // Z-index layers
 $z-index-header: 100;

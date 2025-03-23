@@ -18,16 +18,16 @@ html {
 body {
   font-family: $font-primary;
   font-size: $font-size-base;
-  line-height: $line-height-base;
+  line-height: 1.6;
   color: $text-color;
   background-color: $bg-color-dark;
   overflow-x: hidden;
-  font-weight: $font-weight-regular;
-  letter-spacing: $letter-spacing-body;
+  font-weight: 400;
+  letter-spacing: -0.011em;
   
   &.light-mode {
-    color: $text-color-light;
-    background-color: $bg-color-light;
+    color: #1A202C;
+    background-color: #FFFFFF;
   }
 }
 
@@ -41,50 +41,87 @@ body {
 // Typography
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-primary;
-  line-height: $line-height-heading;
-  font-weight: $font-weight-bold;
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
-  letter-spacing: $letter-spacing-heading;
+  line-height: 1.1;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+  color: #FFFFFF;
   
   .light-mode & {
-    color: $text-heading-light;
+    color: #1A202C;
   }
 }
 
-// Enhance headline rendering
-.enhance-text {
-  text-shadow: 0 0 1px transparent;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 h1 {
-  font-size: $font-size-h1;
-  @extend .enhance-text;
-  letter-spacing: -0.02em;
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: 2.75rem;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 2.25rem;
+  }
 }
 
 h2 {
-  font-size: $font-size-h2;
-  @extend .enhance-text;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: 1.875rem;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.5rem;
+  }
 }
 
 h3 {
-  font-size: $font-size-h3;
-  @extend .enhance-text;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: 1.5rem;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.25rem;
+  }
 }
 
 h4 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+h5 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 p {
   margin-bottom: 1.5rem;
-  max-width: 70ch; // Optimal reading length
+  max-width: 70ch;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.9);
   
   .light-mode & {
-    color: $text-color-light;
+    color: #4A5568;
   }
 }
 
@@ -93,83 +130,95 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
   margin-top: 0;
 }
 
-.tagline {
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: $spacing-lg;
-  opacity: 0.85;
-}
-
-// Light mode text coloring
-.light-mode {
-  h1, h2, h3, h4, h5, h6 {
-    color: $text-heading-light;
-  }
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin-bottom: 2rem;
+  position: relative;
   
-  p, li {
-    color: $charcoal;
+  @media (max-width: $breakpoint-md) {
+    font-size: 1.75rem;
   }
 }
 
 // Links
 a {
-  color: $accent-blue;
+  color: #3B82F6;
   text-decoration: none;
-  transition: color $transition-speed;
+  transition: color 0.2s ease;
+  font-weight: 500;
   
   &:hover {
-    color: $accent-purple;
+    color: #2563EB;
   }
   
   .light-mode & {
-    color: $accent-blue;
+    color: #3B82F6;
+    
+    &:hover {
+      color: #1D4ED8;
+    }
   }
 }
 
 // Buttons
-.btn {
+.btn, .button {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  font-weight: $font-weight-medium;
-  text-align: center;
-  cursor: pointer;
-  transition: all $transition-speed;
+  border-radius: 0.5rem;
+  font-weight: 500;
   text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  cursor: pointer;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
   
   &:hover {
     transform: translateY(-2px);
   }
   
-  &.btn-primary {
-    background-color: $accent-blue;
+  &-primary {
+    background: #3B82F6;
     color: white;
     
     &:hover {
-      background-color: darken($accent-blue, 10%);
+      background: #2563EB;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
     }
   }
   
-  &.btn-secondary {
-    background-color: transparent;
-    color: $accent-blue;
-    border: 1px solid $accent-blue;
+  &-secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     
     &:hover {
-      background-color: rgba($accent-blue, 0.1);
+      background-color: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .light-mode & {
+      background-color: rgba(0, 0, 0, 0.05);
+      color: #1A202C;
+      border-color: rgba(0, 0, 0, 0.1);
+      
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+        border-color: rgba(0, 0, 0, 0.2);
+      }
     }
   }
   
-  .light-mode & {
-    &.btn-primary {
-      background-color: $accent-blue;
-      color: white;
-    }
+  &-outline {
+    background-color: transparent;
+    color: #3B82F6;
+    border: 1px solid #3B82F6;
     
-    &.btn-secondary {
-      color: $accent-blue;
-      border-color: $accent-blue;
+    &:hover {
+      background-color: rgba(59, 130, 246, 0.1);
     }
   }
 }
@@ -204,19 +253,33 @@ img {
 ul, ol {
   margin-bottom: 1.5rem;
   padding-left: 1.5rem;
+  
+  li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    
+    .light-mode & {
+      color: #4A5568;
+    }
+  }
 }
 
 // Block elements
 blockquote {
-  border-left: 4px solid $accent-blue;
-  padding-left: 1rem;
+  border-left: 4px solid #3B82F6;
+  padding: 1rem 0 1rem 1.5rem;
   margin-left: 0;
   margin-bottom: 1.5rem;
   font-style: italic;
   color: rgba(255, 255, 255, 0.8);
   
+  p {
+    margin-bottom: 0;
+  }
+  
   .light-mode & {
-    color: rgba(0, 0, 0, 0.7);
+    color: #4A5568;
   }
 }
 
@@ -225,7 +288,7 @@ code {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   background-color: rgba(255, 255, 255, 0.1);
   padding: 0.2em 0.4em;
-  border-radius: 3px;
+  border-radius: 0.25rem;
   font-size: 0.9em;
   
   .light-mode & {
@@ -236,17 +299,18 @@ code {
 pre {
   background-color: rgba(255, 255, 255, 0.05);
   padding: 1rem;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   overflow-x: auto;
   margin-bottom: 1.5rem;
-  
-  .light-mode & {
-    background-color: rgba(0, 0, 0, 0.03);
-  }
   
   code {
     background-color: transparent;
     padding: 0;
+    border-radius: 0;
+  }
+  
+  .light-mode & {
+    background-color: rgba(0, 0, 0, 0.05);
   }
 }
 

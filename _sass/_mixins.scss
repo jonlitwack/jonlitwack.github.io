@@ -1,0 +1,65 @@
+// _sass/_mixins.scss
+
+// Media query mixin
+@mixin media-query($device) {
+    @media screen and (max-width: $device) {
+        @content;
+    }
+}
+
+// Clearfix
+@mixin clearfix {
+    &::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+// Transitions
+@mixin transition($property: all, $duration: $transition-speed, $timing: ease) {
+    transition: $property $duration $timing;
+}
+
+// Box shadow
+@mixin box-shadow($shadow...) {
+    box-shadow: $shadow;
+}
+
+// Border radius
+@mixin border-radius($radius) {
+    border-radius: $radius;
+}
+
+// Gradient
+@mixin gradient($start-color, $end-color, $direction: to bottom) {
+    background: linear-gradient($direction, $start-color, $end-color);
+}
+
+// Truncate text with ellipsis
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// Responsive font size
+@mixin responsive-font-size($min-size, $max-size, $min-width: $breakpoint-sm, $max-width: $breakpoint-xl) {
+    font-size: $min-size;
+    
+    @media screen and (min-width: $min-width) {
+        font-size: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
+    }
+    
+    @media screen and (min-width: $max-width) {
+        font-size: $max-size;
+    }
+}
+
+// Helper function to strip units
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+    @return $number;
+} 

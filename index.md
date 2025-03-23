@@ -1,13 +1,14 @@
 ---
 layout: home
-title: Jon Litwack - Applied Artificial Intelligence
+title: "Jon Litwack"
 permalink: /
 
 # Hero section
-tagline: Applied Artificial Intelligence
+tagline: APPLIED ARTIFICIAL INTELLIGENCE
 hero_text: Transforming organizations through data-informed experience design and AI-powered development
-cta_primary: Read Insights
-cta_secondary: About Me
+
+# CTA Buttons
+cta_buttons: []
 
 # About section
 about_title: About
