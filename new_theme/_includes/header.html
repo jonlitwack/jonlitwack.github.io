@@ -1,0 +1,20 @@
+<!-- _includes/header.html -->
+<header>
+  <div class="container">
+    <a href="{{ '/' | relative_url }}" class="logo">{{ site.author.name }}</a>
+    
+    <nav>
+      <ul>
+        {% for item in site.data.navigation %}
+          <li>
+            <a href="{{ item.url | relative_url }}" {% if page.url == item.url %}class="active"{% endif %}>
+              {{ item.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+    
+    <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode"></div>
+  </div>
+</header>

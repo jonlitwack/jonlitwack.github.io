@@ -1,0 +1,71 @@
+---
+# _layouts/home.html
+layout: default
+---
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  
+  {% include data-visualization.html %}
+  
+  <div class="container">
+    <div class="hero-content">
+      <p class="tagline">{{ page.tagline }}</p>
+      <p>{{ page.hero_text }}</p>
+    </div>
+    <div class="scroll-indicator">
+      <a href="#thought-leadership" aria-label="Scroll to insights">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Insights Section -->
+<section id="thought-leadership" class="insights-section">
+  <div class="container">
+    <div class="articles-grid featured-insights">
+      {% for post in site.posts limit:6 %}
+      <div class="card insight-card">
+        <div class="card-meta">
+          <span class="post-date">{{ post.date | date: site.date_format }}</span>
+          {% if post.categories %}
+          <span class="categories">
+            {% for category in post.categories %}
+            <span class="category">{{ category }}</span>
+            {% endfor %}
+          </span>
+          {% endif %}
+        </div>
+        <h3 class="post-title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <div class="post-excerpt">
+          {% if post.summary %}
+            {{ post.summary }}
+          {% else %}
+            {{ post.excerpt | strip_html | truncatewords: 30 }}
+          {% endif %}
+        </div>
+        <a href="{{ post.url | relative_url }}" class="read-more">Read More</a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="view-all-insights">
+      <a href="/insights/">View All Insights</a>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ page.about_title }}</h2>
+    </div>
+    <div class="about-content">
+      {{ page.about_content | markdownify }}
+    </div>
+  </div>
+</section>

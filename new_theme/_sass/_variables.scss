@@ -1,0 +1,55 @@
+// _sass/_variables.scss
+
+// Dark Mode Colors (Primary)
+$background-dark: #000000;
+$text-primary-dark: #FFFFFF;
+$text-secondary-dark: rgba(255, 255, 255, 0.7);
+
+// Light Mode Colors
+$background-light: #F8F9FA;
+$paper-light: #F5F5F7;
+$gray-light: #F2F3F5;
+$navy-dark: #0F172A;
+$charcoal: #1E293B;
+$indigo-dark: #1E1B4B;
+
+// Accent Colors (same for both themes)
+$accent-blue: #3B82F6;
+$accent-purple: #7E22CE;
+$accent-teal: #0CA5E9;
+
+// Typography
+$font-primary: 'Urbanist', 'Helvetica Neue', sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.5;
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 2rem;
+$spacing-xl: 4rem;
+
+// Layout
+$container-width: 1200px;
+$header-height: 80px;
+
+// Transitions
+$transition-speed: 0.3s;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Z-index layers
+$z-index-header: 100;
+$z-index-data-viz: 1;
+$z-index-content: 2;

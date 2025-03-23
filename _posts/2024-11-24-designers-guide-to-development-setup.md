@@ -3,7 +3,7 @@ layout:     post
 title:      A Designers Guide to the Perfect Development Setup
 date:       2014-06-09 12:32:18
 summary:    Transform your plain text into static websites and blogs. Simple, static, and blog-aware.
-categories: jekyll pixyll
+categories: insights
 ---
 
 Hey designers! 👋 If you're used to tools like Figma and Sketch, setting up a development environment might feel like landing on a new planet. Don't worry! This guide will walk you through setting up your Mac with everything you need to start coding with Cline, using friendly tools that will feel familiar to your design workflow.

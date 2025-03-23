@@ -1,94 +1,25 @@
 ---
 layout: page
-title: About Jon
+title: About
 permalink: /about/
-tags: about
 ---
 
-This Jekyll theme was crafted with <3 by [John Otander](https://johno.com/)
-([@4lpine](https://twitter.com/4lpine)).
+# About Jon Litwack
 
-Checkout the [GitHub repository](https://github.com/johno/pixyll) to download it,
-request a feature, report a bug, or contribute. It's free, and open source
-([MIT](https://opensource.org/licenses/MIT)).
+Global experience design leader with dual expertise in data strategy and AI-powered development. With extensive experience spanning technical development, UX/UI design, and strategic leadership, I bridge the gap between analytics teams and design/creative units.
 
-Thanks to the following:
+My professional journey has evolved from developer to information architect to data strategy expert, including six years at Slalom Build working on digital transformation initiatives for global organizations.
 
-* [BASSCSS](https://basscss.com/)
-* [Jekyll](https://jekyllrb.com/)
-* [Refills](https://refills.bourbon.io/)
-* [Type Scale](https://type-scale.com/)
+## Expertise
 
-List of contributors:
+### Data-Driven Strategic Innovation
+Transforming complex data into actionable design and business strategies with deep analytical expertise that goes beyond typical design capabilities.
 
-- Aaron S. Hawley
-- Adam Menges
-- Alex Claman
-- Alex Johnson
-- Alex Touchet
-- Allister Antosik
-- Amin Bandali
-- Anders Nissen
-- Andrea Margiovanni
-- Andreas Niedermair
-- Andrzej Ośmiałowski
-- Anuj More
-- Arvind Chembarpu
-- Assaf Gelber
-- Barry vd. Heuvel
-- Bartek Krzemień
-- Benjamin Sinkula
-- Bennett Rogers
-- Brian Gaid
-- Brian Hurst
-- Chee Yeo
-- Cody Chan
-- Cristian Henrique
-- David Ernst
-- David Moodie
-- Donate Altenburger
-- Eddie Schoute
-- Fernando Mantoan
-- Gurchet Rai
-- Harish Narayanan
-- Jack Platten
-- Jehan Tremback
-- Jiaxi Gu (Isaac)
-- John Otander
-- Jordan Danielewski
-- Josh Buxton
-- Kirill Kulikov
-- Kyle Maxwell
-- Marta Sztybor
-- Martin Wagner
-- Matthew Graybosch
-- Maxim Tsoy
-- Mete Balci
-- Mike Lloyd
-- Mikhail Grachev
-- mindwind
-- Nick Rakochy
-- Nikolay Georgiev
-- Noel Bautista
-- Oliver Hamlet
-- Onur (e0i)
-- Praveer Gupta
-- Rassol (Karmeye)
-- Renato Fialho
-- Ricky Han
-- Roberto Pesando
-- Ryan Jacobs
-- Scott Martin
-- Selim Eren Bekçe
-- Shruti Rijhwani
-- Steef Hegeman
-- Tehmasp Chaudhri
-- Thomas Galvin
-- Timothy Gu
-- Tom Kraak
-- Vishnu Ks
-- Vladislav Arbatov
-- Wilfred Hughes
-- Yaroslav Yadrishnikov
-- Yee Chie Tu
-- Yeou Chien
+### AI-Powered Creative Technology
+Conceptualizing, designing, and building complex applications independently using AI, spanning traditional boundaries between design, development, and product management.
+
+### Experience Design
+Creating intuitive, engaging digital experiences backed by user research and strategic insights.
+
+### Digital Transformation
+Guiding organizations through technology-driven change with a focus on human-centered design principles.

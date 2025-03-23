@@ -1,0 +1,59 @@
+---
+layout: default
+title: Insights
+permalink: /insights/
+---
+
+<section class="insights-section">
+  <div class="container">
+    <h1 class="section-title">Insights</h1>
+    
+    <div class="insights-grid">
+      {% for post in paginator.posts %}
+      <article class="insight-card">
+        <div class="insight-content">
+          <span class="insight-date">{{ post.date | date: site.date_format }}</span>
+          <h2 class="insight-title">
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </h2>
+          <div class="insight-excerpt">
+            {% if post.summary %}
+              {{ post.summary }}
+            {% else %}
+              {{ post.excerpt | strip_html | truncatewords: 30 }}
+            {% endif %}
+          </div>
+          <a href="{{ post.url | relative_url }}" class="read-more">Read More</a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    
+    <!-- Pagination controls -->
+    {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+      {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path | relative_url }}" class="pagination-item">&laquo; Previous</a>
+      {% else %}
+        <span class="pagination-item pagination-disabled">&laquo; Previous</span>
+      {% endif %}
+      
+      {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+          <span class="pagination-item pagination-active">{{ page }}</span>
+        {% elsif page == 1 %}
+          <a href="{{ '/insights/' | relative_url }}" class="pagination-item">{{ page }}</a>
+        {% else %}
+          <a href="{{ site.paginate_path | relative_url | replace: ':num', page }}" class="pagination-item">{{ page }}</a>
+        {% endif %}
+      {% endfor %}
+      
+      {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path | relative_url }}" class="pagination-item">Next &raquo;</a>
+      {% else %}
+        <span class="pagination-item pagination-disabled">Next &raquo;</span>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section> 

@@ -3,7 +3,7 @@ layout:     post
 title:      Don't Make Me Type
 date:       2024-11-24 12:32:18
 summary:    What comes next after the CLI of AI
-categories: ai xd
+categories: insights
 ---
 
 Nielsen said it - we went from CLI as an interface because of keyboards, desktop UI because of Mice, Web Design because of the interwebs, Experience Design because of SaaS, and now we have Chat interfaces because of GenAI.

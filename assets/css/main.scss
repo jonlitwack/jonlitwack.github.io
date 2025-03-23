@@ -1,0 +1,21 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+// Force cache invalidation changes
+header .logo {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: bold !important;
+}
+
+// Keep test change visible for debugging - now black instead of red
+h1 {
+  color: #000000 !important;
+}
+
+@import "variables";
+@import "base";
+@import "layout";
+@import "animations";
+@import "responsive"; 

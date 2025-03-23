@@ -1,34 +1,278 @@
-@charset "UTF-8";
-/*!
+// _sass/_base.scss
 
-Pixyll
-
-A simple, beautiful theme for Jekyll that emphasizes content rather than
-aesthetic fluff.
-
-Built upon BASSCSS (https://basscss.com/).
-
-Crafted with <3 by John Otander (@4lpine) - ©2015-2021 John Otander
-MIT License https://opensource.org/licenses/MIT
-
-*/
-
-html, body {
-  height: auto;
-  min-height: 100%;
+// Reset & Base Styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-img {
-  max-width: 100%;
-}
-
-em img {
-  max-width: 100%;
-  margin-left: 0;
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-          box-sizing: border-box;
-     -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+  font-family: $font-primary;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $text-color;
+  background-color: $bg-color-dark;
+  overflow-x: hidden;
+  font-weight: $font-weight-regular;
+  letter-spacing: $letter-spacing-body;
+  
+  &.light-mode {
+    color: $text-color-light;
+    background-color: $bg-color-light;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-primary;
+  line-height: $line-height-heading;
+  font-weight: $font-weight-bold;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  letter-spacing: $letter-spacing-heading;
+  
+  .light-mode & {
+    color: $text-heading-light;
+  }
+}
+
+// Enhance headline rendering
+.enhance-text {
+  text-shadow: 0 0 1px transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-size: $font-size-h1;
+  @extend .enhance-text;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: $font-size-h2;
+  @extend .enhance-text;
+}
+
+h3 {
+  font-size: $font-size-h3;
+  @extend .enhance-text;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+  max-width: 70ch; // Optimal reading length
+  
+  .light-mode & {
+    color: $text-color-light;
+  }
+}
+
+// Ensure paragraphs that follow headings have no top margin
+h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
+  margin-top: 0;
+}
+
+.tagline {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: $spacing-lg;
+  opacity: 0.85;
+}
+
+// Light mode text coloring
+.light-mode {
+  h1, h2, h3, h4, h5, h6 {
+    color: $text-heading-light;
+  }
+  
+  p, li {
+    color: $charcoal;
+  }
+}
+
+// Links
+a {
+  color: $accent-blue;
+  text-decoration: none;
+  transition: color $transition-speed;
+  
+  &:hover {
+    color: $accent-purple;
+  }
+  
+  .light-mode & {
+    color: $accent-blue;
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  cursor: pointer;
+  transition: all $transition-speed;
+  text-decoration: none;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+  
+  &.btn-primary {
+    background-color: $accent-blue;
+    color: white;
+    
+    &:hover {
+      background-color: darken($accent-blue, 10%);
+    }
+  }
+  
+  &.btn-secondary {
+    background-color: transparent;
+    color: $accent-blue;
+    border: 1px solid $accent-blue;
+    
+    &:hover {
+      background-color: rgba($accent-blue, 0.1);
+    }
+  }
+  
+  .light-mode & {
+    &.btn-primary {
+      background-color: $accent-blue;
+      color: white;
+    }
+    
+    &.btn-secondary {
+      color: $accent-blue;
+      border-color: $accent-blue;
+    }
+  }
+}
+
+// Accessibility
+:focus {
+  outline: 2px solid $accent-blue;
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: $accent-blue;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  
+  &:focus {
+    top: 0;
+  }
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Lists
+ul, ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+// Block elements
+blockquote {
+  border-left: 4px solid $accent-blue;
+  padding-left: 1rem;
+  margin-left: 0;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+  
+  .light-mode & {
+    color: rgba(0, 0, 0, 0.7);
+  }
+}
+
+// Code blocks
+code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  
+  .light-mode & {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+pre {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  
+  .light-mode & {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+  
+  code {
+    background-color: transparent;
+    padding: 0;
+  }
+}
+
+// Helpers
+.container {
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+  
+  @media (min-width: $breakpoint-lg) {
+    padding: 0 $spacing-lg;
+  }
+}
+
+// Standard header pattern with animated background
+.site-header {
+  background-color: #000;
+  padding: 2rem 0;
+  position: relative;
+  
+  .header-content {
+    position: relative;
+    z-index: $z-index-content;
+  }
+  
+  .light-mode & {
+    background-color: $background-light;
+  }
 }

@@ -1,0 +1,45 @@
+---
+layout: default
+---
+
+<section class="project-header">
+  <div class="container">
+    <div class="project-banner">
+      <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" class="project-banner-img">
+    </div>
+    
+    <div class="project-meta">
+      <h1>{{ page.title }}</h1>
+      <p class="project-summary">{{ page.summary }}</p>
+      <div class="project-date">{{ page.date | date: "%B %Y" }}</div>
+    </div>
+  </div>
+</section>
+
+<section class="project-content">
+  <div class="container">
+    {{ content }}
+  </div>
+</section>
+
+<section class="other-projects">
+  <div class="container">
+    <div class="section-header">
+      <h2>Other Projects</h2>
+    </div>
+    
+    <div class="portfolio-grid">
+      {% assign other_projects = site.projects | where_exp: "item", "item.url != page.url" | sample: 3 %}
+      {% for project in other_projects %}
+      <div class="project-card">
+        <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="project-img">
+        <div class="project-overlay">
+          <h4 class="project-title">{{ project.title }}</h4>
+          <p>{{ project.summary }}</p>
+          <a href="{{ project.url | relative_url }}" class="read-more">View Project</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

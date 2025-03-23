@@ -1,60 +1,165 @@
-/*!
-Animate.css - https://animate.style/
-Licensed under the MIT license - https://opensource.org/licenses/MIT
+// _sass/_animations.scss
 
-Copyright (c) 2014 Daniel Eden
-*/
-
-.animated {
-  -webkit-animation-duration: 1s;
-          animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
+// Data Line Animation
+.data-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 3s linear forwards;
 }
 
-.animated.infinite {
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-}
-
-.animated.hinge {
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-}
-
-@-webkit-keyframes fadeInDown {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(-20px);
-            transform: translateY(-20px);
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
   }
+}
 
-  100% {
+// Particle Animation
+.particle {
+  opacity: 0.6;
+  animation: fadeInOut 3s infinite;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0; }
+}
+
+// Fade In Animation
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes fadeInDown {
-  0% {
+  from {
     opacity: 0;
-
-    -webkit-transform: translateY(-20px) translate3d(0, 0, 0);
-        -ms-transform: translateY(-20px) translate3d(0, 0, 0);
-            transform: translateY(-20px) translate3d(0, 0, 0);
+    transform: translateY(-20px);
   }
-
-  100% {
+  to {
     opacity: 1;
-
-    -webkit-transform: translateY(0) translate3d(0, 0, 0);
-        -ms-transform: translateY(0) translate3d(0, 0, 0);
-            transform: translateY(0) translate3d(0, 0, 0);
+    transform: translateY(0);
   }
 }
 
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+// Animation classes
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
 .fade-in-down {
-  -webkit-animation-name: fadeInDown;
-          animation-name: fadeInDown;
+  animation: fadeInDown 0.8s ease forwards;
+}
+
+// Data visualization animations
+.data-visualization svg {
+  opacity: 0.5;
+}
+
+.data-line {
+  animation: fadeIn 1.5s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+// Page transitions
+.page-enter {
+  opacity: 0;
+  animation: fadeIn 0.6s forwards;
+}
+
+.page-transition {
+  transition: opacity 0.4s ease;
+  
+  &.is-exiting {
+    opacity: 0;
+  }
+}
+
+// Button hover effect
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+// Hover effects for cards
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Hero content animation
+.hero-content {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroFadeIn 1s forwards 0.5s;
+}
+
+@keyframes heroFadeIn {
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Section headers slide in
+.section-header {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  
+  &.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Navigation link hover effect
+nav a {
+  &::after {
+    transition: width 0.3s ease;
+  }
+}
+
+// Animated background
+.hero-bg {
+  opacity: 0.4;
+  animation: pulse 8s infinite ease-in-out;
 }

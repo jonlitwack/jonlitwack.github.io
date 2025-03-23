@@ -1,0 +1,110 @@
+---
+# _layouts/home.html
+layout: default
+---
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  
+  {% include data-visualization.html %}
+  
+  <div class="container">
+    <div class="hero-content">
+      <h1>{{ site.author.name }}</h1>
+      <p class="tagline">{{ page.tagline }}</p>
+      <p>{{ page.hero_text }}</p>
+      <div class="hero-buttons">
+        <a href="#work" class="btn">{{ page.cta_primary }}</a>
+        <a href="#contact" class="btn btn-secondary">{{ page.cta_secondary }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ page.about_title }}</h2>
+    </div>
+    <div class="about-content">
+      {{ page.about_content | markdownify }}
+    </div>
+  </div>
+</section>
+
+<!-- Expertise Section -->
+<section id="expertise">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ page.expertise_title }}</h2>
+    </div>
+    <div class="expertise-grid">
+      {% for expertise in page.expertise_areas %}
+      <div class="card">
+        <h3>{{ expertise.title }}</h3>
+        <p>{{ expertise.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Work Portfolio Section -->
+<section id="work">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ page.work_title }}</h2>
+    </div>
+    <div class="portfolio-grid">
+      {% for project in site.projects limit:6 %}
+      <div class="project-card">
+        <img src="{{ project.image | relative_url }}" alt="{{ project.title }}" class="project-img">
+        <div class="project-overlay">
+          <h4 class="project-title">{{ project.title }}</h4>
+          <p>{{ project.summary }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Thought Leadership Section -->
+<section id="thought-leadership">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ page.insights_title }}</h2>
+    </div>
+    <div class="articles-grid">
+      {% for post in site.posts limit:3 %}
+      <div class="card">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+        <a href="{{ post.url | relative_url }}" class="read-more">Read More</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ page.contact_title }}</h2>
+    </div>
+    <div class="contact-content">
+      <p>{{ page.contact_text }}</p>
+      
+      {% include contact-form.html %}
+      
+      <div class="social-links">
+        {% for social in site.data.social %}
+        <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer">{{ social.platform }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

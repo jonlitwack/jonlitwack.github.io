@@ -1,0 +1,22 @@
+---
+# _layouts/default.html
+---
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+  {% include head.html %}
+  <body class="{% if site.dark_mode_default %}dark-mode{% else %}light-mode{% endif %}">
+    <!-- Skip to main content (accessibility) -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    {% include header.html %}
+    
+    <main id="main">
+      {{ content }}
+    </main>
+    
+    {% include footer.html %}
+    
+    <!-- JavaScript -->
+    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
+  </body>
+</html>

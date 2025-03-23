@@ -1,0 +1,160 @@
+// _sass/_base.scss
+
+// Reset & Base Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-primary;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  background-color: $background-dark;
+  color: $text-primary-dark;
+  overflow-x: hidden;
+  
+  &.light-mode {
+    background-color: $background-light;
+    color: $navy-dark;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-light; // Light weight for sophisticated feel
+  margin-bottom: $spacing-md;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3.5rem;
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  letter-spacing: -0.3px;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  margin-bottom: $spacing-md;
+}
+
+.tagline {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: $spacing-lg;
+  opacity: 0.85;
+}
+
+// Light mode text coloring
+.light-mode {
+  h1, h2, h3, h4, h5, h6 {
+    color: $navy-dark;
+  }
+  
+  p, li {
+    color: $charcoal;
+  }
+}
+
+// Links
+a {
+  color: $accent-blue;
+  text-decoration: none;
+  transition: color $transition-speed;
+  
+  &:hover {
+    color: darken($accent-blue, 10%);
+  }
+  
+  .light-mode & {
+    color: $accent-blue;
+    
+    &:hover {
+      color: darken($accent-blue, 15%);
+    }
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  border-radius: 4px;
+  background-color: $accent-blue;
+  color: white;
+  text-decoration: none;
+  font-weight: $font-weight-medium;
+  transition: all $transition-speed;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: darken($accent-blue, 10%);
+    transform: translateY(-2px);
+  }
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid $text-primary-dark;
+  color: $text-primary-dark;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .light-mode & {
+    border-color: $navy-dark;
+    color: $navy-dark;
+    
+    &:hover {
+      background-color: rgba(15, 23, 42, 0.05);
+    }
+  }
+}
+
+// Accessibility
+:focus {
+  outline: 2px solid $accent-blue;
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: $accent-blue;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  
+  &:focus {
+    top: 0;
+  }
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+}

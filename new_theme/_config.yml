@@ -1,0 +1,77 @@
+# Site settings
+title: Jon Litwack - Applied Artificial Intelligence
+email: your-email@example.com
+description: >- 
+  Jon Litwack - Global experience design leader with expertise in data strategy 
+  and AI-powered development. Transforming organizations through data-informed 
+  experience design and AI-powered development.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://www.jonlitwack.com" # the base hostname & protocol for your site
+lang: en
+
+# Author information
+author:
+  name: Jon Litwack
+  bio: >-
+    Global experience design leader with dual expertise in 
+    data strategy and AI-powered development.
+
+# Social media
+twitter_username: username
+linkedin_username: jonlitwack
+github_username: username
+
+# Build settings
+markdown: kramdown
+theme: minima # You can replace with a custom theme
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /work/:path/
+  posts:
+    output: true
+    permalink: /insights/:year/:month/:day/:title/
+
+# Defaults (front matter defaults)
+defaults:
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Dark mode default (true = dark, false = light)
+dark_mode_default: true
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .sass-cache/
+  - .jekyll-cache/
+  - README.md

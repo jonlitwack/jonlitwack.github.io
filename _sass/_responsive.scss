@@ -1,0 +1,150 @@
+// _sass/_responsive.scss
+
+// Small devices (landscape phones)
+@media (max-width: $breakpoint-md) {
+  // Base typography adjustments
+  html {
+    font-size: 15px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  // Container padding
+  .container {
+    padding: 0 $spacing-md;
+  }
+  
+  // Navigation - Hide desktop nav and show mobile nav
+  nav {
+    display: none; // Will be replaced with mobile menu
+  }
+  
+  .mobile-menu-toggle {
+    display: block;
+  }
+  
+  // Grid layouts
+  .portfolio-grid,
+  .articles-grid,
+  .expertise-grid {
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+  }
+  
+  // Hero section adjustments
+  .hero {
+    height: auto;
+    min-height: 80vh;
+    padding-top: calc(#{$header-height} + #{$spacing-lg});
+    padding-bottom: $spacing-lg;
+  }
+  
+  // Section spacing
+  section {
+    padding: $spacing-lg 0;
+  }
+  
+  .section-header {
+    margin-bottom: $spacing-lg;
+  }
+  
+  // Contact form
+  .contact-form {
+    .form-group {
+      margin-bottom: $spacing-sm;
+    }
+  }
+}
+
+// Medium devices (tablets)
+@media (min-width: $breakpoint-md) and (max-width: $breakpoint-lg) {
+  // Container width
+  .container {
+    max-width: 720px;
+  }
+  
+  // Grid adjustments
+  .portfolio-grid,
+  .articles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// Large devices (desktops)
+@media (min-width: $breakpoint-lg) and (max-width: $breakpoint-xl) {
+  // Container width
+  .container {
+    max-width: 960px;
+  }
+}
+
+// Extra large devices
+@media (min-width: $breakpoint-xl) {
+  // Container width
+  .container {
+    max-width: $container-width;
+  }
+}
+
+// Dark mode preference
+@media (prefers-color-scheme: dark) {
+  body:not(.light-mode) {
+    // Default to dark mode unless explicitly set to light
+    background-color: $background-dark;
+    color: $text-primary-dark;
+  }
+}
+
+// Reduced motion preference
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// Print styles
+@media print {
+  body {
+    background-color: white !important;
+    color: black !important;
+  }
+  
+  header, 
+  .theme-toggle,
+  .hero-bg,
+  .data-viz,
+  .btn,
+  footer {
+    display: none !important;
+  }
+  
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  p, li {
+    page-break-inside: avoid;
+  }
+  
+  img {
+    max-width: 100% !important;
+  }
+}

@@ -1,0 +1,302 @@
+// _sass/_layout.scss
+
+// Header & Navigation
+header {
+  height: $header-height;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $z-index-header;
+  transition: background-color $transition-speed;
+  
+  &.scrolled {
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(8px);
+    
+    .light-mode & {
+      background-color: rgba(248, 249, 250, 0.9);
+    }
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: $font-weight-regular;
+  color: $text-primary-dark;
+  text-decoration: none;
+  
+  .light-mode & {
+    color: $navy-dark;
+  }
+}
+
+nav {
+  ul {
+    display: flex;
+    list-style: none;
+  }
+  
+  li {
+    margin-left: $spacing-lg;
+  }
+  
+  a {
+    color: $text-primary-dark;
+    text-decoration: none;
+    transition: color $transition-speed;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $accent-blue;
+      transition: width $transition-speed;
+    }
+    
+    &:hover::after,
+    &.active::after {
+      width: 100%;
+    }
+    
+    .light-mode & {
+      color: $navy-dark;
+    }
+  }
+}
+
+// Theme Toggle
+.theme-toggle {
+  width: 50px;
+  height: 26px;
+  border-radius: 13px;
+  background-color: rgba(255, 255, 255, 0.1);
+  position: relative;
+  cursor: pointer;
+  transition: background-color $transition-speed;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    transition: transform $transition-speed;
+  }
+  
+  .light-mode & {
+    background-color: rgba(15, 23, 42, 0.1);
+    
+    &::after {
+      transform: translateX(24px);
+      background-color: $navy-dark;
+    }
+  }
+}
+
+// Hero Section
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: $header-height;
+}
+
+.hero-content {
+  position: relative;
+  z-index: $z-index-content;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/assets/images/data-flow-bg.svg') no-repeat center center;
+  background-size: cover;
+  opacity: 0.2;
+  
+  .light-mode & {
+    opacity: 0.1;
+  }
+}
+
+// Data visualization SVG
+.data-viz {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: $z-index-data-viz;
+}
+
+// Sections
+section {
+  padding: $spacing-xl 0;
+  
+  &#about, &#expertise, &#work, &#thought-leadership, &#contact {
+    scroll-margin-top: $header-height;
+  }
+}
+
+.section-header {
+  margin-bottom: $spacing-xl;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, $accent-blue, $accent-purple);
+  }
+}
+
+// Cards & Content Blocks
+.card {
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  transition: transform $transition-speed;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+  
+  .light-mode & {
+    background-color: $paper-light;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+}
+
+// Portfolio & Projects
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-lg;
+}
+
+.project-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform $transition-speed;
+  
+  .project-card:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.project-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: $spacing-md;
+  background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+}
+
+.project-title {
+  margin-bottom: $spacing-xs;
+}
+
+// Articles Grid
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-lg;
+}
+
+// Contact Form
+.contact-form {
+  margin: $spacing-lg 0;
+  
+  .form-group {
+    margin-bottom: $spacing-md;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: $spacing-xs;
+  }
+  
+  input, textarea {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: $text-primary-dark;
+    font-family: $font-primary;
+    
+    .light-mode & {
+      border-color: rgba(15, 23, 42, 0.1);
+      background-color: white;
+      color: $navy-dark;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: $accent-blue;
+    }
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+// Social Links
+.social-links {
+  margin-top: $spacing-lg;
+  
+  a {
+    margin-right: $spacing-md;
+    font-weight: $font-weight-medium;
+    
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+// Footer
+footer {
+  padding: $spacing-lg 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  
+  .light-mode & {
+    border-top-color: rgba(15, 23, 42, 0.05);
+  }
+}

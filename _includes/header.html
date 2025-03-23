@@ -1,14 +1,21 @@
-<header class="site-header px2 px-responsive">
-  <div class="mt2 wrap">
-    <div class="measure">
-      <a href="{{ "/" | relative_url }}" class="site-title">{{ site.title }}</a>
-      <nav class="site-nav">
-        {% include navigation.html %}
-      </nav>
-      <div class="clearfix"></div>
-      {% if site.show_social_icons %}
-        {% include social_links.html %}
-      {% endif %}
-    </div>
+<!-- _includes/header.html -->
+<header>
+  <div class="container">
+    <a href="{{ '/' | relative_url }}" class="logo">{{ site.author.name }}</a>
+    
+    <nav>
+      <ul>
+        {% for item in site.data.navigation %}
+          <li>
+            <a href="{{ item.url | relative_url }}" {% if page.url == item.url %}class="active"{% endif %}>
+              {{ item.title }}
+            </a>
+          </li>
+        {% endfor %}
+        <li>
+          <a href="/clear-cache/" class="clear-cache-link" title="Clear browser cache">⟳</a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </header>

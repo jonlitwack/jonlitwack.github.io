@@ -1,0 +1,12 @@
+# _data/social.yml
+- platform: LinkedIn
+  url: https://linkedin.com/in/jonlitwack
+  icon: linkedin
+
+- platform: Twitter
+  url: https://twitter.com/yourusername
+  icon: twitter
+
+- platform: GitHub
+  url: https://github.com/yourusername
+  icon: github

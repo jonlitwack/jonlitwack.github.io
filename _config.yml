@@ -1,52 +1,31 @@
 # Site settings
-title: Jonlitwack
+title: JON LITWACK - Applied Artificial Intelligence
 email: jon@jonlitwack.com
-author: Jon Litwack
-description: "Thoughts direct from my brain to your eyeballs."
+author: JON LITWACK
+description: "JON LITWACK - Global experience design leader with expertise in data strategy and AI-powered development. Transforming organizations through data-informed experience design and AI-powered development."
 baseurl: ""
 url: "https://jonlitwack.com"
 date_format: "%b %-d, %Y"
-header_pages: []
+lang: en
 
-# Google services
-google_verification: null
-google_analytics: null
-google_tag_manager: null
-bing_verification: null
+# Author information
+author:
+  name: JON LITWACK
+  bio: >-
+    Global experience design leader with dual expertise in 
+    data strategy and AI-powered development.
 
-# Optional features
-animated: false
-show_related_posts: false
-show_post_footers: false
-show_social_icons: false
-ajaxify_contact_form: false
-enable_mathjax: false
-extended_fonts: false
-enable_anchorjs: false
-post_preview_image: false
-
-# Facebook Page integration
-fb_page: false
-fb_page_id: null
-
-# Disqus post comments
-disqus_shortname: null
-
-# Facebook Comments plugin
-facebook_comments: null
-facebook_appid: null
-facebook_comments_number: 10
-
-# Social icons
+# Social media
+# twitter_username: null
+linkedin_username: null
 github_username: null
+# Other social accounts from old config
 reddit_username: null
 bitbucket_username: null
 stackoverflow_id: null
-twitter_username: null
 skype_username: null
 steam_nickname: null
 google_plus_id: null
-linkedin_username: null
 angellist_username: null
 medium_id: null
 bitcoin_url: null
@@ -55,62 +34,67 @@ flattr_button: null
 telegram_username: null
 vk_id: null
 
-# Post sharing icons
-show_sharing_icons: false
-share_facebook: false
-share_twitter: false
-share_googleplus: false
-share_linkedin: true
-share_digg: false
-share_tumblr: false
-share_reddit: false
-share_stumbleupon: false
-share_hackernews: false
-
-text:
-  pagination:
-    newer: 'Newer'
-    older: 'Older'
-  share_buttons:
-    text: 'Share this post!'
-    facebook: 'Share on Facebook'
-    twitter: 'Share on Twitter'
-    googleplus: 'Share on Google+'
-    linkedin: 'Share on LinkedIn'
-    digg: 'Share on Digg'
-    tumblr: 'Share on Tumblr'
-    reddit: 'Share on Reddit'
-    stumbleupon: 'Share on StumbleUpon'
-    hackernews: 'Share on Hacker News'
-  post:
-    updated: 'Updated'
-    minute_read: 'minute read'
-    related_posts: 'Related Posts'
-  index:
-    coming_soon: 'Coming soon...'
-  contact:
-    email: 'Email Address'
-    content: 'What would you like to say?'
-    subject: 'New submission!'
-    submit: 'Say Hello'
-    ajax:
-      sending: 'sending..'
-      sent: 'Message sent!'
-      error: 'Error!'
-  thanks: 'Thanks for contacting me. I will reply as soon as possible.'
-  og_locale: 'en_US'
+# Google services
+google_verification: null
+google_analytics: null
+google_tag_manager: null
+bing_verification: null
 
 # Build settings
 markdown: kramdown
-redcarpet:
-  extensions: ['smart', 'tables', 'with_toc_data']
-permalink: pretty
-paginate: 4
 sass:
   style: compressed
+  sass_dir: _sass
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:categories/:year/:month/:day/:title/
+
+# Defaults (front matter defaults)
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Dark mode default (true = dark, false = light)
+dark_mode_default: true
+
+# Pagination settings
+paginate: 4
+paginate_path: "/insights/page:num/"
+
+# Optional features
+animated: false
+show_related_posts: true
+show_post_footers: false
+show_social_icons: true
+enable_mathjax: false
+extended_fonts: false
+enable_anchorjs: false
+post_preview_image: false
+
+# Post sharing icons
+show_sharing_icons: false
+
+# Exclude from processing
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -118,3 +102,7 @@ exclude:
   - README.md
   - screenshot.png
   - vendor
+  - new_theme
+  - .sass-cache
+  - .jekyll-cache
+  - _projects

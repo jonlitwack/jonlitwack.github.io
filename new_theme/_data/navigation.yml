@@ -1,0 +1,15 @@
+# _data/navigation.yml
+- title: About
+  url: "/#about"
+  
+- title: Expertise
+  url: "/#expertise"
+  
+- title: Work
+  url: "/#work"
+  
+- title: Insights
+  url: "/#thought-leadership"
+  
+- title: Contact
+  url: "/#contact"
