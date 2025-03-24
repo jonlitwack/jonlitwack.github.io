@@ -10,9 +10,46 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Root styles for light/dark modes */
+:root {
+  background-color: #FFFFFF;
+  overscroll-behavior-y: none;
+}
+
+.dark-mode:root {
+  background-color: #181817;
+}
+
+/* Safari/iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+  html, body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Disable bounce effect for Safari */
+  body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Simple background fix for light/dark modes */
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  background-color: #FFFFFF;
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: auto;
+  
+  .dark-mode & {
+    background-color: #181817;
+  }
 }
 
 body {
@@ -21,9 +58,9 @@ body {
   line-height: 1.6;
   color: #1A202C;
   background-color: #FFFFFF;
-  overflow-x: hidden;
   font-weight: 400;
   letter-spacing: -0.011em;
+  overscroll-behavior-y: none;
   
   &.dark-mode {
     color: #ECECEC;
@@ -331,7 +368,7 @@ pre {
 
 // Standard header pattern with animated background
 .site-header {
-  background-color: #000;
+  background-color: #FFFFFF;
   padding: 2rem 0;
   position: relative;
   
@@ -340,7 +377,7 @@ pre {
     z-index: $z-index-content;
   }
   
-  .light-mode & {
-    background-color: $background-light;
+  .dark-mode & {
+    background-color: #181817;
   }
 }

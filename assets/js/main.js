@@ -8,18 +8,34 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Theme handling based on system preference
   function applyThemePreference() {
+    // Check if user has manually set a theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      console.log('Using saved theme preference:', savedTheme);
+      return; // Don't override user preference
+    }
+    
     // Get the system preference
     const prefersDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const prefersLightMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    
+    const themeColorMeta = document.getElementById('theme-color');
+    const statusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
     
     // Apply theme based on system preference
     if (prefersLightMode) {
       document.body.classList.add('light-mode');
       document.body.classList.remove('dark-mode');
+      document.documentElement.classList.remove('dark-mode');
+      if (themeColorMeta) themeColorMeta.setAttribute('content', '#FFFFFF');
+      if (statusBarMeta) statusBarMeta.setAttribute('content', 'default');
       console.log('Applying light mode based on system preference');
     } else {
       document.body.classList.add('dark-mode');
       document.body.classList.remove('light-mode');
+      document.documentElement.classList.add('dark-mode');
+      if (themeColorMeta) themeColorMeta.setAttribute('content', '#181817');
+      if (statusBarMeta) statusBarMeta.setAttribute('content', 'black-translucent');
       console.log('Applying dark mode based on system preference');
     }
   }
@@ -33,17 +49,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const lightModeMediaQuery = window.matchMedia('(prefers-color-scheme: light)');
     
     darkModeMediaQuery.addEventListener('change', e => {
+      // Only change if user hasn't set a preference
+      if (localStorage.getItem('theme')) return;
+      
       if (e.matches) {
         document.body.classList.add('dark-mode');
         document.body.classList.remove('light-mode');
+        document.documentElement.classList.add('dark-mode');
+        
+        const themeColorMeta = document.getElementById('theme-color');
+        const statusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        if (themeColorMeta) themeColorMeta.setAttribute('content', '#181817');
+        if (statusBarMeta) statusBarMeta.setAttribute('content', 'black-translucent');
+        
         console.log('Changed to dark mode based on system preference');
       }
     });
     
     lightModeMediaQuery.addEventListener('change', e => {
+      // Only change if user hasn't set a preference
+      if (localStorage.getItem('theme')) return;
+      
       if (e.matches) {
         document.body.classList.add('light-mode');
         document.body.classList.remove('dark-mode');
+        document.documentElement.classList.remove('dark-mode');
+        
+        const themeColorMeta = document.getElementById('theme-color');
+        const statusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+        if (themeColorMeta) themeColorMeta.setAttribute('content', '#FFFFFF');
+        if (statusBarMeta) statusBarMeta.setAttribute('content', 'default');
+        
         console.log('Changed to light mode based on system preference');
       }
     });
