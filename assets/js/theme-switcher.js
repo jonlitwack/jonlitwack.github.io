@@ -4,14 +4,12 @@
 (function() {
   // Function to toggle theme
   function toggleTheme() {
-    if (document.body.classList.contains('light-mode')) {
-      document.body.classList.remove('light-mode');
+    if (document.body.classList.contains('dark-mode')) {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'light');
+    } else {
       document.body.classList.add('dark-mode');
       localStorage.setItem('theme', 'dark');
-    } else {
-      document.body.classList.remove('dark-mode');
-      document.body.classList.add('light-mode');
-      localStorage.setItem('theme', 'light');
     }
   }
 
@@ -24,12 +22,11 @@
 
     // Apply saved theme preference
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-      document.body.classList.add('light-mode');
-      document.body.classList.remove('dark-mode');
-    } else if (savedTheme === 'dark') {
+    if (savedTheme === 'dark') {
       document.body.classList.add('dark-mode');
-      document.body.classList.remove('light-mode');
+    } else {
+      // Default to light mode
+      localStorage.setItem('theme', 'light');
     }
   });
 })(); 

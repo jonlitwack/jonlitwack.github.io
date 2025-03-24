@@ -19,15 +19,15 @@ body {
   font-family: $font-primary;
   font-size: $font-size-base;
   line-height: 1.6;
-  color: $text-color;
-  background-color: $bg-color-dark;
+  color: #1A202C;
+  background-color: #FFFFFF;
   overflow-x: hidden;
   font-weight: 400;
   letter-spacing: -0.011em;
   
-  &.light-mode {
-    color: #1A202C;
-    background-color: #FFFFFF;
+  &.dark-mode {
+    color: #ECECEC;
+    background-color: #181817;
   }
 }
 
@@ -40,24 +40,24 @@ body {
 
 // Typography
 h1, h2, h3, h4, h5, h6 {
-  font-family: $font-primary;
-  line-height: 1.1;
-  font-weight: 700;
+  font-family: $font-family-heading;
+  line-height: $line-height-heading;
+  font-weight: 400;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-  letter-spacing: -0.025em;
-  color: #FFFFFF;
+  letter-spacing: $letter-spacing-heading;
+  color: #0F172A;
   
-  .light-mode & {
-    color: #1A202C;
+  .dark-mode & {
+    color: #ECECEC;
   }
 }
 
 h1 {
   font-size: 3.5rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.2;
   
   @media (max-width: $breakpoint-md) {
     font-size: 2.75rem;
@@ -70,8 +70,8 @@ h1 {
 
 h2 {
   font-size: 2.25rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-weight: 400;
+  letter-spacing: normal;
   
   @media (max-width: $breakpoint-md) {
     font-size: 1.875rem;
@@ -84,8 +84,8 @@ h2 {
 
 h3 {
   font-size: 1.75rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  letter-spacing: normal;
   
   @media (max-width: $breakpoint-md) {
     font-size: 1.5rem;
@@ -98,19 +98,19 @@ h3 {
 
 h4 {
   font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
+  font-weight: 400;
+  letter-spacing: normal;
 }
 
 h5 {
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 h6 {
   font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  letter-spacing: normal;
 }
 
 p {
@@ -118,10 +118,10 @@ p {
   max-width: 70ch;
   font-size: 1rem;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.9);
+  color: #4A5568;
   
-  .light-mode & {
-    color: #4A5568;
+  .dark-mode & {
+    color: #979897;
   }
 }
 
@@ -132,10 +132,12 @@ h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
 
 .section-title {
   font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
+  font-weight: 400;
+  font-family: $font-family-heading;
+  letter-spacing: normal;
   margin-bottom: 2rem;
   position: relative;
+  color: #0F172A;
   
   @media (max-width: $breakpoint-md) {
     font-size: 1.75rem;
@@ -147,7 +149,8 @@ a {
   color: #3B82F6;
   text-decoration: none;
   transition: color 0.2s ease;
-  font-weight: 500;
+  font-weight: 400;
+  font-family: $font-family-heading;
   
   &:hover {
     color: #2563EB;
@@ -167,14 +170,15 @@ a {
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  font-weight: 500;
+  font-weight: 400;
+  font-family: $font-family-heading;
   text-decoration: none;
   text-align: center;
   transition: all 0.2s ease;
   font-size: 0.95rem;
   cursor: pointer;
-  line-height: 1.5;
-  letter-spacing: -0.01em;
+  line-height: 1.2;
+  letter-spacing: normal;
   
   &:hover {
     transform: translateY(-2px);

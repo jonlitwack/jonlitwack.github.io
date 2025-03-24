@@ -1,6 +1,3 @@
 # _data/navigation.yml
-- title: Insights
-  url: "/#thought-leadership"
-  
 - title: About
   url: "/#about"
