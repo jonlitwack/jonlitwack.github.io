@@ -1,11 +1,14 @@
 <!-- _includes/header.html -->
 <header class="site-header">
   <div class="container">
-    {% unless page.url == "/" %}
-    <a href="{{ '/' | relative_url }}" class="logo">{{ site.author.name }}</a>
-    {% else %}
-    <a href="{{ '/' | relative_url }}" class="logo"></a>
-    {% endunless %}
+    <div class="header-left">
+      {% if page.url == "/" %}
+      <a href="{{ '/' | relative_url }}" class="logo"></a>
+      <div class="dynamic-name">JON LITWACK</div>
+      {% else %}
+      <a href="{{ '/' | relative_url }}" class="logo">{{ site.author.name }}</a>
+      {% endif %}
+    </div>
     
     <nav>
       <ul>

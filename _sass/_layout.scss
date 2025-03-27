@@ -6,67 +6,103 @@ header.site-header {
   top: 0;
   left: 0;
   right: 0;
-  padding: 1.5rem 0;
   z-index: 100;
   background-color: #FFFFFF;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  height: 4rem; // Tailwind's h-16
   
   .dark-mode & {
     background-color: #181817;
   }
-
-  .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  
+  &.scrolled {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-
-  a.logo {
-    font-size: 1.1rem;
-    font-family: $font-family-heading;
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .logo {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 1.125rem;
     font-weight: 400;
     color: #0F172A;
     text-decoration: none;
+    text-transform: uppercase;
+    transition: opacity 0.3s ease;
+    opacity: 1;
     
     .dark-mode & {
       color: #ECECEC;
     }
     
-    &:hover {
-      opacity: 0.8;
+    &.hidden {
+      opacity: 0;
     }
   }
-
+  
+  .dynamic-name {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: #0F172A;
+    text-transform: uppercase;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    
+    .dark-mode & {
+      color: #ECECEC;
+    }
+    
+    &.visible {
+      opacity: 1;
+    }
+  }
+  
   nav {
     ul {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
       list-style: none;
       margin: 0;
       padding: 0;
+      align-items: center;
       
       li {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        
         a {
-          color: #0F172A;
+          color: #334155;
           text-decoration: none;
-          font-size: 1.1rem;
-          font-family: $font-family-heading;
-          font-weight: 700;
-          letter-spacing: 0.02em;
-          transition: color 0.2s ease;
-          padding-bottom: 3px;
-          border-bottom: 2px solid transparent;
+          transition: color 0.3s ease;
+          font-size: 1.125rem;
+          font-weight: 400;
+          
+          &:hover {
+            color: #2563EB;
+          }
+          
+          &.active {
+            color: #2563EB;
+          }
           
           .dark-mode & {
             color: #ECECEC;
-          }
-          
-          &:hover, &.active {
-            color: #2563EB;
-            border-bottom-color: #2563EB;
+            
+            &:hover, &.active {
+              color: #60A5FA;
+            }
           }
         }
         
@@ -74,35 +110,27 @@ header.site-header {
           background: none;
           border: none;
           padding: 0;
-          margin: 0;
           cursor: pointer;
-          color: #0F172A;
+          color: #334155;
+          transition: color 0.3s ease;
           display: flex;
           align-items: center;
-          height: 100%;
-          padding-bottom: 3px;
-          transition: color 0.2s ease, transform 0.3s ease;
-          outline: none;
           
-          &:focus {
-            outline: none;
+          &:hover {
+            color: #2563EB;
           }
           
           .dark-mode & {
             color: #ECECEC;
-          }
-          
-          &:hover {
-            color: #2563EB;
-            transform: rotate(30deg);
-          }
-          
-          &:active {
-            transform: rotate(180deg);
+            
+            &:hover {
+              color: #60A5FA;
+            }
           }
           
           svg {
-            vertical-align: middle;
+            width: 18px;
+            height: 18px;
           }
         }
       }
@@ -113,21 +141,21 @@ header.site-header {
 // Hero Section
 .hero {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #FFFFFF;
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: 6rem 0;
-  margin-top: 0; /* Ensure no gap */
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
   
   .dark-mode & {
     background-color: #181817;
   }
   
   @media (max-width: 768px) {
-    min-height: 100vh;
-    padding: 6rem 0 4rem;
+    height: 100vh;
   }
   
   .container {
@@ -135,16 +163,15 @@ header.site-header {
     z-index: 2;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 3rem;
+    padding: 4rem 3rem 0; // Move padding here to maintain content position
     
     @media (max-width: 768px) {
-      padding: 0 1.5rem;
+      padding: 4rem 1.5rem 0;
     }
   }
   
   .hero-content {
     max-width: 700px;
-    padding: 0;
     margin-left: 0;
     
     @media (max-width: 768px) {
@@ -229,8 +256,12 @@ header.site-header {
       margin-bottom: 0.5rem;
       font-size: 1rem;
       font-weight: 400;
-      color: #4A5568;
+      color: #334155;
       letter-spacing: 0.01em;
+      
+      .dark-mode & {
+        color: #979897;
+      }
       
       a {
         color: #2563EB;
@@ -238,8 +269,16 @@ header.site-header {
         transition: color 0.2s ease;
         
         &:hover {
-          color: #1E40AF;
+          color: #1D4ED8;
           text-decoration: underline;
+        }
+        
+        .dark-mode & {
+          color: #60A5FA;
+          
+          &:hover {
+            color: #93C5FD;
+          }
         }
       }
     }
@@ -278,7 +317,6 @@ header.site-header {
 
 // Main content area
 main {
-  padding-top: $header-height;
   min-height: calc(100vh - 200px);
 }
 
@@ -313,8 +351,12 @@ section {
       font-size: 2.25rem;
       font-weight: 700;
       letter-spacing: -0.025em;
-      color: #1A202C;
+      color: #0F172A;
       line-height: 1.2;
+      
+      .dark-mode & {
+        color: #ECECEC;
+      }
       
       @media (max-width: $breakpoint-md) {
         font-size: 1.875rem;
@@ -325,8 +367,12 @@ section {
       max-width: 600px;
       margin: 0 auto;
       font-size: 1.125rem;
-      color: #4A5568;
+      color: #334155;
       line-height: 1.65;
+      
+      .dark-mode & {
+        color: #979897;
+      }
     }
   }
 }
@@ -361,7 +407,7 @@ section {
 .content {
   font-size: 1.125rem;
   line-height: 1.7;
-  color: #4A5568;
+  color: #334155;
   
   .dark-mode & {
     color: #979897;
@@ -371,8 +417,23 @@ section {
     margin-bottom: 1.5rem;
   }
   
-  a.button {
-    margin-top: 1rem;
+  a {
+    color: #2563EB;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: #1D4ED8;
+      text-decoration: underline;
+    }
+    
+    .dark-mode & {
+      color: #60A5FA;
+      
+      &:hover {
+        color: #93C5FD;
+      }
+    }
   }
 }
 
