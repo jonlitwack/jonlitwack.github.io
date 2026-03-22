@@ -36,8 +36,7 @@ yarn-error.log*
 # vercel
 .vercel
 
-# tina
-tina/__generated__
+# tina (generated files must be committed for Tina Cloud to detect schema)
 
 # typescript
 *.tsbuildinfo
