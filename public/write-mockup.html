@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Write — Jon Litwack</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #161a1f;
+    --ice: #e8f0ff;
+    --muted: #8a9098;
+    --rule: #22242a;
+    --cyan: #00d4e8;
+    --surface: #1c2027;
+    --font-serif: "Source Serif 4", Georgia, serif;
+    --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--night);
+    color: var(--muted);
+    font-family: var(--font-serif);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* Top bar */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    background: var(--night);
+    z-index: 10;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .back-arrow {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .back-arrow:hover { color: var(--cyan); }
+
+  .topbar-title {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .status {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.75rem;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  .btn-publish {
+    background: none;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-publish:hover {
+    background: var(--cyan);
+    color: var(--night);
+  }
+
+  .btn-publish:active {
+    transform: scale(0.97);
+  }
+
+  /* Editor area */
+  .editor-container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+  }
+
+  .title-input {
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--ice);
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 1.55rem;
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+    resize: none;
+    overflow: hidden;
+  }
+
+  .title-input::placeholder {
+    color: #2a2f38;
+  }
+
+  .date-display {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.85rem;
+    color: var(--muted);
+    opacity: 0.6;
+    margin-bottom: 1rem;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 1rem 0 1.5rem;
+  }
+
+  .body-editor {
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--muted);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.75;
+    min-height: 60vh;
+    resize: none;
+    overflow: hidden;
+  }
+
+  .body-editor::placeholder {
+    color: #2a2f38;
+  }
+
+  /* Formatting toolbar (mobile) */
+  .format-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    gap: 0.25rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .format-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  .format-btn:hover, .format-btn:active {
+    background: var(--rule);
+    color: var(--ice);
+  }
+
+  .format-btn.accent {
+    color: var(--cyan);
+  }
+
+  .format-separator {
+    width: 1px;
+    height: 1.25rem;
+    background: var(--rule);
+    margin: 0 0.25rem;
+    flex-shrink: 0;
+  }
+
+  /* Essay list (shown when no essay is selected) */
+  .essay-list-view {
+    display: none;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .essay-list-view.active {
+    display: block;
+  }
+
+  .editor-view {
+    display: block;
+  }
+
+  .essay-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .essay-list-title {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 1.25rem;
+    color: var(--ice);
+  }
+
+  .btn-new, .btn-upload {
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ice);
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-new:hover, .btn-upload:hover {
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+
+  .list-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  /* Paste zone */
+  .paste-zone {
+    display: none;
+    margin-bottom: 1.5rem;
+  }
+
+  .paste-zone.active {
+    display: block;
+  }
+
+  .paste-area {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    padding: 1rem 1.25rem;
+    min-height: 120px;
+    resize: none;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .paste-area:focus {
+    border-color: var(--cyan);
+  }
+
+  .paste-area::placeholder {
+    color: #2a2f38;
+  }
+
+  .paste-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+  }
+
+  .paste-hint {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .paste-hint span {
+    color: var(--ice);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+  }
+
+  .paste-hint span:hover {
+    color: var(--cyan);
+  }
+
+  .btn-load {
+    background: var(--cyan);
+    border: none;
+    color: var(--night);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-load:hover {
+    opacity: 0.85;
+  }
+
+  .btn-load:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .essay-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1rem 0;
+    border-top: 1px solid var(--rule);
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  .essay-item:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .essay-item:hover .essay-item-title {
+    color: var(--cyan);
+  }
+
+  .essay-item-title {
+    color: var(--ice);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1rem;
+    transition: color 0.15s;
+  }
+
+  .essay-item-date {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.75rem;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .essay-item-draft {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: 0.65rem;
+    color: var(--cyan);
+    margin-left: 0.5rem;
+  }
+
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 4rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    color: var(--ice);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 6px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Responsive */
+  @media (min-width: 768px) {
+    .format-bar {
+      justify-content: center;
+    }
+    .editor-container {
+      padding: 2rem 1.5rem 4rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="#" class="back-arrow" id="backBtn">←</a>
+    <span class="topbar-title" id="topbarTitle">New essay</span>
+  </div>
+  <div style="display: flex; align-items: center; gap: 0.75rem;">
+    <span class="status" id="statusText"></span>
+    <button class="btn-publish" id="publishBtn">Publish</button>
+  </div>
+</div>
+
+<!-- Essay List View -->
+<div class="essay-list-view" id="listView">
+  <div class="essay-list-header">
+    <span class="essay-list-title">Essays</span>
+    <div class="list-actions">
+      <button class="btn-upload" id="uploadBtn">+ Paste / Import</button>
+      <button class="btn-new" id="newBtn">+ New</button>
+    </div>
+  </div>
+  <div class="paste-zone" id="pasteZone">
+    <textarea class="paste-area" id="pasteArea" placeholder="Paste Markdown from Claude here..."></textarea>
+    <div class="paste-actions">
+      <span class="paste-hint">or <span onclick="document.getElementById('fileInput').click()">browse for a .md file</span></span>
+      <button class="btn-load" id="loadBtn" disabled>Open in editor →</button>
+    </div>
+  </div>
+  <input type="file" id="fileInput" accept=".md,.markdown,.txt" style="display:none">
+  <div class="essay-item" onclick="openEditor('collaboration-through-code', 'Collaboration Through Code', 'Mar 2026')">
+    <span class="essay-item-title">Collaboration Through Code</span>
+    <span class="essay-item-date">Mar 2026</span>
+  </div>
+  <div class="essay-item" onclick="openEditor('code-is-a-medium', 'Code Is a Medium', 'Mar 2026')">
+    <span class="essay-item-title">Code Is a Medium</span>
+    <span style="display:flex;align-items:baseline;">
+      <span class="essay-item-draft">draft</span>
+      <span class="essay-item-date">Mar 2026</span>
+    </span>
+  </div>
+  <div class="essay-item" onclick="openEditor('the-enterprise-designer', 'The Enterprise Designer', 'Feb 2026')">
+    <span class="essay-item-title">The Enterprise Designer</span>
+    <span style="display:flex;align-items:baseline;">
+      <span class="essay-item-draft">draft</span>
+      <span class="essay-item-date">Feb 2026</span>
+    </span>
+  </div>
+  <div class="essay-item" onclick="openEditor('what-protogen-is', 'What Protogen Is', 'Jan 2026')">
+    <span class="essay-item-title">What Protogen Is</span>
+    <span style="display:flex;align-items:baseline;">
+      <span class="essay-item-draft">draft</span>
+      <span class="essay-item-date">Jan 2026</span>
+    </span>
+  </div>
+</div>
+
+<!-- Editor View -->
+<div class="editor-view" id="editorView">
+  <div class="editor-container">
+    <textarea class="title-input" id="titleInput" placeholder="Essay title" rows="1">Collaboration Through Code</textarea>
+    <div class="date-display">March 2026</div>
+    <hr class="divider">
+    <textarea class="body-editor" id="bodyEditor" placeholder="Start writing...">For a long time, code was a wall. You either spoke the language or you waited. And if you waited, you translated — your ideas into tickets, tickets into estimates, estimates into sprints, sprints into something that didn't quite match what you had in your head. The wall didn't just slow things down. It changed what got built.
+
+I spent a lot of years on the design side of that wall. I understood the problem better than most people in the room, but I couldn't touch the solution. I could describe it, sketch it, argue for it — but then I had to hand it off and hope the translation held.
+
+What's changed isn't that the wall is gone. It's that it's become optional.
+
+I was in a room recently with a group of designers. Nobody would call themselves a developer. We opened VS Code, opened Claude Code, and started building. In an hour, people had made a Pokédex, a personal data management tool, a native mobile prototype. Real things. Things that worked. The absorption in the room was total — because they were finally touching the thing, not describing it.
+
+That's what I mean by collaboration through code. Not that everyone should learn to code. Not that AI replaces engineers. But that code is becoming a shared medium — something you can work *in* together, the way musicians work in sound or architects work in space. And when more perspectives can touch the material, the material gets better.</textarea>
+  </div>
+</div>
+
+<!-- Format Bar -->
+<div class="format-bar" id="formatBar">
+  <button class="format-btn" title="Bold"><b>B</b></button>
+  <button class="format-btn" title="Italic"><i>I</i></button>
+  <button class="format-btn accent" title="Emphasis (cyan)" onclick="showToast('*emphasis* → cyan on site')"><i>em</i></button>
+  <div class="format-separator"></div>
+  <button class="format-btn" title="Heading">H2</button>
+  <button class="format-btn" title="Quote">❝</button>
+  <button class="format-btn" title="List">—</button>
+  <button class="format-btn" title="Link">🔗</button>
+  <div class="format-separator"></div>
+  <button class="format-btn" title="Image" onclick="showToast('Image uploaded to /images/')">📷</button>
+  <button class="format-btn" title="Horizontal rule">───</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const listView = document.getElementById('listView');
+  const editorView = document.getElementById('editorView');
+  const formatBar = document.getElementById('formatBar');
+  const topbarTitle = document.getElementById('topbarTitle');
+  const backBtn = document.getElementById('backBtn');
+  const publishBtn = document.getElementById('publishBtn');
+  const newBtn = document.getElementById('newBtn');
+  const titleInput = document.getElementById('titleInput');
+  const bodyEditor = document.getElementById('bodyEditor');
+  const statusText = document.getElementById('statusText');
+  const toast = document.getElementById('toast');
+
+  // Auto-resize textareas
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  }
+
+  titleInput.addEventListener('input', () => autoResize(titleInput));
+  bodyEditor.addEventListener('input', () => {
+    autoResize(bodyEditor);
+    statusText.textContent = 'Unsaved';
+  });
+
+  // Initial resize
+  setTimeout(() => {
+    autoResize(titleInput);
+    autoResize(bodyEditor);
+  }, 50);
+
+  // Show list view
+  function showList() {
+    listView.classList.add('active');
+    editorView.style.display = 'none';
+    formatBar.style.display = 'none';
+    topbarTitle.textContent = 'Essays';
+    backBtn.style.display = 'none';
+    publishBtn.style.display = 'none';
+    statusText.textContent = '';
+  }
+
+  // Open editor
+  function openEditor(slug, title, date) {
+    listView.classList.remove('active');
+    editorView.style.display = 'block';
+    formatBar.style.display = 'flex';
+    topbarTitle.textContent = slug ? slug + '.md' : 'new-essay.md';
+    backBtn.style.display = 'inline';
+    publishBtn.style.display = 'inline';
+    statusText.textContent = '';
+
+    if (title) {
+      titleInput.value = title;
+    } else {
+      titleInput.value = '';
+      bodyEditor.value = '';
+    }
+
+    setTimeout(() => {
+      autoResize(titleInput);
+      autoResize(bodyEditor);
+    }, 50);
+  }
+
+  backBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    showList();
+  });
+
+  newBtn.addEventListener('click', () => {
+    openEditor('', '', '');
+    titleInput.focus();
+  });
+
+  publishBtn.addEventListener('click', () => {
+    publishBtn.textContent = 'Publishing...';
+    publishBtn.style.opacity = '0.5';
+    setTimeout(() => {
+      publishBtn.textContent = 'Publish';
+      publishBtn.style.opacity = '1';
+      statusText.textContent = 'Published';
+      showToast('Committed & deploying →');
+    }, 1200);
+  });
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  // Paste / import zone
+  const uploadBtn = document.getElementById('uploadBtn');
+  const pasteZone = document.getElementById('pasteZone');
+  const pasteArea = document.getElementById('pasteArea');
+  const loadBtn = document.getElementById('loadBtn');
+  const fileInput = document.getElementById('fileInput');
+
+  uploadBtn.addEventListener('click', () => {
+    pasteZone.classList.toggle('active');
+    if (pasteZone.classList.contains('active')) {
+      setTimeout(() => pasteArea.focus(), 100);
+    }
+  });
+
+  // Enable the load button when there's content
+  pasteArea.addEventListener('input', () => {
+    loadBtn.disabled = pasteArea.value.trim().length === 0;
+  });
+
+  // Load pasted content into editor
+  loadBtn.addEventListener('click', () => {
+    const content = pasteArea.value.trim();
+    if (!content) return;
+    loadMarkdownContent(content);
+    pasteArea.value = '';
+    loadBtn.disabled = true;
+  });
+
+  // File browse fallback
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        loadMarkdownContent(ev.target.result, file.name);
+      };
+      reader.readAsText(file);
+    }
+  });
+
+  function loadMarkdownContent(content, filename) {
+    let title = '';
+    let body = content;
+
+    // Parse frontmatter if present
+    const fmMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
+    if (fmMatch) {
+      const frontmatter = fmMatch[1];
+      body = fmMatch[2].trim();
+      const titleMatch = frontmatter.match(/title:\s*["']?(.+?)["']?\s*$/m);
+      if (titleMatch) title = titleMatch[1];
+    }
+
+    // If no title from frontmatter, try filename or first heading
+    if (!title && filename) {
+      title = filename.replace(/\.(md|markdown|txt)$/, '').replace(/-/g, ' ');
+    }
+    if (!title) {
+      const h1Match = body.match(/^#\s+(.+)$/m);
+      if (h1Match) {
+        title = h1Match[1];
+        body = body.replace(/^#\s+.+\n*/, '').trim();
+      }
+    }
+
+    const slug = title
+      ? title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
+      : 'new-essay';
+
+    pasteZone.classList.remove('active');
+    openEditor(slug, title, '');
+    bodyEditor.value = body;
+    setTimeout(() => {
+      autoResize(titleInput);
+      autoResize(bodyEditor);
+    }, 50);
+    showToast('Loaded into editor');
+  }
+
+  // Start on editor view by default for the mockup
+  // To see list view, click the back arrow
+</script>
+
+</body>
+</html>
