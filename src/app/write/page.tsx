@@ -1,7 +1,13 @@
 "use client";
 
 import { useSession, signIn } from "next-auth/react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { marked } from "marked";
+import {
+  Bold, Italic, Heading1, Heading2, Heading3,
+  Quote, List, ListOrdered, Link, Image,
+  Code, FileCode, Minus, Sun, Moon, Pencil, Eye, ArrowLeft,
+} from "lucide-react";
 import styles from "./write.module.css";
 
 interface EssayListItem {
@@ -18,13 +24,18 @@ interface EssayData {
 }
 
 type View = "list" | "editor";
+type EditorMode = "edit" | "preview";
+
+const ICON_SIZE = 18;
 
 export default function WritePage() {
   const { data: session, status } = useSession();
   const [view, setView] = useState<View>("list");
+  const [mode, setMode] = useState<EditorMode>("edit");
   const [essays, setEssays] = useState<EssayListItem[]>([]);
   const [showPaste, setShowPaste] = useState(false);
   const [pasteContent, setPasteContent] = useState("");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   // Editor state
   const [title, setTitle] = useState("");
@@ -39,6 +50,18 @@ export default function WritePage() {
   const pasteRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  // Load theme from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("write-theme");
+    if (saved === "light") setTheme("light");
+  }, []);
+
+  function toggleTheme() {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    localStorage.setItem("write-theme", next);
+  }
+
   // Auto-resize textareas
   const autoResize = useCallback((el: HTMLTextAreaElement | null) => {
     if (!el) return;
@@ -52,7 +75,7 @@ export default function WritePage() {
 
   useEffect(() => {
     autoResize(bodyRef.current);
-  }, [body, view, autoResize]);
+  }, [body, view, mode, autoResize]);
 
   // Load essay list
   useEffect(() => {
@@ -64,9 +87,54 @@ export default function WritePage() {
     }
   }, [status]);
 
+  // Preview HTML
+  const previewHtml = useMemo(() => {
+    if (mode !== "preview") return "";
+    return marked(body, { async: false }) as string;
+  }, [body, mode]);
+
+  // Markdown insertion helper
+  function insertMarkdown(
+    type: "wrap" | "prefix" | "insert",
+    before: string,
+    after: string = ""
+  ) {
+    const textarea = bodyRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = body.substring(start, end);
+
+    let newBody: string;
+    let cursorPos: number;
+
+    if (type === "wrap") {
+      newBody = body.substring(0, start) + before + selected + after + body.substring(end);
+      cursorPos = selected ? start + before.length + selected.length + after.length : start + before.length;
+    } else if (type === "prefix") {
+      // Find start of current line
+      const lineStart = body.lastIndexOf("\n", start - 1) + 1;
+      newBody = body.substring(0, lineStart) + before + body.substring(lineStart);
+      cursorPos = start + before.length;
+    } else {
+      newBody = body.substring(0, start) + before + body.substring(end);
+      cursorPos = start + before.length;
+    }
+
+    setBody(newBody);
+    setStatusText("Unsaved");
+
+    // Restore cursor position
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(cursorPos, cursorPos);
+    }, 0);
+  }
+
   if (status === "loading") {
     return (
-      <div className={styles.loading}>
+      <div className={styles.loading} data-theme={theme}>
         <span className={styles.loadingText}>Loading...</span>
       </div>
     );
@@ -74,7 +142,7 @@ export default function WritePage() {
 
   if (!session) {
     return (
-      <div className={styles.loading}>
+      <div className={styles.loading} data-theme={theme}>
         <button className={styles.btnPublish} onClick={() => signIn("github")}>
           Sign in with GitHub
         </button>
@@ -92,6 +160,7 @@ export default function WritePage() {
       setSlug(data.slug);
       setSha(data.sha);
       setStatusText("");
+      setMode("edit");
       setView("editor");
     } catch {
       setStatusText("Error loading essay");
@@ -105,6 +174,7 @@ export default function WritePage() {
     setSlug("");
     setSha(undefined);
     setStatusText("");
+    setMode("edit");
     setView("editor");
     setTimeout(() => titleRef.current?.focus(), 100);
   }
@@ -114,25 +184,18 @@ export default function WritePage() {
     let parsedTitle = "";
     let parsedBody = content;
 
-    // Parse frontmatter
     const fmMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
     if (fmMatch) {
       const frontmatter = fmMatch[1];
       parsedBody = fmMatch[2].trim();
-      const titleMatch = frontmatter.match(
-        /title:\s*["']?(.+?)["']?\s*$/m
-      );
+      const titleMatch = frontmatter.match(/title:\s*["']?(.+?)["']?\s*$/m);
       if (titleMatch) parsedTitle = titleMatch[1];
     }
 
-    // Fallback: filename
     if (!parsedTitle && filename) {
-      parsedTitle = filename
-        .replace(/\.(md|markdown|txt)$/, "")
-        .replace(/-/g, " ");
+      parsedTitle = filename.replace(/\.(md|markdown|txt)$/, "").replace(/-/g, " ");
     }
 
-    // Fallback: first H1
     if (!parsedTitle) {
       const h1Match = parsedBody.match(/^#\s+(.+)$/m);
       if (h1Match) {
@@ -142,10 +205,7 @@ export default function WritePage() {
     }
 
     const newSlug = parsedTitle
-      ? parsedTitle
-          .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^a-z0-9-]/g, "")
+      ? parsedTitle.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")
       : "new-essay";
 
     setTitle(parsedTitle);
@@ -155,6 +215,7 @@ export default function WritePage() {
     setShowPaste(false);
     setPasteContent("");
     setStatusText("");
+    setMode("edit");
     setView("editor");
   }
 
@@ -164,10 +225,7 @@ export default function WritePage() {
 
     const essaySlug =
       slug ||
-      title
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9-]/g, "");
+      title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
     setPublishing(true);
     setStatusText("Publishing...");
@@ -188,7 +246,6 @@ export default function WritePage() {
       if (res.ok) {
         setStatusText("Published");
         setSlug(essaySlug);
-        // Refresh essay list
         const listRes = await fetch("/api/essays");
         setEssays(await listRes.json());
       } else {
@@ -202,7 +259,6 @@ export default function WritePage() {
     }
   }
 
-  // Handle file upload
   function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -213,23 +269,18 @@ export default function WritePage() {
     reader.readAsText(file);
   }
 
-  // Format date for display
-  function formatDate(slug: string) {
-    // Read from the essay list — we don't have dates in the list API
-    // Just show the slug for now
-    return "";
-  }
-
   // ——— RENDER ———
 
   if (view === "list") {
     return (
-      <div className={styles.shell}>
+      <div className={styles.shell} data-theme={theme}>
         <div className={styles.topbar}>
           <div className={styles.topbarLeft}>
             <span className={styles.topbarTitle}>Essays</span>
           </div>
-          <div />
+          <button className={styles.themeToggle} onClick={toggleTheme} title="Toggle theme">
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
         </div>
 
         <div className={styles.container}>
@@ -291,7 +342,6 @@ export default function WritePage() {
                 <span className={styles.essayTitle}>
                   {essay.slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
                 </span>
-                <span className={styles.essayDate}>{formatDate(essay.slug)}</span>
               </li>
             ))}
           </ul>
@@ -302,23 +352,37 @@ export default function WritePage() {
 
   // Editor view
   return (
-    <div className={styles.shell}>
+    <div className={styles.shell} data-theme={theme}>
       <div className={styles.topbar}>
         <div className={styles.topbarLeft}>
-          <button
-            className={styles.backArrow}
-            onClick={() => setView("list")}
-          >
-            ←
+          <button className={styles.backArrow} onClick={() => setView("list")}>
+            <ArrowLeft size={18} />
           </button>
           <span className={styles.topbarTitle}>
             {slug ? `${slug}.md` : "new-essay.md"}
           </span>
         </div>
         <div className={styles.topbarRight}>
-          {statusText && (
-            <span className={styles.status}>{statusText}</span>
-          )}
+          <div className={styles.modeToggle}>
+            <button
+              className={`${styles.modeBtn} ${mode === "edit" ? styles.modeActive : ""}`}
+              onClick={() => setMode("edit")}
+              title="Edit"
+            >
+              <Pencil size={14} />
+            </button>
+            <button
+              className={`${styles.modeBtn} ${mode === "preview" ? styles.modeActive : ""}`}
+              onClick={() => setMode("preview")}
+              title="Preview"
+            >
+              <Eye size={14} />
+            </button>
+          </div>
+          <button className={styles.themeToggle} onClick={toggleTheme} title="Toggle theme">
+            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+          {statusText && <span className={styles.status}>{statusText}</span>}
           <button
             className={styles.btnPublish}
             onClick={publish}
@@ -340,39 +404,78 @@ export default function WritePage() {
             setTitle(e.target.value);
             setStatusText("Unsaved");
           }}
+          readOnly={mode === "preview"}
         />
         <div className={styles.dateDisplay}>
-          {new Date().toLocaleDateString("en-US", {
-            month: "long",
-            year: "numeric",
-          })}
+          {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
         </div>
         <hr className={styles.divider} />
-        <textarea
-          ref={bodyRef}
-          className={styles.bodyEditor}
-          placeholder="Start writing..."
-          value={body}
-          onChange={(e) => {
-            setBody(e.target.value);
-            setStatusText("Unsaved");
-          }}
-        />
+
+        {mode === "edit" ? (
+          <textarea
+            ref={bodyRef}
+            className={styles.bodyEditor}
+            placeholder="Start writing..."
+            value={body}
+            onChange={(e) => {
+              setBody(e.target.value);
+              setStatusText("Unsaved");
+            }}
+          />
+        ) : (
+          <div
+            className="essay-body"
+            dangerouslySetInnerHTML={{ __html: previewHtml }}
+          />
+        )}
       </div>
 
-      <div className={styles.formatBar}>
-        <button className={styles.formatBtn}><b>B</b></button>
-        <button className={styles.formatBtn}><i>I</i></button>
-        <button className={`${styles.formatBtn} ${styles.accent}`}><i>em</i></button>
-        <div className={styles.formatSep} />
-        <button className={styles.formatBtn}>H2</button>
-        <button className={styles.formatBtn}>❝</button>
-        <button className={styles.formatBtn}>—</button>
-        <button className={styles.formatBtn}>🔗</button>
-        <div className={styles.formatSep} />
-        <button className={styles.formatBtn}>📷</button>
-        <button className={styles.formatBtn}>───</button>
-      </div>
+      {mode === "edit" && (
+        <div className={styles.formatBar}>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("wrap", "**", "**")} title="Bold">
+            <Bold size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("wrap", "*", "*")} title="Italic">
+            <Italic size={ICON_SIZE} />
+          </button>
+          <div className={styles.formatSep} />
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("prefix", "# ")} title="Heading 1">
+            <Heading1 size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("prefix", "## ")} title="Heading 2">
+            <Heading2 size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("prefix", "### ")} title="Heading 3">
+            <Heading3 size={ICON_SIZE} />
+          </button>
+          <div className={styles.formatSep} />
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("prefix", "> ")} title="Quote">
+            <Quote size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("prefix", "- ")} title="Bullet list">
+            <List size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("prefix", "1. ")} title="Numbered list">
+            <ListOrdered size={ICON_SIZE} />
+          </button>
+          <div className={styles.formatSep} />
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("wrap", "[", "](url)")} title="Link">
+            <Link size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("insert", "![alt](/images/)")} title="Image">
+            <Image size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("wrap", "`", "`")} title="Inline code">
+            <Code size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("insert", "\n```\n\n```\n")} title="Code block">
+            <FileCode size={ICON_SIZE} />
+          </button>
+          <button className={styles.formatBtn} onClick={() => insertMarkdown("insert", "\n---\n")} title="Horizontal rule">
+            <Minus size={ICON_SIZE} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
