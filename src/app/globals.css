@@ -88,19 +88,47 @@ hr {
 /* Header */
 
 .site-header {
-  padding: 3rem 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--night);
+  border-bottom: 1px solid var(--rule);
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
 }
 
 .wordmark {
   font-family: var(--font-serif);
   font-weight: 300;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--ice);
   letter-spacing: -0.01em;
 }
 
 .wordmark em {
   font-weight: 300;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.header-nav a {
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.header-nav a:hover {
+  color: var(--cyan);
 }
 
 /* Footer */
@@ -133,6 +161,7 @@ hr {
 /* Index page — intro */
 
 .intro {
+  margin-top: 2rem;
   margin-bottom: 2.5rem;
 }
 
@@ -182,6 +211,10 @@ hr {
 }
 
 /* Essay page */
+
+.essay {
+  padding-top: 2rem;
+}
 
 .essay h1 {
   font-size: 1.55rem;
