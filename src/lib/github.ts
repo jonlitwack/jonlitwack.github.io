@@ -1,4 +1,6 @@
 import { Octokit } from "@octokit/rest";
+import { remark } from "remark";
+import html from "remark-html";
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const OWNER = "jonlitwack";
@@ -63,6 +65,35 @@ export async function getEssay(slug: string): Promise<EssayFile> {
   }
 
   return { slug, title, date, content: body, sha: data.sha };
+}
+
+export async function getEssayWithHtml(slug: string): Promise<{
+  title: string;
+  date: string;
+  contentHtml: string;
+}> {
+  const essay = await getEssay(slug);
+  const processed = await remark().use(html).process(essay.content);
+  return {
+    title: essay.title,
+    date: essay.date,
+    contentHtml: processed.toString(),
+  };
+}
+
+export async function listEssaysWithMeta(): Promise<
+  { slug: string; title: string; date: string }[]
+> {
+  const files = await listEssays();
+  const essays = await Promise.all(
+    files.map(async (f) => {
+      const essay = await getEssay(f.slug);
+      return { slug: f.slug, title: essay.title, date: essay.date };
+    })
+  );
+  return essays.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
 }
 
 export async function saveEssay(

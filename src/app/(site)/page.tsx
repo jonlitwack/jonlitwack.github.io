@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { getAllEssays } from "@/lib/essays";
+import { listEssaysWithMeta } from "@/lib/github";
 
-export default function Home() {
-  const essays = getAllEssays();
+export const revalidate = 60;
+
+export default async function Home() {
+  const essays = await listEssaysWithMeta();
 
   return (
     <div className="container">

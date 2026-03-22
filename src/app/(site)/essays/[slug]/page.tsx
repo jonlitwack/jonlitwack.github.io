@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { getAllEssays, getEssay } from "@/lib/essays";
+import { listEssays, getEssayWithHtml } from "@/lib/github";
 
-export function generateStaticParams() {
-  const essays = getAllEssays();
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const essays = await listEssays();
   return essays.map((essay) => ({ slug: essay.slug }));
 }
 
@@ -12,7 +14,7 @@ export default async function EssayPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const essay = await getEssay(slug);
+  const essay = await getEssayWithHtml(slug);
 
   return (
     <article className="container essay">
