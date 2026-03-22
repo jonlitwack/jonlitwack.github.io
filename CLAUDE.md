@@ -4,17 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Personal essays site for Jon Litwack at jonlitwack.com. Next.js + Tina CMS, deployed on Vercel. Dark-only, minimalist design — essays are the entire site.
+Personal essays site for Jon Litwack at jonlitwack.com. Next.js, deployed on Vercel. Dark-only, minimalist design — essays are the entire site.
 
 ## Build & Dev Commands
 
 ```bash
-npm install                           # Install dependencies
-npm run dev                           # Dev server with Tina CMS at localhost:3000 (runs tinacms dev + next dev)
-npm run build                         # Production build
-npm run start                         # Serve production build locally
-npm run lint                          # Run ESLint
-npx next dev                          # Dev server without Tina CMS (essays still render, no /admin)
+npm install          # Install dependencies
+npm run dev          # Dev server at localhost:3000
+npm run build        # Production build
+npm run lint         # Run ESLint
 ```
 
 ## Architecture
@@ -29,11 +27,22 @@ npx next dev                          # Dev server without Tina CMS (essays stil
 - `src/app/globals.css` — all styles (CSS custom properties, no CSS modules)
 - `src/components/Header.tsx` — wordmark: "Jon Litwack — *writing*"
 - `src/components/Footer.tsx` — email + LinkedIn
-- `tina/config.ts` — Tina CMS schema (essay collection)
 
 ### Content
 - Essays live in `content/essays/*.md` with YAML frontmatter (`title`, `date`, optional `summary`)
-- Tina CMS provides an admin UI at `/admin` for editing (requires Tina Cloud credentials in env vars)
+- Images go in `public/images/` and are referenced in Markdown as `![alt](/images/filename.jpg)`
+
+### Publishing Workflow
+1. Write essay in Markdown (with Claude, in an editor, or on GitHub mobile)
+2. Save to `content/essays/slug-name.md` with frontmatter:
+   ```yaml
+   ---
+   title: Essay Title
+   date: 2026-03-22T00:00:00.000Z
+   ---
+   ```
+3. Add any images to `public/images/`
+4. Commit and push — Vercel auto-deploys in ~60 seconds
 
 ### Brand System
 All design specs are in `jonlitwack-context.md`. Key tokens in `globals.css`:
@@ -41,8 +50,3 @@ All design specs are in `jonlitwack-context.md`. Key tokens in `globals.css`:
 - Fonts: Source Serif 4 (body/headings), IBM Plex Mono (meta/labels)
 - No light mode, no gradients, no shadows, no decorative elements
 - Cyan accent only on italic `<em>`, wordmark, and active states
-
-### Tina CMS
-- Local dev: `npm run dev` starts Tina's local GraphQL server alongside Next.js
-- Production: requires `NEXT_PUBLIC_TINA_CLIENT_ID` and `TINA_TOKEN` env vars (from app.tina.io)
-- Pages read Markdown directly from filesystem — Tina is for the editing UI, not rendering

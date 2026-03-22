@@ -1,7 +1,0 @@
-fragment EssayParts on Essay {
-  __typename
-  title
-  date
-  summary
-  body
-}

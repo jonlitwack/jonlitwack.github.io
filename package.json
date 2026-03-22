@@ -3,21 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tinacms dev -c \"next dev\"",
+    "dev": "next dev",
     "build": "next build",
-    "build:tina": "tinacms build && next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
-    "@tinacms/cli": "^2.1.11",
     "gray-matter": "^4.0.3",
     "next": "16.2.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "remark": "^15.0.1",
-    "remark-html": "^16.0.1",
-    "tinacms": "^3.6.3"
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
