@@ -1,13 +1,15 @@
 ---
 title: "Code Is a Medium"
-date: 2026-03-23T00:35:40.551Z
+date: 2026-03-23T00:00:00.000Z
 ---
 
-*Every medium has a moment when it stops belonging to specialists. Code is having that moment right now.*
+Last month I sat in a room with a dozen designers. Nobody would call themselves a developer. We opened VS Code, opened Claude Code, and I said: "Build something. Anything. You have an hour."
 
-For most of software's history, code has been a trade skill. You learned the syntax, internalized the patterns, spent years building fluency — and then you could make things. Everyone else described what they wanted and hoped the translation held.
+One person built a Pokédex. Another built a personal finance tracker. Someone else made a working quiz app for their kid. These weren't mockups. These weren't prototypes that approximate the experience. These were real, running, interactive applications — and the people who built them had never written a line of code in their lives.
 
-That's not a knock on engineers. It's a description of a constraint. Code was hard to work in, so working in it required dedication, and dedication created specialization, and specialization created a divide between the people who understood problems and the people who could shape solutions.
+I've been thinking about that room ever since, because what happened in it wasn't a parlor trick. It was a medium shift.
+
+For most of software's history, code has been a trade skill. You learned the syntax, internalized the patterns, spent years building fluency — and then you could make things. Everyone else described what they wanted and hoped the translation held. That's not a knock on engineers. It's a description of a constraint. Code was hard to work in, so working in it required dedication, and dedication created specialization, and specialization created a divide between the people who understood problems and the people who could shape solutions.
 
 We built entire industries around managing that divide. Product management. Business analysis. Requirements documentation. Design handoffs. Sprint planning. All of it, fundamentally, is translation infrastructure — the machinery we invented to move intent from one side to the other.
 
@@ -31,10 +33,8 @@ Now the bottleneck is judgment. The hardest part isn't making the thing. It's kn
 
 Engineers have always known this, by the way. The best engineers were never just translating specs — they were making design decisions constantly, filling in the gaps that no specification could fully cover. What's changed is that now the people who own the intent can participate in those decisions directly, in real time, in the actual material. Not instead of engineers. Alongside them. Each bringing distinct fluency to the same surface.
 
-Every time a medium opens up, the same thing happens. The specialists worry. The newcomers are clumsy at first. And then — slowly, then all at once — the medium goes somewhere nobody predicted.
+I think back to that room of designers. The absorption was total — because they were finally touching the thing, not describing it. That's the shift. Not that code got easier. That code became a medium anyone with taste and intent can work in.
 
-I think that's where we are with code. The designers who learn to work in it won't replace engineers. The operators who start building their own tools won't eliminate the need for architecture. But the line between who has ideas and who implements them is going to blur until it's unrecognizable.
-
-And the things we build on the other side of that blur are going to be better. Not because the tools got faster. Because more kinds of intelligence are finally touching the material.
+The designers who learn to work in it won't replace engineers. The operators who start building their own tools won't eliminate the need for architecture. But the line between who has ideas and who implements them is going to blur until it's unrecognizable. And the things we build on the other side of that blur are going to be better. Not because the tools got faster. Because more kinds of intelligence are finally touching the material.
 
 Code isn't just a trade skill anymore. It's a medium. And the most interesting work is going to come from the people who just got access to it.
