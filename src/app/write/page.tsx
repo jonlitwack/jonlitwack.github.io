@@ -260,10 +260,12 @@ export default function WritePage() {
   }
 
   // Delete
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   async function deleteCurrentEssay() {
     if (!slug) return;
-    if (!confirm(`Delete "${title || slug}"? This cannot be undone.`)) return;
 
+    setShowDeleteModal(false);
     setStatusText("Deleting...");
     try {
       const res = await fetch(`/api/essays/${slug}`, { method: "DELETE" });
@@ -408,7 +410,7 @@ export default function WritePage() {
           {sha && (
             <button
               className={styles.deleteBtn}
-              onClick={deleteCurrentEssay}
+              onClick={() => setShowDeleteModal(true)}
               title="Delete essay"
             >
               <Trash2 size={16} />
@@ -505,6 +507,31 @@ export default function WritePage() {
           <button className={styles.formatBtn} onClick={() => insertMarkdown("insert", "\n---\n")} title="Horizontal rule">
             <Minus size={ICON_SIZE} />
           </button>
+        </div>
+      )}
+
+      {showDeleteModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowDeleteModal(false)}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <p className={styles.modalText}>
+              Delete &ldquo;{title || slug}&rdquo;?
+            </p>
+            <p className={styles.modalHint}>This cannot be undone.</p>
+            <div className={styles.modalActions}>
+              <button
+                className={styles.btnOutline}
+                onClick={() => setShowDeleteModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className={styles.btnDelete}
+                onClick={deleteCurrentEssay}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
