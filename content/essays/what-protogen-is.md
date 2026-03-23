@@ -1,6 +1,7 @@
 ---
 title: "What Protogen Is"
 date: 2026-01-15T00:00:00.000Z
+image: "/images/1774239072630-what-protogen-is.png"
 ---
 
 There's a pattern I keep seeing. A C-level product leader pulls me aside at a conference or on a call and says some version of the same thing: "I expected my design team to be further along by now."
