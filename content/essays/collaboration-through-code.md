@@ -1,6 +1,7 @@
 ---
-title: Collaboration Through Code
+title: "Collaboration Through Code"
 date: 2026-03-01T00:00:00.000Z
+image: "/images/1774239006165-collaboration-through-code.png"
 ---
 
 For a long time, code was a wall. You either spoke the language or you waited. And if you waited, you translated — your ideas into tickets, tickets into estimates, estimates into sprints, sprints into something that didn't quite match what you had in your head. The wall didn't just slow things down. It changed what got built.
