@@ -1,6 +1,7 @@
 ---
 title: "Design as Governance"
 date: 2026-03-22T00:00:00.000Z
+image: "/images/1774239040854-design-as-governance.png"
 ---
 
 I was on a call last year with a VP of customer experience at a large financial services company. They'd just rolled out an AI agent to handle first-tier support — account questions, balance inquiries, basic troubleshooting. The agent was technically solid. Fast. Accurate. Handled eighty percent of volume without escalation.
