@@ -1,6 +1,7 @@
 ---
 title: "The Emergent Future of Product Development"
 date: 2025-04-24T00:00:00.000Z
+image: "/images/1774239092083-the-emergent-future.png"
 ---
 
 I've been on an adventure.
