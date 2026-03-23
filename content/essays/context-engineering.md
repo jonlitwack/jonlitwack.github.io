@@ -1,6 +1,7 @@
 ---
 title: "Context Engineering"
 date: 2026-03-22T00:00:00.000Z
+image: "/images/1774239025225-context-engineering.png"
 ---
 
 A few months ago I was building a client demo with Claude Code — a working prototype of a dashboard for their internal operations team. The first pass was fine. Functional. Generic. It looked like every other dashboard I'd ever seen.
