@@ -1,7 +1,7 @@
 ---
 title: "Code Is a Medium"
 date: 2026-03-23T04:14:56.777Z
-image: "/images/1774239277151-code-is-a-medium.png"
+image: "/images/1774238983250-code-is-a-medium.png"
 ---
 
 Last month I sat in a room with a dozen designers. Nobody would call themselves a developer. We opened VS Code, opened Claude Code, and I said: "Build something. Anything. You have an hour."
