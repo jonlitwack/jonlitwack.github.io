@@ -19,6 +19,7 @@ interface EssayData {
   slug: string;
   title: string;
   date: string;
+  image?: string;
   content: string;
   sha?: string;
 }
@@ -42,6 +43,7 @@ export default function WritePage() {
   const [body, setBody] = useState("");
   const [slug, setSlug] = useState("");
   const [sha, setSha] = useState<string | undefined>();
+  const [heroImage, setHeroImage] = useState<string | undefined>();
   const [publishing, setPublishing] = useState(false);
   const [statusText, setStatusText] = useState("");
 
@@ -49,6 +51,8 @@ export default function WritePage() {
   const bodyRef = useRef<HTMLTextAreaElement>(null);
   const pasteRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
+  const heroRef = useRef<HTMLInputElement>(null);
 
   // Load theme from localStorage
   useEffect(() => {
@@ -60,6 +64,73 @@ export default function WritePage() {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
     localStorage.setItem("write-theme", next);
+  }
+
+  // Upload an image file and return the URL
+  async function uploadImage(file: File): Promise<string | null> {
+    const formData = new FormData();
+    formData.append("file", file);
+    setStatusText("Uploading image...");
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      if (res.ok) {
+        const { url } = await res.json();
+        setStatusText("");
+        return url;
+      }
+      setStatusText("Upload failed");
+      return null;
+    } catch {
+      setStatusText("Upload failed");
+      return null;
+    }
+  }
+
+  // Handle image toolbar button
+  async function handleInlineImage() {
+    imageRef.current?.click();
+  }
+
+  async function onInlineImageSelected(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = await uploadImage(file);
+    if (url) {
+      insertMarkdown("insert", `![${file.name}](${url})`);
+    }
+    e.target.value = "";
+  }
+
+  // Handle hero image upload
+  async function onHeroImageSelected(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = await uploadImage(file);
+    if (url) {
+      setHeroImage(url);
+      setStatusText("Unsaved");
+    }
+    e.target.value = "";
+  }
+
+  // Handle paste image in body textarea
+  function handleBodyPaste(e: React.ClipboardEvent<HTMLTextAreaElement>) {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith("image/")) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        if (file) {
+          uploadImage(file).then((url) => {
+            if (url) {
+              insertMarkdown("insert", `![image](${url})`);
+            }
+          });
+        }
+        return;
+      }
+    }
   }
 
   // Auto-resize textareas
@@ -159,6 +230,7 @@ export default function WritePage() {
       setBody(data.content);
       setSlug(data.slug);
       setSha(data.sha);
+      setHeroImage(data.image || undefined);
       setStatusText("");
       setMode("edit");
       setView("editor");
@@ -173,6 +245,7 @@ export default function WritePage() {
     setBody("");
     setSlug("");
     setSha(undefined);
+    setHeroImage(undefined);
     setStatusText("");
     setMode("edit");
     setView("editor");
@@ -240,6 +313,7 @@ export default function WritePage() {
           date: new Date().toISOString(),
           body: body.trim(),
           sha,
+          image: heroImage,
         }),
       });
 
@@ -427,6 +501,36 @@ export default function WritePage() {
       </div>
 
       <div className={styles.editorContainer}>
+        {/* Hero image */}
+        <div
+          className={styles.heroZone}
+          onClick={() => heroRef.current?.click()}
+        >
+          {heroImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={heroImage} alt="Hero" className={styles.heroPreview} />
+          ) : (
+            <span className={styles.heroPlaceholder}>
+              <Image size={20} /> Add hero image
+            </span>
+          )}
+        </div>
+        {heroImage && (
+          <button
+            className={styles.heroRemove}
+            onClick={() => { setHeroImage(undefined); setStatusText("Unsaved"); }}
+          >
+            Remove hero image
+          </button>
+        )}
+        <input
+          ref={heroRef}
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={onHeroImageSelected}
+        />
+
         <textarea
           ref={titleRef}
           className={styles.titleInput}
@@ -454,7 +558,9 @@ export default function WritePage() {
               setBody(e.target.value);
               setStatusText("Unsaved");
             }}
+            onPaste={handleBodyPaste}
           />
+
         ) : (
           <div
             className="essay-body"
@@ -495,9 +601,16 @@ export default function WritePage() {
           <button className={styles.formatBtn} onClick={() => insertMarkdown("wrap", "[", "](url)")} title="Link">
             <Link size={ICON_SIZE} />
           </button>
-          <button className={styles.formatBtn} onClick={() => insertMarkdown("insert", "![alt](/images/)")} title="Image">
+          <button className={styles.formatBtn} onClick={handleInlineImage} title="Image">
             <Image size={ICON_SIZE} />
           </button>
+          <input
+            ref={imageRef}
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={onInlineImageSelected}
+          />
           <button className={styles.formatBtn} onClick={() => insertMarkdown("wrap", "`", "`")} title="Inline code">
             <Code size={ICON_SIZE} />
           </button>

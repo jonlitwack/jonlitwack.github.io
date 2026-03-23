@@ -11,6 +11,7 @@ export interface EssayFile {
   slug: string;
   title: string;
   date: string;
+  image?: string;
   content: string;
   sha?: string;
 }
@@ -50,6 +51,7 @@ export async function getEssay(slug: string): Promise<EssayFile> {
   // Parse frontmatter
   let title = slug;
   let date = "";
+  let image: string | undefined;
   let body = content;
 
   const fmMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
@@ -62,14 +64,17 @@ export async function getEssay(slug: string): Promise<EssayFile> {
     if (titleMatch) title = titleMatch[1];
     const dateMatch = frontmatter.match(/date:\s*(.+)$/m);
     if (dateMatch) date = dateMatch[1].trim();
+    const imageMatch = frontmatter.match(/image:\s*["']?(.+?)["']?\s*$/m);
+    if (imageMatch) image = imageMatch[1];
   }
 
-  return { slug, title, date, content: body, sha: data.sha };
+  return { slug, title, date, image, content: body, sha: data.sha };
 }
 
 export async function getEssayWithHtml(slug: string): Promise<{
   title: string;
   date: string;
+  image?: string;
   contentHtml: string;
 }> {
   const essay = await getEssay(slug);
@@ -77,6 +82,7 @@ export async function getEssayWithHtml(slug: string): Promise<{
   return {
     title: essay.title,
     date: essay.date,
+    image: essay.image,
     contentHtml: processed.toString(),
   };
 }
@@ -111,9 +117,12 @@ export async function saveEssay(
   title: string,
   date: string,
   body: string,
-  sha?: string
+  sha?: string,
+  image?: string
 ): Promise<void> {
-  const frontmatter = `---\ntitle: "${title}"\ndate: ${date}\n---\n\n`;
+  let frontmatter = `---\ntitle: "${title}"\ndate: ${date}\n`;
+  if (image) frontmatter += `image: "${image}"\n`;
+  frontmatter += `---\n\n`;
   const content = frontmatter + body;
   const encoded = Buffer.from(content).toString("base64");
 

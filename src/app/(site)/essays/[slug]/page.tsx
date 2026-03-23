@@ -18,6 +18,14 @@ export default async function EssayPage({
 
   return (
     <article className="container essay">
+      {essay.image && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={essay.image}
+          alt={essay.title}
+          className="essay-hero"
+        />
+      )}
       <h1>{essay.title}</h1>
       <time className="essay-meta">
         {new Date(essay.date).toLocaleDateString("en-US", {

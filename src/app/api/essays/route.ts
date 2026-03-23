@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   const session = await getServerSession();
   if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { slug, title, date, body, sha } = await req.json();
+  const { slug, title, date, body, sha, image } = await req.json();
 
   if (!slug || !title || !body) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
   const essayDate = date || new Date().toISOString();
 
-  await saveEssay(slug, title, essayDate, body, sha);
+  await saveEssay(slug, title, essayDate, body, sha, image);
 
   return NextResponse.json({ ok: true });
 }
