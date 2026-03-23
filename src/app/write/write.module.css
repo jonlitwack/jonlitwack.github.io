@@ -91,6 +91,23 @@
   color: var(--night);
 }
 
+.deleteBtn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+  opacity: 0.5;
+}
+
+.deleteBtn:hover {
+  color: #e55;
+  opacity: 1;
+}
+
 .btnPublish:disabled {
   opacity: 0.3;
   cursor: default;

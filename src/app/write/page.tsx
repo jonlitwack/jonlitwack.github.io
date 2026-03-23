@@ -6,7 +6,7 @@ import { marked } from "marked";
 import {
   Bold, Italic, Heading1, Heading2, Heading3,
   Quote, List, ListOrdered, Link, Image,
-  Code, FileCode, Minus, Sun, Moon, Pencil, Eye, ArrowLeft,
+  Code, FileCode, Minus, Sun, Moon, Pencil, Eye, ArrowLeft, Trash2,
 } from "lucide-react";
 import styles from "./write.module.css";
 
@@ -259,6 +259,28 @@ export default function WritePage() {
     }
   }
 
+  // Delete
+  async function deleteCurrentEssay() {
+    if (!slug) return;
+    if (!confirm(`Delete "${title || slug}"? This cannot be undone.`)) return;
+
+    setStatusText("Deleting...");
+    try {
+      const res = await fetch(`/api/essays/${slug}`, { method: "DELETE" });
+      if (res.ok) {
+        setStatusText("");
+        setView("list");
+        const listRes = await fetch("/api/essays");
+        setEssays(await listRes.json());
+      } else {
+        const err = await res.json();
+        setStatusText(`Error: ${err.error}`);
+      }
+    } catch {
+      setStatusText("Error deleting");
+    }
+  }
+
   function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -383,6 +405,15 @@ export default function WritePage() {
             {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
           {statusText && <span className={styles.status}>{statusText}</span>}
+          {sha && (
+            <button
+              className={styles.deleteBtn}
+              onClick={deleteCurrentEssay}
+              title="Delete essay"
+            >
+              <Trash2 size={16} />
+            </button>
+          )}
           <button
             className={styles.btnPublish}
             onClick={publish}

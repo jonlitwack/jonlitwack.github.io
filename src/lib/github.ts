@@ -96,6 +96,16 @@ export async function listEssaysWithMeta(): Promise<
   );
 }
 
+export async function deleteEssay(slug: string, sha: string): Promise<void> {
+  await octokit.repos.deleteFile({
+    owner: OWNER,
+    repo: REPO,
+    path: `${ESSAYS_PATH}/${slug}.md`,
+    message: `Delete essay: ${slug}`,
+    sha,
+  });
+}
+
 export async function saveEssay(
   slug: string,
   title: string,
