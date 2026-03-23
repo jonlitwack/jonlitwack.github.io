@@ -46,6 +46,7 @@ export default function WritePage() {
   const [heroImage, setHeroImage] = useState<string | undefined>();
   const [publishing, setPublishing] = useState(false);
   const [statusText, setStatusText] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
@@ -334,8 +335,6 @@ export default function WritePage() {
   }
 
   // Delete
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-
   async function deleteCurrentEssay() {
     if (!slug) return;
 
