@@ -1,6 +1,7 @@
 ---
 title: "The Enterprise Designer"
 date: 2026-03-22T00:00:00.000Z
+image: "/images/1774239056989-the-enterprise-designer.png"
 ---
 
 There's a pattern hiding in plain sight inside design's title history. We've been so busy debating methodologies and tools that we missed the signal the titles were sending the whole time. It's not about the designer. It was never about the designer. It was always about the thing being designed.
