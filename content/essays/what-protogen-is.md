@@ -1,6 +1,6 @@
 ---
 title: "What Protogen Is"
-date: 2026-03-23T00:37:44.889Z
+date: 2026-01-15T00:00:00.000Z
 ---
 
 *Design teams have been told to adopt AI for two years. Most still haven't. Protogen is what we built at Slalom to change that.*
