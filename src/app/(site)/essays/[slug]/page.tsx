@@ -1,8 +1,49 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { listEssays, getEssayWithHtml } from "@/lib/github";
+import { listEssays, getEssayWithHtml, getEssay } from "@/lib/github";
 import { ChartHydrator } from "@/components/ChartHydrator";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const essay = await getEssay(slug);
+  const description =
+    essay.content.replace(/[#*_`>\[\]]/g, "").trim().slice(0, 160) + "…";
+  const siteUrl = "https://jonlitwack.com";
+
+  return {
+    title: `${essay.title} — Jon Litwack`,
+    description,
+    openGraph: {
+      title: essay.title,
+      description,
+      type: "article",
+      url: `${siteUrl}/essays/${slug}`,
+      ...(essay.image
+        ? {
+            images: [
+              {
+                url: `${siteUrl}${essay.image}`,
+                width: 1200,
+                height: 630,
+              },
+            ],
+          }
+        : {}),
+    },
+    twitter: {
+      card: essay.image ? "summary_large_image" : "summary",
+      title: essay.title,
+      description,
+      ...(essay.image ? { images: [`${siteUrl}${essay.image}`] } : {}),
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const essays = await listEssays();

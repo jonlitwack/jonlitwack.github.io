@@ -11,7 +11,9 @@
   "dependencies": {
     "@octokit/rest": "^22.0.1",
     "@types/marked": "^5.0.2",
+    "canvas": "^3.2.3",
     "chart.js": "^4.5.1",
+    "chartjs-node-canvas": "^5.0.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.577.0",
     "marked": "^17.0.5",

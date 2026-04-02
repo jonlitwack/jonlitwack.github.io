@@ -214,8 +214,10 @@ export default function WritePage() {
   // Auto-resize textareas
   const autoResize = useCallback((el: HTMLTextAreaElement | null) => {
     if (!el) return;
+    const scrollY = window.scrollY;
     el.style.height = "auto";
     el.style.height = el.scrollHeight + "px";
+    window.scrollTo(0, scrollY);
   }, []);
 
   useEffect(() => {
@@ -235,6 +237,20 @@ export default function WritePage() {
         .catch(() => {});
     }
   }, [status]);
+
+  // Detect which chart will become the hero image
+  const heroChartTitle = useMemo(() => {
+    if (heroImage) return null;
+    const regex = /```chart\n([\s\S]*?)\n```/g;
+    const charts: { title?: string; hero?: boolean }[] = [];
+    let match;
+    while ((match = regex.exec(body)) !== null) {
+      try { charts.push(JSON.parse(match[1])); } catch { /* skip */ }
+    }
+    if (!charts.length) return null;
+    const chosen = charts.find((c) => c.hero) ?? charts[0];
+    return chosen.title || "Untitled chart";
+  }, [body, heroImage]);
 
   // Preview HTML
   const previewHtml = useMemo(() => {
@@ -558,6 +574,13 @@ export default function WritePage() {
           {heroImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={heroImage} alt="Hero" className={styles.heroPreview} />
+          ) : heroChartTitle ? (
+            <span className={styles.heroPlaceholder}>
+              <Image size={20} /> Preview image: &ldquo;{heroChartTitle}&rdquo;
+              <span className={styles.heroChartHint}>
+                Add <code>&quot;hero&quot;: true</code> to a chart block to choose which one
+              </span>
+            </span>
           ) : (
             <span className={styles.heroPlaceholder}>
               <Image size={20} /> Add hero image
@@ -608,6 +631,21 @@ export default function WritePage() {
               setStatusText("Unsaved");
             }}
             onPaste={handleBodyPaste}
+            onKeyDown={(e) => {
+              if (e.key === "Tab") {
+                e.preventDefault();
+                const start = e.currentTarget.selectionStart;
+                const end = e.currentTarget.selectionEnd;
+                const newBody = body.substring(0, start) + "  " + body.substring(end);
+                setBody(newBody);
+                setStatusText("Unsaved");
+                setTimeout(() => {
+                  if (bodyRef.current) {
+                    bodyRef.current.selectionStart = bodyRef.current.selectionEnd = start + 2;
+                  }
+                }, 0);
+              }
+            }}
           />
 
         ) : (
@@ -616,6 +654,7 @@ export default function WritePage() {
             dangerouslySetInnerHTML={{ __html: previewHtml }}
           />
         )}
+
       </div>
 
       {mode === "edit" && (
@@ -707,6 +746,7 @@ export default function WritePage() {
           </div>
         </div>
       )}
+
     </div>
   );
 }
