@@ -3,10 +3,11 @@
 import { useSession, signIn } from "next-auth/react";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { marked } from "marked";
+import { chartExtension } from "@/lib/chartExtension";
 import {
   Bold, Italic, Heading1, Heading2, Heading3,
   Quote, List, ListOrdered, Link, Image,
-  Code, FileCode, Minus, Sun, Moon, Pencil, Eye, ArrowLeft, Trash2,
+  Code, FileCode, Minus, Sun, Moon, Pencil, Eye, ArrowLeft, Trash2, Upload,
 } from "lucide-react";
 import styles from "./write.module.css";
 
@@ -27,6 +28,74 @@ interface EssayData {
 type View = "list" | "editor";
 type EditorMode = "edit" | "preview";
 
+marked.use({ extensions: [chartExtension] });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function buildPreviewChartConfig(c: any) {
+  const GRID = "rgba(255,255,255,0.06)";
+  return {
+    type: c.type,
+    data: {
+      labels: c.xLabels ?? c.datasets[0].data.map((_: unknown, i: number) => String(i)),
+      datasets: c.datasets.map((ds: { label: string; data: (number | null)[]; color: string; width?: number; dash?: number[]; fill?: boolean }) => ({
+        label: ds.label,
+        data: ds.data,
+        borderColor: ds.color,
+        backgroundColor: ds.color + "1a",
+        borderWidth: ds.width ?? 2.5,
+        borderDash: ds.dash ?? [],
+        fill: ds.fill ?? c.type === "bar",
+        tension: 0.4,
+        pointRadius: 0,
+        pointHoverRadius: 4,
+        spanGaps: false,
+      })),
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: "index" as const, intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "#1a1a14",
+          borderColor: "#2e2e28",
+          borderWidth: 1,
+          titleColor: "#e8e6df",
+          bodyColor: "#9a9a8e",
+          padding: 10,
+          callbacks: {
+            label: (ctx: { parsed: { y: number | null }; dataset: { label?: string } }) =>
+              ctx.parsed.y === null ? "" : `  ${ctx.dataset.label ?? ""}: ${ctx.parsed.y}${c.ySuffix ?? ""}`,
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: { color: GRID },
+          border: { display: false },
+          ticks: {
+            color: "#666660",
+            font: { size: 11, family: "'IBM Plex Mono', monospace" },
+            callback: (_: unknown, i: number) => (c.xLabels?.[i] ?? String(i)) + (c.xSuffix ?? ""),
+          },
+        },
+        y: {
+          min: c.yMin,
+          max: c.yMax,
+          grid: { color: GRID },
+          border: { display: false },
+          ticks: {
+            color: "#666660",
+            font: { size: 11, family: "'IBM Plex Mono', monospace" },
+            callback: (v: unknown) => `${v}${c.ySuffix ?? ""}`,
+          },
+        },
+      },
+    },
+  };
+}
+
 const ICON_SIZE = 18;
 
 export default function WritePage() {
@@ -34,8 +103,6 @@ export default function WritePage() {
   const [view, setView] = useState<View>("list");
   const [mode, setMode] = useState<EditorMode>("edit");
   const [essays, setEssays] = useState<EssayListItem[]>([]);
-  const [showPaste, setShowPaste] = useState(false);
-  const [pasteContent, setPasteContent] = useState("");
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   // Editor state
@@ -50,7 +117,6 @@ export default function WritePage() {
 
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
-  const pasteRef = useRef<HTMLTextAreaElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLInputElement>(null);
   const heroRef = useRef<HTMLInputElement>(null);
@@ -114,10 +180,12 @@ export default function WritePage() {
     e.target.value = "";
   }
 
-  // Handle paste image in body textarea
+  // Handle paste in body textarea — images or markdown with frontmatter
   function handleBodyPaste(e: React.ClipboardEvent<HTMLTextAreaElement>) {
     const items = e.clipboardData?.items;
     if (!items) return;
+
+    // Check for pasted images
     for (const item of items) {
       if (item.type.startsWith("image/")) {
         e.preventDefault();
@@ -130,6 +198,15 @@ export default function WritePage() {
           });
         }
         return;
+      }
+    }
+
+    // If body is empty and paste contains frontmatter, auto-parse it
+    if (!body.trim()) {
+      const text = e.clipboardData?.getData("text");
+      if (text && text.trimStart().startsWith("---")) {
+        e.preventDefault();
+        loadMarkdownContent(text);
       }
     }
   }
@@ -164,6 +241,24 @@ export default function WritePage() {
     if (mode !== "preview") return "";
     return marked(body, { async: false }) as string;
   }, [body, mode]);
+
+  // Hydrate charts in preview
+  useEffect(() => {
+    if (mode !== "preview" || !previewHtml) return;
+    const blocks = document.querySelectorAll<HTMLElement>(".chart-block[data-chart]");
+    if (!blocks.length) return;
+
+    import("chart.js/auto").then(({ default: Chart }) => {
+      blocks.forEach((block) => {
+        const id = block.dataset.chartId!;
+        const canvas = document.getElementById(id) as HTMLCanvasElement | null;
+        if (!canvas || canvas.dataset.hydrated) return;
+        canvas.dataset.hydrated = "true";
+        const config = JSON.parse(atob(block.dataset.chart!));
+        new Chart(canvas, buildPreviewChartConfig(config));
+      });
+    });
+  }, [mode, previewHtml]);
 
   // Markdown insertion helper
   function insertMarkdown(
@@ -286,8 +381,6 @@ export default function WritePage() {
     setBody(parsedBody);
     setSlug(newSlug);
     setSha(undefined);
-    setShowPaste(false);
-    setPasteContent("");
     setStatusText("");
     setMode("edit");
     setView("editor");
@@ -384,54 +477,11 @@ export default function WritePage() {
           <div className={styles.listHeader}>
             <span className={styles.listTitle}>Essays</span>
             <div className={styles.listActions}>
-              <button
-                className={styles.btnOutline}
-                onClick={() => {
-                  setShowPaste(!showPaste);
-                  setTimeout(() => pasteRef.current?.focus(), 100);
-                }}
-              >
-                + Paste / Import
-              </button>
               <button className={styles.btnOutline} onClick={openNew}>
                 + New
               </button>
             </div>
           </div>
-
-          {showPaste && (
-            <div className={styles.pasteZone}>
-              <textarea
-                ref={pasteRef}
-                className={styles.pasteArea}
-                placeholder="Paste Markdown from Claude here..."
-                value={pasteContent}
-                onChange={(e) => setPasteContent(e.target.value)}
-              />
-              <div className={styles.pasteActions}>
-                <span className={styles.pasteHint}>
-                  or{" "}
-                  <span onClick={() => fileRef.current?.click()}>
-                    browse for a .md file
-                  </span>
-                </span>
-                <button
-                  className={styles.btnLoad}
-                  disabled={!pasteContent.trim()}
-                  onClick={() => loadMarkdownContent(pasteContent)}
-                >
-                  Open in editor →
-                </button>
-              </div>
-              <input
-                ref={fileRef}
-                type="file"
-                accept=".md,.markdown,.txt"
-                style={{ display: "none" }}
-                onChange={handleFileUpload}
-              />
-            </div>
-          )}
 
           <ul className={styles.essayList}>
             {essays.map((essay) => (
@@ -619,6 +669,17 @@ export default function WritePage() {
           <button className={styles.formatBtn} onClick={() => insertMarkdown("insert", "\n---\n")} title="Horizontal rule">
             <Minus size={ICON_SIZE} />
           </button>
+          <div className={styles.formatSep} />
+          <button className={styles.formatBtn} onClick={() => fileRef.current?.click()} title="Import .md file">
+            <Upload size={ICON_SIZE} />
+          </button>
+          <input
+            ref={fileRef}
+            type="file"
+            accept=".md,.markdown,.txt"
+            style={{ display: "none" }}
+            onChange={handleFileUpload}
+          />
         </div>
       )}
 

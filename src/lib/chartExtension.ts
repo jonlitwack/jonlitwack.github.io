@@ -31,7 +31,9 @@ export const chartExtension: TokenizerExtension & RendererExtension = {
     }
 
     const id = `chart-${Math.random().toString(36).slice(2, 8)}`;
-    const encoded = Buffer.from(JSON.stringify(config)).toString("base64");
+    const encoded = typeof Buffer !== "undefined"
+      ? Buffer.from(JSON.stringify(config)).toString("base64")
+      : btoa(JSON.stringify(config));
 
     return `
 <div class="chart-block" data-chart="${encoded}" data-chart-id="${id}">
