@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { listEssays, getEssayWithHtml } from "@/lib/github";
+import { ChartHydrator } from "@/components/ChartHydrator";
 
 export const revalidate = 60;
 
@@ -39,6 +40,7 @@ export default async function EssayPage({
         className="essay-body"
         dangerouslySetInnerHTML={{ __html: essay.contentHtml }}
       />
+      <ChartHydrator />
       <Link href="/" className="back-link">
         ← All essays
       </Link>

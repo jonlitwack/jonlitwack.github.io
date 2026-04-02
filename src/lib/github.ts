@@ -1,6 +1,8 @@
 import { Octokit } from "@octokit/rest";
-import { remark } from "remark";
-import html from "remark-html";
+import { marked } from "marked";
+import { chartExtension } from "./chartExtension";
+
+marked.use({ extensions: [chartExtension] });
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const OWNER = "jonlitwack";
@@ -78,12 +80,12 @@ export async function getEssayWithHtml(slug: string): Promise<{
   contentHtml: string;
 }> {
   const essay = await getEssay(slug);
-  const processed = await remark().use(html).process(essay.content);
+  const contentHtml = await marked(essay.content);
   return {
     title: essay.title,
     date: essay.date,
     image: essay.image,
-    contentHtml: processed.toString(),
+    contentHtml,
   };
 }
 
