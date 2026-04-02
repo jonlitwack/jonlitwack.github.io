@@ -14,7 +14,7 @@ export async function generateMetadata({
   const essay = await getEssay(slug);
   const description =
     essay.content.replace(/[#*_`>\[\]]/g, "").trim().slice(0, 160) + "…";
-  const siteUrl = "https://jonlitwack.com";
+  const siteUrl = "https://www.jonlitwack.com";
 
   return {
     title: `${essay.title} — Jon Litwack`,
