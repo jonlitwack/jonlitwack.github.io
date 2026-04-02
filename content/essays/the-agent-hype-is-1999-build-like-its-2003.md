@@ -1,6 +1,6 @@
 ---
 title: "The Agent Hype Is 1999. Build Like It's 2003."
-date: 2026-04-02T16:58:47.527Z
+date: 2026-04-02T21:44:45.678Z
 ---
 
 In 1999, Pets.com raised $82.5 million in an IPO. Nine months later it was gone. The internet was real. The business model wasn't. The mistake wasn't believing in the technology — it was believing the trust and infrastructure would catch up on the schedule the pitch deck required.
@@ -75,6 +75,7 @@ The data on internet trust adoption tells this story clearly.
 
 ```chart
 {
+  "hero":true,
   "title": "The trust arc — % of US adults by category, 1995–2026",
   "source": "Internet: Pew Research Center adoption surveys (1995–2015); US Census Bureau e-commerce data (1999–2014); Pew online banking surveys (2000–2013). AI: Pew ChatGPT usage surveys (2023–2025); Fed Reserve Bank of St. Louis generative AI data (2024–2025).",
   "type": "line",
