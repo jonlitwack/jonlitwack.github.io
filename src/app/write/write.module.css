@@ -285,7 +285,7 @@
 .heroPreview {
   width: 100%;
   max-height: 200px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 4px;
   display: block;
 }
@@ -301,18 +301,80 @@
   gap: 0.5rem;
 }
 
-.heroChartHint {
-  display: block;
-  font-size: 0.65rem;
-  margin-top: 0.35rem;
-  opacity: 0.7;
+.heroAutoLabel {
+  font-family: var(--font-mono);
+  font-weight: 300;
+  font-size: 0.7rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
 }
 
-.heroChartHint code {
+.heroAutoDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  flex-shrink: 0;
+}
+
+.heroAutoHint {
+  opacity: 0.6;
+}
+
+.heroAutoHint code {
   background: var(--rule);
   padding: 0.1em 0.3em;
   border-radius: 3px;
   font-size: 0.95em;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+.heroRendering {
+  animation: pulse 1.4s ease-in-out infinite;
+  font-family: var(--font-mono);
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.cropModal {
+  background: var(--night);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 1.5rem;
+  width: 90vw;
+  max-width: 700px;
+}
+
+.cropContainer {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  max-height: 400px;
+  margin: 1rem 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.previewHero {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  display: block;
 }
 
 .heroRemove {

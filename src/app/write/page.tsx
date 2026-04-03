@@ -4,6 +4,8 @@ import { useSession, signIn } from "next-auth/react";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { marked } from "marked";
 import { chartExtension } from "@/lib/chartExtension";
+import Cropper from "react-easy-crop";
+import type { Area } from "react-easy-crop";
 import {
   Bold, Italic, Heading1, Heading2, Heading3,
   Quote, List, ListOrdered, Link, Image,
@@ -114,6 +116,15 @@ export default function WritePage() {
   const [publishing, setPublishing] = useState(false);
   const [statusText, setStatusText] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [heroChartPreviewUrl, setHeroChartPreviewUrl] = useState<string | undefined>();
+  const [heroChartFullUrl, setHeroChartFullUrl] = useState<string | undefined>();
+  const [heroChartRendering, setHeroChartRendering] = useState(false);
+  const [showCropModal, setShowCropModal] = useState(false);
+  const [cropPosition, setCropPosition] = useState({ x: 0, y: 0 });
+  const [cropZoom, setCropZoom] = useState(1);
+  const [croppedArea, setCroppedArea] = useState<Area | null>(null);
+  const heroChartBlobRef = useRef<string | undefined>(undefined);
+  const heroChartFullRef = useRef<string | undefined>(undefined);
 
   const titleRef = useRef<HTMLTextAreaElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
@@ -250,6 +261,44 @@ export default function WritePage() {
     if (!charts.length) return null;
     const chosen = charts.find((c) => c.hero) ?? charts[0];
     return chosen.title || "Untitled chart";
+  }, [body, heroImage]);
+
+  // Auto-render hero chart image
+  useEffect(() => {
+    if (heroImage) {
+      if (heroChartBlobRef.current) { URL.revokeObjectURL(heroChartBlobRef.current); heroChartBlobRef.current = undefined; }
+      if (heroChartFullRef.current) { URL.revokeObjectURL(heroChartFullRef.current); heroChartFullRef.current = undefined; }
+      setHeroChartPreviewUrl(undefined);
+      setHeroChartFullUrl(undefined);
+      return;
+    }
+
+    const chart = extractHeroChart();
+    if (!chart) {
+      setHeroChartPreviewUrl(undefined);
+      setHeroChartFullUrl(undefined);
+      return;
+    }
+
+    let cancelled = false;
+    const timer = setTimeout(async () => {
+      setHeroChartRendering(true);
+      // Render full-size for cropping
+      const fullBlob = await renderChartToBlob(chart, 1600, 1000);
+      if (cancelled || !fullBlob) { setHeroChartRendering(false); return; }
+      const fullUrl = URL.createObjectURL(fullBlob);
+      if (heroChartFullRef.current) URL.revokeObjectURL(heroChartFullRef.current);
+      heroChartFullRef.current = fullUrl;
+      setHeroChartFullUrl(fullUrl);
+      // Initially show the full render as preview (user can crop later)
+      if (heroChartBlobRef.current) URL.revokeObjectURL(heroChartBlobRef.current);
+      heroChartBlobRef.current = fullUrl;
+      setHeroChartPreviewUrl(fullUrl);
+      setHeroChartRendering(false);
+    }, 800);
+
+    return () => { cancelled = true; clearTimeout(timer); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [body, heroImage]);
 
   // Preview HTML
@@ -405,32 +454,104 @@ export default function WritePage() {
   // Render a chart config to a PNG blob using an offscreen canvas
   async function renderChartToBlob(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    config: any
+    config: any,
+    width = 1600,
+    height = 1000
   ): Promise<Blob | null> {
     const { default: Chart } = await import("chart.js/auto");
 
     const canvas = document.createElement("canvas");
-    canvas.width = 1200;
-    canvas.height = 630;
+    canvas.width = width;
+    canvas.height = height;
+
+    const chartConfig = buildPreviewChartConfig(config);
+
+    // Plugin to draw dark background (canvas is transparent by default)
+    const bgPlugin = {
+      id: "ogBackground",
+      beforeDraw: (ch: { canvas: HTMLCanvasElement }) => {
+        const ctx = ch.canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.save();
+        ctx.globalCompositeOperation = "destination-over";
+        ctx.fillStyle = "#161a1f";
+        ctx.fillRect(0, 0, ch.canvas.width, ch.canvas.height);
+        ctx.restore();
+      },
+    };
 
     const chart = new Chart(canvas, {
-      ...buildPreviewChartConfig(config),
+      ...chartConfig,
+      plugins: [bgPlugin],
       options: {
-        ...buildPreviewChartConfig(config).options,
+        ...chartConfig.options,
         responsive: false,
         animation: false,
-        devicePixelRatio: 1,
+        devicePixelRatio: 2,
+        plugins: {
+          ...chartConfig.options.plugins,
+          legend: {
+            display: true,
+            position: "bottom" as const,
+            labels: {
+              color: "#8a9098",
+              font: { size: 11, family: "'IBM Plex Mono', monospace" },
+              padding: 16,
+              usePointStyle: true,
+              pointStyleWidth: 16,
+            },
+          },
+          title: config.title ? {
+            display: true,
+            text: config.title.toUpperCase(),
+            color: "#8a9098",
+            font: { size: 13, weight: "normal" as const, family: "'IBM Plex Mono', monospace" },
+            padding: { top: 10, bottom: 20 },
+            align: "start" as const,
+          } : { display: false },
+          subtitle: config.source ? {
+            display: true,
+            text: config.source,
+            color: "#555550",
+            font: { size: 10, family: "'IBM Plex Mono', monospace" },
+            padding: { top: 8, bottom: 0 },
+            align: "start" as const,
+          } : { display: false },
+        },
       },
     });
 
     // Wait for render
-    await new Promise((r) => setTimeout(r, 100));
+    await new Promise((r) => setTimeout(r, 200));
 
     return new Promise((resolve) => {
       canvas.toBlob((blob) => {
         chart.destroy();
         resolve(blob);
       }, "image/png");
+    });
+  }
+
+  // Crop an image blob to the specified area, output at 1200x630
+  async function cropImage(sourceUrl: string, area: Area): Promise<Blob | null> {
+    const img = new window.Image();
+    img.src = sourceUrl;
+    await new Promise((r) => { img.onload = r; });
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 1200;
+    canvas.height = 630;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+
+    ctx.drawImage(
+      img,
+      area.x, area.y, area.width, area.height,
+      0, 0, 1200, 630
+    );
+
+    return new Promise((resolve) => {
+      canvas.toBlob(resolve, "image/png");
     });
   }
 
@@ -459,21 +580,19 @@ export default function WritePage() {
     setStatusText("Publishing...");
 
     try {
-      // Generate chart hero image if needed
+      // Upload chart hero image if one was rendered
       let publishImage = heroImage;
-      if (!publishImage) {
-        const chart = extractHeroChart();
-        if (chart) {
-          setStatusText("Generating preview image...");
-          const blob = await renderChartToBlob(chart);
-          if (blob) {
-            const formData = new FormData();
-            formData.append("file", blob, `og-${essaySlug}.png`);
-            const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
-            if (uploadRes.ok) {
-              const { url } = await uploadRes.json();
-              publishImage = url;
-            }
+      if (!publishImage && heroChartPreviewUrl) {
+        setStatusText("Uploading preview image...");
+        const res2 = await fetch(heroChartPreviewUrl);
+        const blob = await res2.blob();
+        if (blob) {
+          const formData = new FormData();
+          formData.append("file", blob, `og-${essaySlug}.png`);
+          const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
+          if (uploadRes.ok) {
+            const { url } = await uploadRes.json();
+            publishImage = url;
           }
         }
       }
@@ -631,34 +750,69 @@ export default function WritePage() {
       </div>
 
       <div className={styles.editorContainer}>
-        {/* Hero image */}
-        <div
-          className={styles.heroZone}
-          onClick={() => heroRef.current?.click()}
-        >
-          {heroImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={heroImage} alt="Hero" className={styles.heroPreview} />
-          ) : heroChartTitle ? (
-            <span className={styles.heroPlaceholder}>
-              <Image size={20} /> Preview image: &ldquo;{heroChartTitle}&rdquo;
-              <span className={styles.heroChartHint}>
-                Add <code>&quot;hero&quot;: true</code> to a chart block to choose which one
-              </span>
-            </span>
-          ) : (
-            <span className={styles.heroPlaceholder}>
-              <Image size={20} /> Add hero image
-            </span>
-          )}
-        </div>
-        {heroImage && (
-          <button
-            className={styles.heroRemove}
-            onClick={() => { setHeroImage(undefined); setStatusText("Unsaved"); }}
-          >
-            Remove hero image
-          </button>
+        {/* Preview mode: hero image as it appears on the public page */}
+        {mode === "preview" && (heroImage || heroChartPreviewUrl) && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={heroImage ?? heroChartPreviewUrl}
+            alt={title}
+            className={styles.previewHero}
+          />
+        )}
+
+        {/* Edit mode: hero upload zone */}
+        {mode === "edit" && (
+          <>
+            <div
+              className={styles.heroZone}
+              onClick={() => heroRef.current?.click()}
+            >
+              {heroImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={heroImage} alt="Hero" className={styles.heroPreview} />
+              ) : heroChartPreviewUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={heroChartPreviewUrl}
+                  alt={heroChartTitle ?? "Chart"}
+                  className={styles.heroPreview}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (heroChartFullUrl) {
+                      setCropPosition({ x: 0, y: 0 });
+                      setCropZoom(1);
+                      setShowCropModal(true);
+                    }
+                  }}
+                />
+              ) : heroChartRendering ? (
+                <span className={styles.heroRendering}>
+                  Rendering preview&hellip;
+                </span>
+              ) : (
+                <span className={styles.heroPlaceholder}>
+                  <Image size={20} /> Add hero image
+                </span>
+              )}
+            </div>
+            {heroImage && (
+              <button
+                className={styles.heroRemove}
+                onClick={() => { setHeroImage(undefined); setStatusText("Unsaved"); }}
+              >
+                Remove hero image
+              </button>
+            )}
+            {!heroImage && heroChartTitle && (
+              <div className={styles.heroAutoLabel}>
+                <span className={styles.heroAutoDot} />
+                {heroChartPreviewUrl ? "Tap image to crop" : `Auto: "${heroChartTitle}"`}
+                <span className={styles.heroAutoHint}>
+                  &middot; Add <code>&quot;hero&quot;: true</code> to choose a different chart
+                </span>
+              </div>
+            )}
+          </>
         )}
         <input
           ref={heroRef}
@@ -806,6 +960,57 @@ export default function WritePage() {
                 onClick={deleteCurrentEssay}
               >
                 Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showCropModal && heroChartFullUrl && (
+        <div className={styles.modalOverlay} onClick={() => setShowCropModal(false)}>
+          <div className={styles.cropModal} onClick={(e) => e.stopPropagation()}>
+            <p className={styles.modalText}>Crop preview image</p>
+            <div className={styles.cropContainer}>
+              <Cropper
+                image={heroChartFullUrl}
+                crop={cropPosition}
+                zoom={cropZoom}
+                minZoom={0.3}
+                maxZoom={3}
+                aspect={1200 / 630}
+                objectFit="contain"
+                onCropChange={setCropPosition}
+                onZoomChange={setCropZoom}
+                onCropComplete={(_, area) => setCroppedArea(area)}
+                style={{
+                  containerStyle: { background: "#161a1f" },
+                }}
+              />
+            </div>
+            <div className={styles.modalActions}>
+              <button
+                className={styles.btnOutline}
+                onClick={() => setShowCropModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className={styles.btnPublish}
+                onClick={async () => {
+                  if (!croppedArea) return;
+                  const cropped = await cropImage(heroChartFullUrl, croppedArea);
+                  if (cropped) {
+                    const url = URL.createObjectURL(cropped);
+                    if (heroChartBlobRef.current && heroChartBlobRef.current !== heroChartFullRef.current) {
+                      URL.revokeObjectURL(heroChartBlobRef.current);
+                    }
+                    heroChartBlobRef.current = url;
+                    setHeroChartPreviewUrl(url);
+                  }
+                  setShowCropModal(false);
+                }}
+              >
+                Apply crop
               </button>
             </div>
           </div>
