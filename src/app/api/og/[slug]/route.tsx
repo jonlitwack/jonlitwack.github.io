@@ -7,7 +7,7 @@ export const runtime = "edge";
 
 const WIDTH = 1200;
 const HEIGHT = 630;
-const PADDING = { top: 80, right: 60, bottom: 60, left: 70 };
+const PADDING = { top: 80, right: 60, bottom: 90, left: 70 };
 const CHART_W = WIDTH - PADDING.left - PADDING.right;
 const CHART_H = HEIGHT - PADDING.top - PADDING.bottom;
 
@@ -22,21 +22,29 @@ interface ChartConfig {
   yMax?: number;
 }
 
-function buildPoints(
+/** Split data into contiguous non-null segments for proper gap rendering */
+function buildSegments(
   data: (number | null)[],
   yMin: number,
   yMax: number
-): string {
+): string[] {
   const range = yMax - yMin || 1;
-  return data
-    .map((v, i) => {
-      if (v === null) return null;
+  const segments: string[] = [];
+  let current: string[] = [];
+
+  data.forEach((v, i) => {
+    if (v === null) {
+      if (current.length > 1) segments.push(current.join(" "));
+      current = [];
+    } else {
       const x = PADDING.left + (i / (data.length - 1)) * CHART_W;
       const y = PADDING.top + (1 - (v - yMin) / range) * CHART_H;
-      return `${x},${y}`;
-    })
-    .filter(Boolean)
-    .join(" ");
+      current.push(`${x},${y}`);
+    }
+  });
+  if (current.length > 1) segments.push(current.join(" "));
+
+  return segments;
 }
 
 export async function GET(
@@ -72,6 +80,23 @@ export async function GET(
     const xTicks: number[] = [];
     for (let i = 0; i < dataLen; i += xStep) {
       xTicks.push(i);
+    }
+
+    // Build all polyline segments
+    const allSegments = chart.datasets.map((ds) => ({
+      color: ds.color,
+      segments: buildSegments(ds.data, yMin, yMax),
+    }));
+
+    // Split legend into rows of 4
+    const legendRows: { label: string; color: string }[][] = [];
+    for (let i = 0; i < chart.datasets.length; i += 4) {
+      legendRows.push(
+        chart.datasets.slice(i, i + 4).map((ds) => ({
+          label: ds.label,
+          color: ds.color,
+        }))
+      );
     }
 
     return new ImageResponse(
@@ -156,11 +181,11 @@ export async function GET(
                 key={`xtick-${i}`}
                 style={{
                   position: "absolute",
-                  left: x - 20,
-                  top: PADDING.top + CHART_H + 12,
+                  left: x - 30,
+                  top: PADDING.top + CHART_H + 8,
                   color: "#666660",
                   fontSize: 12,
-                  width: 40,
+                  width: 60,
                   textAlign: "center",
                   display: "flex",
                   justifyContent: "center",
@@ -171,55 +196,82 @@ export async function GET(
             );
           })}
 
-          {/* Chart lines as SVG */}
+          {/* Chart lines as SVG with clipping */}
           <svg
             width={WIDTH}
             height={HEIGHT}
             style={{ position: "absolute", top: 0, left: 0 }}
           >
-            {chart.datasets.map((ds, di) => (
-              <polyline
-                key={di}
-                points={buildPoints(ds.data, yMin, yMax)}
-                fill="none"
-                stroke={ds.color}
-                strokeWidth="2.5"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-              />
-            ))}
+            <defs>
+              <clipPath id="chart-clip">
+                <rect
+                  x={PADDING.left}
+                  y={PADDING.top}
+                  width={CHART_W}
+                  height={CHART_H}
+                />
+              </clipPath>
+            </defs>
+            <g clipPath="url(#chart-clip)">
+              {allSegments.flatMap((ds, di) =>
+                ds.segments.map((seg, si) => (
+                  <polyline
+                    key={`${di}-${si}`}
+                    points={seg}
+                    fill="none"
+                    stroke={ds.color}
+                    strokeWidth="2.5"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+                ))
+              )}
+            </g>
           </svg>
 
-          {/* Legend */}
+          {/* Legend - wrapping rows */}
           <div
             style={{
               position: "absolute",
-              bottom: 16,
+              bottom: 12,
+              left: PADDING.left,
               right: PADDING.right,
               display: "flex",
-              gap: 20,
+              flexDirection: "column",
+              gap: 6,
             }}
           >
-            {chart.datasets.map((ds, i) => (
+            {legendRows.map((row, ri) => (
               <div
-                key={i}
+                key={ri}
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  gap: 6,
+                  gap: 24,
+                  justifyContent: "center",
                 }}
               >
-                <div
-                  style={{
-                    width: 16,
-                    height: 3,
-                    background: ds.color,
-                    borderRadius: 2,
-                  }}
-                />
-                <span style={{ color: "#666660", fontSize: 11 }}>
-                  {ds.label}
-                </span>
+                {row.map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 16,
+                        height: 3,
+                        background: item.color,
+                        borderRadius: 2,
+                      }}
+                    />
+                    <span style={{ color: "#666660", fontSize: 11 }}>
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
