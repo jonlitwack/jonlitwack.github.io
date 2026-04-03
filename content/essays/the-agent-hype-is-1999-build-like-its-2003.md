@@ -1,6 +1,6 @@
 ---
 title: "The Agent Hype Is 1999. Build Like It's 2003."
-date: 2026-04-02T21:44:45.678Z
+date: 2026-04-03T02:48:47.274Z
 ---
 
 In 1999, Pets.com raised $82.5 million in an IPO. Nine months later it was gone. The internet was real. The business model wasn't. The mistake wasn't believing in the technology — it was believing the trust and infrastructure would catch up on the schedule the pitch deck required.
