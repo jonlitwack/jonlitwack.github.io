@@ -21,7 +21,7 @@ export async function generateMetadata({
   const ogImageUrl = essay.image
     ? `${siteUrl}${essay.image}`
     : hasCharts
-      ? `${siteUrl}/api/og/${slug}`
+      ? `${siteUrl}/og/${slug}.png`
       : undefined;
 
   return {
