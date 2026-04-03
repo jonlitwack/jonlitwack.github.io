@@ -16,13 +16,7 @@ export async function generateMetadata({
     essay.content.replace(/[#*_`>\[\]]/g, "").trim().slice(0, 160) + "…";
   const siteUrl = "https://www.jonlitwack.com";
 
-  // Use explicit image, or fall back to dynamic chart OG route if charts exist
-  const hasCharts = /```chart\n/.test(essay.content);
-  const ogImageUrl = essay.image
-    ? `${siteUrl}${essay.image}`
-    : hasCharts
-      ? `${siteUrl}/og/${slug}.png`
-      : undefined;
+  const ogImageUrl = essay.image ? `${siteUrl}${essay.image}` : undefined;
 
   return {
     title: `${essay.title} — Jon Litwack`,

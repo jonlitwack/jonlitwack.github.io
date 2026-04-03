@@ -402,6 +402,51 @@ export default function WritePage() {
     setView("editor");
   }
 
+  // Render a chart config to a PNG blob using an offscreen canvas
+  async function renderChartToBlob(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    config: any
+  ): Promise<Blob | null> {
+    const { default: Chart } = await import("chart.js/auto");
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 1200;
+    canvas.height = 630;
+
+    const chart = new Chart(canvas, {
+      ...buildPreviewChartConfig(config),
+      options: {
+        ...buildPreviewChartConfig(config).options,
+        responsive: false,
+        animation: false,
+        devicePixelRatio: 1,
+      },
+    });
+
+    // Wait for render
+    await new Promise((r) => setTimeout(r, 100));
+
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        chart.destroy();
+        resolve(blob);
+      }, "image/png");
+    });
+  }
+
+  // Extract the hero chart from the body (matching server-side logic)
+  function extractHeroChart() {
+    const regex = /```chart\n([\s\S]*?)\n```/g;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const charts: any[] = [];
+    let match;
+    while ((match = regex.exec(body)) !== null) {
+      try { charts.push(JSON.parse(match[1])); } catch { /* skip */ }
+    }
+    if (!charts.length) return null;
+    return charts.find((c) => c.hero) ?? charts[0];
+  }
+
   // Publish
   async function publish() {
     if (!title.trim() || !body.trim()) return;
@@ -414,6 +459,26 @@ export default function WritePage() {
     setStatusText("Publishing...");
 
     try {
+      // Generate chart hero image if needed
+      let publishImage = heroImage;
+      if (!publishImage) {
+        const chart = extractHeroChart();
+        if (chart) {
+          setStatusText("Generating preview image...");
+          const blob = await renderChartToBlob(chart);
+          if (blob) {
+            const formData = new FormData();
+            formData.append("file", blob, `og-${essaySlug}.png`);
+            const uploadRes = await fetch("/api/upload", { method: "POST", body: formData });
+            if (uploadRes.ok) {
+              const { url } = await uploadRes.json();
+              publishImage = url;
+            }
+          }
+        }
+      }
+
+      setStatusText("Publishing...");
       const res = await fetch("/api/essays", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -423,7 +488,7 @@ export default function WritePage() {
           date: new Date().toISOString(),
           body: body.trim(),
           sha,
-          image: heroImage,
+          image: publishImage,
         }),
       });
 
