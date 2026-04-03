@@ -21,11 +21,14 @@ export async function generateMetadata({
   return {
     title: `${essay.title} — Jon Litwack`,
     description,
+    authors: [{ name: "Jon Litwack", url: siteUrl }],
     openGraph: {
       title: essay.title,
       description,
       type: "article",
       url: `${siteUrl}/essays/${slug}`,
+      authors: ["Jon Litwack"],
+      publishedTime: essay.date,
       ...(ogImageUrl
         ? {
             images: [
