@@ -16,6 +16,14 @@ export async function generateMetadata({
     essay.content.replace(/[#*_`>\[\]]/g, "").trim().slice(0, 160) + "…";
   const siteUrl = "https://www.jonlitwack.com";
 
+  // Use explicit image, or fall back to dynamic chart OG route if charts exist
+  const hasCharts = /```chart\n/.test(essay.content);
+  const ogImageUrl = essay.image
+    ? `${siteUrl}${essay.image}`
+    : hasCharts
+      ? `${siteUrl}/api/og/${slug}`
+      : undefined;
+
   return {
     title: `${essay.title} — Jon Litwack`,
     description,
@@ -24,11 +32,11 @@ export async function generateMetadata({
       description,
       type: "article",
       url: `${siteUrl}/essays/${slug}`,
-      ...(essay.image
+      ...(ogImageUrl
         ? {
             images: [
               {
-                url: `${siteUrl}${essay.image}`,
+                url: ogImageUrl,
                 width: 1200,
                 height: 630,
               },
@@ -37,10 +45,10 @@ export async function generateMetadata({
         : {}),
     },
     twitter: {
-      card: essay.image ? "summary_large_image" : "summary",
+      card: ogImageUrl ? "summary_large_image" : "summary",
       title: essay.title,
       description,
-      ...(essay.image ? { images: [`${siteUrl}${essay.image}`] } : {}),
+      ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
     },
   };
 }
