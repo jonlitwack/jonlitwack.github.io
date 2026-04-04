@@ -464,16 +464,15 @@ export default function WritePage() {
     canvas.width = width;
     canvas.height = height;
 
-    // Force web fonts to load for canvas rendering
+    // Ensure web fonts are loaded for canvas rendering
     await Promise.all(
       Array.from(document.fonts)
-        .filter((f) => f.family === "Source Serif 4" || f.family === "IBM Plex Mono")
+        .filter((f) => f.family === "IBM Plex Mono")
         .map((f) => f.load())
     );
 
     const GRID = "rgba(255,255,255,0.06)";
     const MONO = "'IBM Plex Mono', monospace";
-    const SERIF = "'Source Serif 4', Georgia, serif";
 
     // Plugin to draw dark background (canvas is transparent by default)
     const bgPlugin = {
@@ -512,7 +511,7 @@ export default function WritePage() {
       options: {
         responsive: false,
         animation: false,
-        devicePixelRatio: 1,
+        devicePixelRatio: 2,
         layout: {
           padding: { top: 20, right: 30, bottom: 20, left: 20 },
         },
@@ -534,7 +533,7 @@ export default function WritePage() {
             display: true,
             text: config.title.toUpperCase(),
             color: "#8a9098",
-            font: { size: 36, weight: 400, family: SERIF },
+            font: { size: 36, weight: "bold" as const, family: MONO },
             padding: { top: 16, bottom: 24 },
             align: "start" as const,
           } : { display: false },
