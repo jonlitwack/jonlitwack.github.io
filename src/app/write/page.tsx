@@ -284,7 +284,7 @@ export default function WritePage() {
     const timer = setTimeout(async () => {
       setHeroChartRendering(true);
       // Render full-size for cropping
-      const fullBlob = await renderChartToBlob(chart, 1600, 1000);
+      const fullBlob = await renderChartToBlob(chart);
       if (cancelled || !fullBlob) { setHeroChartRendering(false); return; }
       const fullUrl = URL.createObjectURL(fullBlob);
       if (heroChartFullRef.current) URL.revokeObjectURL(heroChartFullRef.current);
@@ -455,8 +455,8 @@ export default function WritePage() {
   async function renderChartToBlob(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     config: any,
-    width = 1600,
-    height = 1000
+    width = 1200,
+    height = 630
   ): Promise<Blob | null> {
     const { default: Chart } = await import("chart.js/auto");
 
@@ -464,7 +464,8 @@ export default function WritePage() {
     canvas.width = width;
     canvas.height = height;
 
-    const chartConfig = buildPreviewChartConfig(config);
+    const GRID = "rgba(255,255,255,0.06)";
+    const MONO = "'IBM Plex Mono', monospace";
 
     // Plugin to draw dark background (canvas is transparent by default)
     const bgPlugin = {
@@ -480,43 +481,89 @@ export default function WritePage() {
       },
     };
 
+    // OG-optimized: larger fonts, thicker lines, more padding
     const chart = new Chart(canvas, {
-      ...chartConfig,
+      type: config.type,
+      data: {
+        labels: config.xLabels ?? config.datasets[0].data.map((_: unknown, i: number) => String(i)),
+        datasets: config.datasets.map((ds: { label: string; data: (number | null)[]; color: string; width?: number; dash?: number[]; fill?: boolean }) => ({
+          label: ds.label,
+          data: ds.data,
+          borderColor: ds.color,
+          backgroundColor: ds.color + "1a",
+          borderWidth: ds.width ? ds.width * 2 : 4,
+          borderDash: ds.dash ?? [],
+          fill: ds.fill ?? config.type === "bar",
+          tension: 0.4,
+          pointRadius: 0,
+          pointHoverRadius: 0,
+          spanGaps: false,
+        })),
+      },
       plugins: [bgPlugin],
       options: {
-        ...chartConfig.options,
         responsive: false,
         animation: false,
-        devicePixelRatio: 2,
+        devicePixelRatio: 1,
+        layout: {
+          padding: { top: 20, right: 30, bottom: 20, left: 20 },
+        },
+        interaction: { mode: "index" as const, intersect: false },
         plugins: {
-          ...chartConfig.options.plugins,
+          tooltip: { enabled: false },
           legend: {
             display: true,
             position: "bottom" as const,
             labels: {
               color: "#8a9098",
-              font: { size: 11, family: "'IBM Plex Mono', monospace" },
-              padding: 16,
+              font: { size: 20, family: MONO },
+              padding: 20,
               usePointStyle: true,
-              pointStyleWidth: 16,
+              pointStyleWidth: 20,
             },
           },
           title: config.title ? {
             display: true,
             text: config.title.toUpperCase(),
             color: "#8a9098",
-            font: { size: 13, weight: "normal" as const, family: "'IBM Plex Mono', monospace" },
-            padding: { top: 10, bottom: 20 },
+            font: { size: 36, weight: "normal" as const, family: MONO },
+            padding: { top: 16, bottom: 24 },
             align: "start" as const,
           } : { display: false },
           subtitle: config.source ? {
             display: true,
             text: config.source,
             color: "#555550",
-            font: { size: 10, family: "'IBM Plex Mono', monospace" },
-            padding: { top: 8, bottom: 0 },
+            font: { size: 16, family: MONO },
+            padding: { top: 10, bottom: 0 },
             align: "start" as const,
           } : { display: false },
+        },
+        scales: {
+          x: {
+            grid: { color: GRID },
+            border: { display: false },
+            ticks: {
+              color: "#666660",
+              font: { size: 22, family: MONO },
+              maxTicksLimit: 7,
+              callback: (_: unknown, i: number) => {
+                const label = config.xLabels?.[i] ?? String(i);
+                return label + (config.xSuffix ?? "");
+              },
+            },
+          },
+          y: {
+            min: config.yMin,
+            max: config.yMax,
+            grid: { color: GRID },
+            border: { display: false },
+            ticks: {
+              color: "#666660",
+              font: { size: 22, family: MONO },
+              callback: (v: unknown) => `${v}${config.ySuffix ?? ""}`,
+            },
+          },
         },
       },
     });
