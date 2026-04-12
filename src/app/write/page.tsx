@@ -243,9 +243,9 @@ export default function WritePage() {
   useEffect(() => {
     if (status === "authenticated") {
       fetch("/api/essays")
-        .then((r) => r.json())
+        .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
         .then(setEssays)
-        .catch(() => {});
+        .catch(() => setStatusText("Failed to load essays"));
     }
   }, [status]);
 
@@ -386,6 +386,11 @@ export default function WritePage() {
   async function openEssay(essaySlug: string) {
     try {
       const res = await fetch(`/api/essays/${essaySlug}`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        setStatusText(`Error: ${err.error || res.statusText}`);
+        return;
+      }
       const data: EssayData = await res.json();
       setTitle(data.title);
       setBody(data.content);
@@ -395,8 +400,9 @@ export default function WritePage() {
       setStatusText("");
       setMode("edit");
       setView("editor");
-    } catch {
-      setStatusText("Error loading essay");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setStatusText(`Error loading essay: ${message}`);
     }
   }
 
@@ -600,14 +606,17 @@ export default function WritePage() {
       if (res.ok) {
         setStatusText("Published");
         setSlug(essaySlug);
-        const listRes = await fetch("/api/essays");
-        setEssays(await listRes.json());
+        try {
+          const listRes = await fetch("/api/essays");
+          if (listRes.ok) setEssays(await listRes.json());
+        } catch { /* list refresh failed, but publish succeeded */ }
       } else {
         const err = await res.json();
         setStatusText(`Error: ${err.error}`);
       }
-    } catch {
-      setStatusText("Error publishing");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setStatusText(`Error publishing: ${message}`);
     } finally {
       setPublishing(false);
     }
@@ -624,14 +633,17 @@ export default function WritePage() {
       if (res.ok) {
         setStatusText("");
         setView("list");
-        const listRes = await fetch("/api/essays");
-        setEssays(await listRes.json());
+        try {
+          const listRes = await fetch("/api/essays");
+          if (listRes.ok) setEssays(await listRes.json());
+        } catch { /* list refresh failed, but delete succeeded */ }
       } else {
         const err = await res.json();
         setStatusText(`Error: ${err.error}`);
       }
-    } catch {
-      setStatusText("Error deleting");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setStatusText(`Error deleting: ${message}`);
     }
   }
 

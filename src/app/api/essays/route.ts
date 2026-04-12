@@ -22,7 +22,12 @@ export async function POST(req: NextRequest) {
 
   const essayDate = date || new Date().toISOString();
 
-  await saveEssay(slug, title, essayDate, body, sha, image);
-
-  return NextResponse.json({ ok: true });
+  try {
+    await saveEssay(slug, title, essayDate, body, sha, image);
+    return NextResponse.json({ ok: true });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Failed to save";
+    console.error("saveEssay failed:", err);
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }

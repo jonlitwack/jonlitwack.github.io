@@ -14,8 +14,10 @@ export async function GET(
   try {
     const essay = await getEssay(slug);
     return NextResponse.json(essay);
-  } catch {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  } catch (err) {
+    console.error(`GET /api/essays/${slug}:`, err);
+    const message = err instanceof Error ? err.message : "Not found";
+    return NextResponse.json({ error: message }, { status: 404 });
   }
 }
 
@@ -35,7 +37,9 @@ export async function DELETE(
     }
     await deleteEssay(slug, essay.sha);
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
+  } catch (err) {
+    console.error(`DELETE /api/essays/${slug}:`, err);
+    const message = err instanceof Error ? err.message : "Failed to delete";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
