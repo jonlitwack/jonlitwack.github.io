@@ -42,5 +42,7 @@ export async function POST(req: NextRequest) {
     content: base64,
   });
 
-  return NextResponse.json({ url: `/images/${filename}` });
+  return NextResponse.json({
+    url: `https://raw.githubusercontent.com/${OWNER}/${REPO}/main/public/images/${filename}`,
+  });
 }
