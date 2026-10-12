@@ -7,6 +7,7 @@ import emdash from "emdash/astro";
 import { d1, r2 } from "@emdash-cms/cloudflare";
 import { agentGuardPlugin } from "@jonlitwack/plugin-agent-guard";
 import { chartPlugin } from "@jonlitwack/plugin-chart";
+import { subscribePlugin } from "@jonlitwack/plugin-subscribe";
 
 export default defineConfig({
 	output: "server",
@@ -17,7 +18,7 @@ export default defineConfig({
 		emdash({
 			database: d1({ binding: "DB", session: "auto" }),
 			storage: r2({ binding: "MEDIA" }),
-			plugins: [agentGuardPlugin(), chartPlugin()],
+			plugins: [agentGuardPlugin(), chartPlugin(), subscribePlugin()],
 		}),
 	],
 	devToolbar: { enabled: false },

@@ -1,0 +1,71 @@
+---
+// Email signup. Posts to the subscribe plugin. Works without JavaScript
+// (the plugin redirects to /subscribed); with JavaScript it answers inline.
+import { CONSENT_TEXT, SUBSCRIBE_PATH } from "@jonlitwack/plugin-subscribe/shared";
+
+const page = Astro.url.pathname;
+const id = `subscribe-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<section class="subscribe" aria-labelledby={`${id}-label`}>
+	<h2 class="section-label" id={`${id}-label`}>Subscribe</h2>
+	<form class="subscribe-form" method="post" action={SUBSCRIBE_PATH} data-subscribe>
+		<input type="hidden" name="page" value={page} />
+		<div class="subscribe-trap" aria-hidden="true">
+			<label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+		</div>
+		<label for={`${id}-email`} class="visually-hidden">Email address</label>
+		<div class="subscribe-row">
+			<input
+				id={`${id}-email`}
+				type="email"
+				name="email"
+				required
+				maxlength="254"
+				autocomplete="email"
+				placeholder="you@example.com"
+				aria-describedby={`${id}-consent ${id}-status`}
+			/>
+			<button type="submit">Subscribe</button>
+		</div>
+		<p class="subscribe-consent" id={`${id}-consent`}>{CONSENT_TEXT}</p>
+		<p class="subscribe-status" id={`${id}-status`} role="status" aria-live="polite"></p>
+	</form>
+</section>
+
+<script>
+	const MESSAGES: Record<string, string> = {
+		ok: "You're on the list. Thanks.",
+		invalid: "That doesn't look like an email address.",
+		limited: "Too many signups from here. Try again in an hour.",
+		error: "Something went wrong. Try again, or email jon@jonlitwack.com.",
+	};
+
+	for (const form of document.querySelectorAll<HTMLFormElement>("form[data-subscribe]")) {
+		const status = form.querySelector<HTMLElement>(".subscribe-status")!;
+		const button = form.querySelector<HTMLButtonElement>("button")!;
+		form.addEventListener("submit", async (event) => {
+			event.preventDefault();
+			button.disabled = true;
+			status.textContent = "";
+			let outcome = "error";
+			try {
+				const res = await fetch(form.action, {
+					method: "POST",
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/x-www-form-urlencoded",
+					},
+					body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString(),
+				});
+				outcome = ((await res.json().catch(() => ({}))) as { outcome?: string }).outcome ?? "error";
+			} catch {
+				outcome = "error";
+			}
+			status.textContent = MESSAGES[outcome] ?? MESSAGES.error;
+			status.dataset.outcome = outcome;
+			if (outcome === "ok") form.reset();
+			button.disabled = false;
+		});
+	}
+</script>

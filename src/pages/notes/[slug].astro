@@ -2,6 +2,7 @@
 import { getEmDashEntry, getEmDashCollection } from "emdash";
 import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
+import Subscribe from "../../components/Subscribe.astro";
 import { dayMonth } from "../../lib/content";
 
 const { slug } = Astro.params;
@@ -48,6 +49,7 @@ if (promoted_to) {
 				</p>
 			)
 		}
+		<Subscribe />
 		<a href="/notes" class="back-link">← All notes</a>
 	</article>
 </Base>

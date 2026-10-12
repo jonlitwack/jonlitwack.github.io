@@ -56,6 +56,17 @@ Datasets hold CSV (long or wide). Many charts can read one dataset, and editing 
 
 Limit: EmDash's editor shows plugin blocks as a summary card, so you see the chart via Preview, not inline in the editor.
 
+## Email signups
+
+The `subscribe` plugin (`plugins/subscribe`) adds a signup form (`src/components/Subscribe.astro`) to the home page, essay pages and note pages. Signups are stored in the site's own database. **Nothing is emailed yet.**
+
+- Each signup keeps the email, date, page, and the consent wording shown at the time (`CONSENT_TEXT` in `plugins/subscribe/src/shared.ts`). Bump `CONSENT_VERSION` when the wording changes.
+- Spam: a hidden honeypot field, and at most 5 signups per IP per hour. EmDash only trusts the client IP on Cloudflare, so the rate limit doesn't apply in local dev.
+- The form works without JavaScript (redirects to `/subscribed`) and answers inline with it.
+- Admin → **Subscribers** lists signups, deletes them, and links to `/subscribers.csv` (Admins only).
+
+When sending starts: set up Cloudflare Email Sending, then send each address a one-time confirmation before adding it to anything.
+
 ## OB1 agent access
 
 The pipeline's agent is a **Contributor** with a `content:read content:write` token. The role already stops it editing, deleting or publishing anything, including its own drafts, so each note has to be filed in one `content_create` call. The `agent-guard` plugin (`plugins/agent-guard`) adds the Notes-only restriction: a `content:beforeSave` hook rejects any save outside `notes` by a user below Author. It covers MCP and REST alike. Your Admin writes aren't affected.
@@ -78,7 +89,6 @@ Open question: `emdash login` uses the device flow, which caps scopes at the rol
 
 - **OB1 agent access on staging**: done locally (see above). Repeat on staging once it exists.
 - **Sanitizer**: OB1-side, fail-closed denylist + LLM traceability check, denylist kept out of the repo.
-- **Email capture**: needs your decision (forms plugin vs a D1 route).
 - **Lead images** are stored as URL strings pointing at `/public/images`. Move them into the media library (R2) when you migrate.
 - **Descriptions** were empty in the source, so the importer uses the first 160 characters, the same rule the live site applies. Rewrite them in the admin.
 - **Cutover**: staging subdomain, proxy Worker with fallback, DNS last.

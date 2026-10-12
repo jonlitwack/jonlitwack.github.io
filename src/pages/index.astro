@@ -2,6 +2,7 @@
 import { getEmDashCollection, getSiteSettingsWithCacheHint } from "emdash";
 import Base from "../layouts/Base.astro";
 import NoteItem from "../components/NoteItem.astro";
+import Subscribe from "../components/Subscribe.astro";
 import { monthYear, sortByDate } from "../lib/content";
 
 const [essaysResult, notesResult, settings] = await Promise.all([
@@ -54,5 +55,7 @@ const tagline = settings.data?.tagline;
 				</>
 			)
 		}
+
+		<Subscribe />
 	</div>
 </Base>

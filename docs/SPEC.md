@@ -40,17 +40,9 @@ If this comes back, start from an opt-in design: Jon tags a capture (e.g. `publi
 
 Step 1 is done and stays: the agent-guard plugin does nothing unless a user below Author exists. Open item from step 1: find a way to issue a staging token with only `content:read content:write` (the device flow also grants `media:write`).
 
-## 4. Email capture
+## 4. Email capture: done (2026-10-12)
 
-Add a subscribe form to the home page, essay pages and note pages. Options:
-
-- Store subscribers in D1 through a small route of our own.
-- Use EmDash's forms plugin.
-- Use the third-party Bulletin plugin (newsletters).
-
-No third-party mailing service yet.
-
-**Check in** with the options and a recommendation, then stop.
+Built as our own native plugin (`plugins/subscribe`), not Bulletin or a forms plugin: those are sandboxed registry plugins (need the sandbox runner and Workers Paid), are v0.1–0.2 from single authors with no public source, and would hold the list. See the README's "Email signups" section. On staging, confirm the 5-per-hour rate limit triggers (it needs Cloudflare's trusted client IP).
 
 ## 5. Authoring improvements
 

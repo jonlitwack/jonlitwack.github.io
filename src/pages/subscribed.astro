@@ -1,0 +1,20 @@
+---
+// Where the subscribe form lands when JavaScript is off.
+import Base from "../layouts/Base.astro";
+
+const error = Astro.url.searchParams.get("error");
+const MESSAGES: Record<string, string> = {
+	invalid: "That doesn't look like an email address.",
+	limited: "Too many signups from here. Try again in an hour.",
+	error: "Something went wrong. Try again, or email jon@jonlitwack.com.",
+};
+const message = error ? (MESSAGES[error] ?? MESSAGES.error) : null;
+---
+
+<Base title={message ? "Not subscribed" : "Subscribed"}>
+	<div class="container essay">
+		<h1>{message ? "Not subscribed" : "You're on the list"}</h1>
+		<p class="subscribed-text">{message ?? "Thanks. New essays and notes will come to your inbox."}</p>
+		<a href="/" class="back-link">← Back to the site</a>
+	</div>
+</Base>

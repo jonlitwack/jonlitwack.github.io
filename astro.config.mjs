@@ -7,6 +7,7 @@ import emdash, { local } from "emdash/astro";
 import { sqlite } from "emdash/db";
 import { agentGuardPlugin } from "@jonlitwack/plugin-agent-guard";
 import { chartPlugin } from "@jonlitwack/plugin-chart";
+import { subscribePlugin } from "@jonlitwack/plugin-subscribe";
 
 export default defineConfig({
 	output: "server",
@@ -20,7 +21,7 @@ export default defineConfig({
 				directory: "./uploads",
 				baseUrl: "/_emdash/api/media/file",
 			}),
-			plugins: [agentGuardPlugin(), chartPlugin()],
+			plugins: [agentGuardPlugin(), chartPlugin(), subscribePlugin()],
 		}),
 	],
 	devToolbar: { enabled: false },

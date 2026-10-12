@@ -1,0 +1,14 @@
+{
+  "name": "@jonlitwack/plugin-subscribe",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Email signups for jonlitwack.com, stored in the site's own database. Sends nothing.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./shared": "./src/shared.ts"
+  },
+  "peerDependencies": {
+    "emdash": "^1.0.1"
+  }
+}

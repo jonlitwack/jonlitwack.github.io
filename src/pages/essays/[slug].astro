@@ -2,6 +2,7 @@
 import { getEmDashEntry } from "emdash";
 import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
+import Subscribe from "../../components/Subscribe.astro";
 import { monthYear, readingMinutes } from "../../lib/content";
 
 const { slug } = Astro.params;
@@ -33,6 +34,7 @@ const { title, date, description, lead_image, body } = essay.data;
 		<div class="essay-body" {...essay.edit.body}>
 			<PortableText value={body} />
 		</div>
+		<Subscribe />
 		<a href="/" class="back-link">← All essays</a>
 	</article>
 </Base>

@@ -25,6 +25,7 @@
     "@fontsource/source-serif-4": "^5.3.1",
     "@jonlitwack/plugin-agent-guard": "file:plugins/agent-guard",
     "@jonlitwack/plugin-chart": "file:plugins/chart",
+    "@jonlitwack/plugin-subscribe": "file:plugins/subscribe",
     "@observablehq/plot": "^0.6.17",
     "astro": "^7.3.2",
     "emdash": "^1.0.1",
