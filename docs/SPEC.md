@@ -28,26 +28,17 @@ Do this against a local instance first, then staging.
 
 **Check in** with the enforcement proposal before building it.
 
-## 2. Sanitizer (OB1 side, before a draft is filed)
+## 2–3. OB1 pipeline: parked (2026-10-12)
 
-- A small service or script takes a candidate note and only then calls `content_create`. It **fails closed**: any error means nothing is filed.
-- Refuse anything tagged `never-publish` before any other check runs.
-- Denylist check: client and employer names, people's names, project codenames, dollar figures, and any listed phrase. A hit blocks filing and returns the reason.
-- A second pass asks a model whether the note can be traced to a specific client engagement even without names. "Yes" or "unsure" blocks filing.
-- **The denylist is never committed.** It's loaded at runtime from an environment secret. This repo is public.
-- Log every attempt, filed or blocked, with the reason, back to OB1.
-- The rewrite step turns a capture into a public note (`claim`, `source_context`, body) in Jon's voice (see `CLAUDE.md`). The raw capture stays in OB1.
-- Record the draft's capture date. The admin view, or the draft itself, flags anything captured today. Rule: nothing is published the same day it was captured.
+The sanitizer (step 2) and publish-time check (step 3) are parked. Notes are written by hand in the admin until Jon decides otherwise. Reasons:
 
-**Done when** a test note containing a denylisted name is blocked, a test note that describes an engagement without naming it is blocked, and a clean note lands as a Notes draft.
+- OB1 mixes client work and personal material, and client topics are among the most frequent. A denylist alone can't catch a capture that describes an engagement without naming it.
+- The model-based traceability check is off the table: Jon only wants free models, so no paid model or billable API key is used.
+- OB1 captures have no tag marking what's safe to publish.
 
-**Check in** before building: Jon needs to say how OB1 is called (its API or MCP, and where the service runs).
+If this comes back, start from an opt-in design: Jon tags a capture (e.g. `publish-candidate`) and only tagged captures are ever filed as drafts, then run the denylist on those. OB1 is a Supabase project with an Edge Function, so the sanitizer would be another Edge Function there, holding the agent token and denylist as Supabase secrets. The original requirements are in git history (`e8879f4:docs/SPEC.md`).
 
-## 3. Publish-time check (defence in depth)
-
-Plugins in the EmDash registry (seo-guard, EmDash Preflight) block publishing when a check fails, so this is possible. Propose a native plugin that re-runs the denylist check when a note is published, with the denylist from a secret.
-
-**Check in** before building.
+Step 1 is done and stays: the agent-guard plugin does nothing unless a user below Author exists. Open item from step 1: find a way to issue a staging token with only `content:read content:write` (the device flow also grants `media:write`).
 
 ## 4. Email capture
 
