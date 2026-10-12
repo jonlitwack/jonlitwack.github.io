@@ -22,4 +22,30 @@
 	"triggers": {
 		"crons": ["* * * * *"],
 	},
+	// Staging: its own Worker, database and bucket, never production data.
+	// Deploy with `npm run deploy:staging`. The Astro adapter picks the
+	// environment at BUILD time (CLOUDFLARE_ENV=staging); `wrangler deploy
+	// --env staging` on a normal build would still bind production. Serves on
+	// workers.dev, so no DNS change is needed. Wrangler creates the D1 database
+	// and R2 bucket by name on the first deploy.
+	"env": {
+		"staging": {
+			"name": "jonlitwack-site-staging",
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "jonlitwack-site-staging",
+				},
+			],
+			"r2_buckets": [
+				{
+					"binding": "MEDIA",
+					"bucket_name": "jonlitwack-media-staging",
+				},
+			],
+			"triggers": {
+				"crons": ["* * * * *"],
+			},
+		},
+	},
 }

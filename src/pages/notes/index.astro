@@ -15,9 +15,15 @@ const notes = sortByDate(entries);
 			<h1 class="sr-only">Notes</h1>
 			<p class="tagline">Short notes. Where ideas show up before they become essays.</p>
 		</section>
-		<ul class="note-list">
-			{notes.map((note) => <NoteItem note={note} promoted={!!note.data.promoted_to} />)}
-		</ul>
+		{
+			notes.length > 0 ? (
+				<ul class="note-list">
+					{notes.map((note) => <NoteItem note={note} promoted={!!note.data.promoted_to} />)}
+				</ul>
+			) : (
+				<p class="notes-empty">No notes yet.</p>
+			)
+		}
 		<a href="/" class="back-link">← Essays</a>
 	</div>
 </Base>

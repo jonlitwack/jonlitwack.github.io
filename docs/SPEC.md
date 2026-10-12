@@ -10,7 +10,7 @@ The rebuild is on the `emdash` branch. Read `CLAUDE.md` first. This file lists *
 - `/about`, Notes index and pages, feeds for essays, notes and both combined.
 - Design ported from the Next.js site, with self-hosted fonts.
 - `chart` block plugin: server SVG plus an interactive Observable Plot layer. Datasets collection, dataset-referencing charts, `/data/{slug}.csv`.
-- Sample notes in `content/notes/` are **placeholders** written for the prototype. Don't publish them to production. Delete them before launch, or keep them as `status: draft`.
+- Sample notes in `content/notes/` are **placeholders** written for the prototype. All four are now `status: draft` (2026-10-12), so the setup wizard can't publish them. Delete them before launch if they're not wanted as examples.
 
 ## 1. Agent access for the OB1 pipeline (security core)
 
@@ -54,7 +54,7 @@ Built as our own native plugin (`plugins/subscribe`), not Bulletin or a forms pl
 
 - Jon runs `npx wrangler login`. Create the D1 database and R2 bucket named in `wrangler.jsonc`, and fill in the IDs.
 - Recommend Workers Paid ($5 USD/month). The free plan's 10 ms CPU cap per request will fail some server-rendered pages. Turn on EmDash's object cache and Workers Cache (see the docs) to keep CPU low.
-- **Seeding D1 is untested.** `npx emdash seed` targets local SQLite. Find the documented path for loading `seed/seed.json` into D1 (site transfer, `emdash seed` against a remote, or the MCP), prove it on staging, and write it into the README.
+- **Seeding D1:** the documented path is the setup wizard with "include sample content": the seed is bundled into the build and applied in Workers-sized batches. Proven locally on an empty database (2026-10-12); still to prove on staging. Runbook in the README ("Staging on Cloudflare"). Staging config is ready: `env.staging` in `wrangler.jsonc`, `npm run deploy:staging`.
 - Deploy to a staging subdomain. Check every essay URL against the live site, every chart at desktop and 390px, all three feeds, `/data/*.csv`, and the agent permission tests against staging.
 
 **Check in** before anything touches the production domain.

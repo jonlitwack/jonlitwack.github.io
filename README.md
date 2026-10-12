@@ -85,6 +85,19 @@ Staging (not done yet): invite the agent's email as a Contributor in the admin, 
 
 Open question: `emdash login` uses the device flow, which caps scopes at the role. For a Contributor that still includes `media:write`, which the test rejects. Find out whether the device flow can request `content:read content:write` only before relying on it.
 
+## Staging on Cloudflare
+
+Staging is a separate Worker (`jonlitwack-site-staging`) with its own D1 database and R2 bucket, served on workers.dev. It never touches production data or DNS.
+
+1. `npx wrangler login` (once).
+2. `npm run deploy:staging`. The first deploy creates the D1 database and R2 bucket.
+   Always use this script: the Astro adapter picks the environment at build time (`CLOUDFLARE_ENV=staging`), so `wrangler deploy --env staging` after a normal build would bind **production**.
+3. Open the workers.dev URL Wrangler prints, then `/_emdash/admin`. The setup wizard runs: keep the title and tagline, tick **include sample content**, and create your admin passkey.
+   This is how content gets into D1. The seed (`seed/seed.json`) is bundled into the build, and the wizard applies it in batches (five image downloads per request) so it fits Workers limits. Lead images download from the live site, so www.jonlitwack.com must be up. Tested locally on an empty database: 10 essays, 4 notes, 1 dataset, 10 images, in three requests.
+4. The site URL comes from the request hostname. Set `EMDASH_SITE_URL` only if staging moves to a custom domain.
+
+Fallback if the wizard path fails: `npx emdash site export` from a local instance and `site import` into staging (see the EmDash site transfer guide).
+
 ## Not done yet (from the spec)
 
 - **OB1 agent access on staging**: done locally (see above). Repeat on staging once it exists.

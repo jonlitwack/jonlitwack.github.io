@@ -4079,7 +4079,7 @@
 			{
 				"id": "note-sample-dataset-charts",
 				"slug": "sample-dataset-charts",
-				"status": "published",
+				"status": "draft",
 				"data": {
 					"title": "Sample note: one dataset, two charts",
 					"date": "2026-10-12T00:00:00.000Z",
@@ -4144,7 +4144,7 @@
 			{
 				"id": "note-sample-drafts-not-publishing",
 				"slug": "sample-drafts-not-publishing",
-				"status": "published",
+				"status": "draft",
 				"data": {
 					"title": "Sample note: the agent files drafts, I publish",
 					"date": "2026-10-10T00:00:00.000Z",
@@ -4171,7 +4171,7 @@
 			{
 				"id": "note-sample-how-notes-work",
 				"slug": "sample-how-notes-work",
-				"status": "published",
+				"status": "draft",
 				"data": {
 					"title": "Sample note: how notes work",
 					"date": "2026-10-12T00:00:00.000Z",
@@ -4212,7 +4212,7 @@
 			{
 				"id": "note-sample-promoted",
 				"slug": "sample-promoted",
-				"status": "published",
+				"status": "draft",
 				"data": {
 					"title": "Sample note: promoted to an essay",
 					"date": "2026-03-20T00:00:00.000Z",

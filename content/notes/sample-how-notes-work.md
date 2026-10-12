@@ -1,4 +1,5 @@
 ---
+status: draft
 title: "Sample note: how notes work"
 date: "2026-10-12"
 claim: "Notes are where an idea shows up first. The strong ones graduate into essays."

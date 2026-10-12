@@ -425,6 +425,14 @@ hr {
 	color: var(--muted);
 }
 
+.notes-empty {
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.85rem;
+	border-top: 1px solid var(--rule);
+	padding-top: 1.25rem;
+}
+
 /* Note page */
 .note-page .note-claim-lede {
 	color: var(--ice);

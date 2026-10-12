@@ -1,4 +1,5 @@
 ---
+status: draft
 title: "Sample note: the agent files drafts, I publish"
 date: "2026-10-10"
 claim: "The pipeline from my notes to this site can file a draft. It can't publish one."

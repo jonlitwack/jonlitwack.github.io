@@ -14,7 +14,9 @@
     "typecheck": "astro check",
     "seed:build": "node scripts/build-seed.mjs",
     "build:cf": "astro build --config astro.config.cloudflare.mjs",
-    "deploy": "astro build --config astro.config.cloudflare.mjs && wrangler deploy"
+    "deploy": "astro build --config astro.config.cloudflare.mjs && wrangler deploy",
+    "build:cf:staging": "CLOUDFLARE_ENV=staging astro build --config astro.config.cloudflare.mjs",
+    "deploy:staging": "npm run build:cf:staging && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.4",

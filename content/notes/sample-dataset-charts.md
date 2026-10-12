@@ -1,4 +1,5 @@
 ---
+status: draft
 title: "Sample note: one dataset, two charts"
 date: "2026-10-12"
 claim: "Both charts below read the same table. Change a number once and both update."
