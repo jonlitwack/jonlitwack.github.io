@@ -1,0 +1,15 @@
+{
+  "title": "The trust arc: % of US adults by category, 1995–2026",
+  "source": "Internet: Pew Research Center adoption surveys (1995–2015); US Census Bureau e-commerce data (1999–2014); Pew online banking surveys (2000–2013). AI: Pew ChatGPT usage surveys (2023–2025); Fed Reserve Bank of St. Louis generative AI data (2024–2025).",
+  "notes": "Extracted from the chart in “The Agent Hype Is 1999. Build Like It's 2003.” Long format: one row per year and category.",
+  "colors": {
+    "Information (internet)": "#888780",
+    "ID & Access (internet)": "#1D9E75",
+    "Logistics (internet)": "#378ADD",
+    "Finance (internet)": "#c84b2a",
+    "Information (AI)": "#c0bfba",
+    "ID & Access (AI)": "#7ecfb0",
+    "Logistics (AI)": "#8fc5e8",
+    "Finance (AI)": "#e8a882"
+  }
+}

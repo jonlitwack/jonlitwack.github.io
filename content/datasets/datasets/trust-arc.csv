@@ -1,0 +1,83 @@
+year,category,pct
+1995,"Information (internet)",14
+1996,"Information (internet)",18
+1997,"Information (internet)",22
+1998,"Information (internet)",31.5
+1999,"Information (internet)",41
+2000,"Information (internet)",46
+2001,"Information (internet)",57
+2002,"Information (internet)",60
+2003,"Information (internet)",63
+2004,"Information (internet)",65.5
+2005,"Information (internet)",68
+2006,"Information (internet)",70.5
+2007,"Information (internet)",73
+2008,"Information (internet)",75
+2009,"Information (internet)",77
+2010,"Information (internet)",79
+2011,"Information (internet)",80
+2012,"Information (internet)",81
+2013,"Information (internet)",85
+2014,"Information (internet)",87
+2005,"ID & Access (internet)",5
+2006,"ID & Access (internet)",8
+2007,"ID & Access (internet)",14.5
+2008,"ID & Access (internet)",21
+2009,"ID & Access (internet)",37
+2010,"ID & Access (internet)",46
+2011,"ID & Access (internet)",50
+2012,"ID & Access (internet)",55
+2013,"ID & Access (internet)",57
+2014,"ID & Access (internet)",58
+2015,"ID & Access (internet)",65
+1999,"Logistics (internet)",4
+2000,"Logistics (internet)",6
+2001,"Logistics (internet)",8.5
+2002,"Logistics (internet)",11
+2003,"Logistics (internet)",12.5
+2004,"Logistics (internet)",14
+2005,"Logistics (internet)",17
+2006,"Logistics (internet)",20
+2007,"Logistics (internet)",22.5
+2008,"Logistics (internet)",25
+2009,"Logistics (internet)",27
+2010,"Logistics (internet)",29
+2011,"Logistics (internet)",32.5
+2012,"Logistics (internet)",36
+2013,"Logistics (internet)",41
+2014,"Logistics (internet)",46
+2000,"Finance (internet)",8
+2001,"Finance (internet)",11
+2002,"Finance (internet)",14
+2003,"Finance (internet)",18
+2004,"Finance (internet)",22
+2005,"Finance (internet)",28
+2006,"Finance (internet)",32
+2007,"Finance (internet)",34
+2008,"Finance (internet)",36
+2009,"Finance (internet)",41
+2010,"Finance (internet)",46
+2011,"Finance (internet)",48
+2012,"Finance (internet)",49.5
+2013,"Finance (internet)",51
+2014,"Finance (internet)",53
+2022,"Information (AI)",5
+2023,"Information (AI)",17
+2024,"Information (AI)",23
+2025,"Information (AI)",34
+2026,"Information (AI)",45
+2022,"ID & Access (AI)",1
+2023,"ID & Access (AI)",4
+2024,"ID & Access (AI)",9
+2025,"ID & Access (AI)",16
+2026,"ID & Access (AI)",26
+2022,"Logistics (AI)",0
+2023,"Logistics (AI)",1
+2024,"Logistics (AI)",3
+2025,"Logistics (AI)",7
+2026,"Logistics (AI)",13
+2022,"Finance (AI)",0
+2023,"Finance (AI)",0
+2024,"Finance (AI)",1
+2025,"Finance (AI)",3
+2026,"Finance (AI)",6

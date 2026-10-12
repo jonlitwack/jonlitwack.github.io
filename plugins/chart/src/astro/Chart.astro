@@ -1,0 +1,66 @@
+---
+/**
+ * Chart block.
+ *
+ * Server: resolves the spec (inline JSON or a Datasets entry), draws a static
+ * SVG so the chart is complete with no JavaScript, in RSS readers, and for crawlers.
+ * Browser: ./client.ts swaps in an interactive Observable Plot chart
+ * (crosshair + tooltip, series toggles, responsive width, data table toggle).
+ */
+import { getEmDashEntry } from "emdash";
+import { renderChartSvg, type ChartSpec } from "../render";
+import { readBlockJson, isRef, parseCsv, specFromDataset } from "../spec";
+
+const { node } = Astro.props;
+let spec: ChartSpec | undefined;
+let error: string | undefined;
+let datasetSlug: string | undefined;
+
+const read = readBlockJson(node);
+if (read.error) error = read.error;
+else if (read.json && isRef(read.json)) {
+	datasetSlug = read.json.dataset;
+	try {
+		const { entry } = await getEmDashEntry("datasets", datasetSlug);
+		if (!entry) throw new Error(`Dataset "${datasetSlug}" not found`);
+		spec = specFromDataset(read.json, parseCsv(String(entry.data.csv ?? "")));
+		spec.source ??= entry.data.source ?? undefined;
+	} catch (e) {
+		error = (e as Error).message;
+	}
+} else if (read.json) {
+	spec = read.json as ChartSpec;
+	if (!Array.isArray(spec.datasets) || !spec.datasets.length) error = "Chart has no datasets";
+}
+
+const uid = `chart-${String(node?._key ?? Math.random().toString(36).slice(2, 8)).replace(/[^a-z0-9_-]/gi, "")}`;
+---
+
+{
+	error || !spec ? (
+		<div class="chart-error" role="note">Chart can't be drawn: {error}</div>
+	) : (
+		<figure class:list={["chart-block", spec.hero && "chart-hero"]} data-chart={JSON.stringify(spec)} data-chart-id={uid}>
+			{spec.title && <figcaption class="chart-title">{spec.title}</figcaption>}
+			<div class="chart-canvas" set:html={renderChartSvg(spec, uid)} />
+			<div class="chart-foot">
+				{spec.source && <p class="chart-source">{spec.source}</p>}
+				<div class="chart-actions">
+					<button type="button" class="chart-action" data-chart-table aria-expanded="false" hidden>
+						Show data
+					</button>
+					{datasetSlug && (
+						<a class="chart-action" href={`/data/${datasetSlug}.csv`}>
+							Download CSV
+						</a>
+					)}
+				</div>
+			</div>
+		</figure>
+	)
+}
+
+<script>
+	import { enhanceCharts } from "../client";
+	enhanceCharts();
+</script>

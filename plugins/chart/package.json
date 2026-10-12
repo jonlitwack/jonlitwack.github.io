@@ -1,0 +1,17 @@
+{
+  "name": "@jonlitwack/plugin-chart",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Chart block for jonlitwack.com: registers a `chart` Portable Text block in the EmDash editor and renders it as accessible SVG on the site.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./astro": "./src/astro/index.ts"
+  },
+  "peerDependencies": {
+    "emdash": "^1.0.1"
+  },
+  "dependencies": {
+    "@observablehq/plot": "^0.6.17"
+  }
+}
