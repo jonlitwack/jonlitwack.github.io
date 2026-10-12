@@ -1,0 +1,700 @@
+/*
+ * jonlitwack.com design tokens and styles.
+ * Ported from the Next.js site (src/app/globals.css). Dark only.
+ * Fonts are self-hosted from npm (@fontsource), so there's no Google Fonts call.
+ */
+@import "@fontsource/source-serif-4/300.css";
+@import "@fontsource/source-serif-4/400.css";
+@import "@fontsource/source-serif-4/400-italic.css";
+@import "@fontsource/source-serif-4/600.css";
+@import "@fontsource/ibm-plex-mono/300.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+
+:root {
+	--font-serif: "Source Serif 4";
+	--font-mono: "IBM Plex Mono";
+	--night: #161a1f;
+	--ice: #e8f0ff;
+	--muted: #8a9098;
+	--rule: #22242a;
+	--cyan: #00d4e8;
+	--surface: rgba(255, 255, 255, 0.03);
+
+	--chart-bg: var(--night);
+	--chart-ink: var(--ice);
+
+	/* EmDash built-in block hooks */
+	--emdash-break-color: var(--rule);
+	--color-border: var(--rule);
+
+	color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	background: var(--night);
+	color: var(--muted);
+	font-family: var(--font-serif), Georgia, serif;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 1.75;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex: 1;
+}
+
+.container {
+	max-width: 640px;
+	margin: 0 auto;
+	padding: 0 1.5rem;
+}
+
+a {
+	color: var(--ice);
+	text-decoration: none;
+	transition: color 0.2s;
+}
+a:hover {
+	color: var(--cyan);
+}
+a:focus-visible {
+	outline: 2px solid var(--cyan);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+em {
+	color: var(--cyan);
+	font-style: italic;
+}
+
+h1,
+h2,
+h3 {
+	color: var(--ice);
+	font-family: var(--font-serif), Georgia, serif;
+	font-weight: 300;
+	line-height: 1.3;
+}
+
+hr {
+	border: none;
+	border-top: 1px solid var(--rule);
+	margin: 2rem 0;
+}
+
+.mono {
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+}
+
+.sr-only {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+
+/* Header */
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background: var(--night);
+	border-bottom: 1px solid var(--rule);
+}
+.header-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem 0;
+	gap: 1rem;
+}
+.wordmark {
+	font-family: var(--font-serif), Georgia, serif;
+	font-weight: 300;
+	font-size: 1.1rem;
+	color: var(--ice);
+	letter-spacing: -0.01em;
+	white-space: nowrap;
+}
+.header-nav {
+	display: flex;
+	gap: 1.5rem;
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.8rem;
+}
+.header-nav a {
+	color: var(--muted);
+}
+.header-nav a:hover,
+.header-nav a[aria-current="page"] {
+	color: var(--ice);
+}
+.header-nav a[aria-current="page"] {
+	text-decoration: underline;
+	text-decoration-color: var(--cyan);
+	text-underline-offset: 6px;
+}
+
+/* Footer */
+.site-footer {
+	padding: 3rem 0;
+	border-top: 1px solid var(--rule);
+	margin-top: 4rem;
+}
+.footer-links {
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.85rem;
+	color: var(--muted);
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0;
+}
+.footer-links a {
+	color: var(--muted);
+}
+.footer-links a:hover {
+	color: var(--cyan);
+}
+.footer-separator {
+	margin: 0 0.5rem;
+	opacity: 0.5;
+}
+
+/* Index */
+.intro {
+	margin-top: 2rem;
+	margin-bottom: 2.5rem;
+}
+.tagline {
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.85rem;
+	color: var(--muted);
+}
+
+.section-label {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	font-family: var(--font-mono), monospace;
+	font-weight: 400;
+	font-size: 0.72rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin: 3rem 0 0.75rem;
+}
+.section-label a {
+	color: var(--muted);
+	text-transform: none;
+	letter-spacing: 0;
+	font-weight: 300;
+	font-size: 0.8rem;
+}
+.section-label a:hover {
+	color: var(--cyan);
+}
+
+.essay-list {
+	list-style: none;
+}
+.essay-list li {
+	border-top: 1px solid var(--rule);
+}
+.essay-list li:last-child {
+	border-bottom: 1px solid var(--rule);
+}
+.essay-list a {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	padding: 1rem 0;
+	gap: 1rem;
+}
+.essay-title {
+	color: var(--ice);
+	font-family: var(--font-serif), Georgia, serif;
+	font-weight: 400;
+	font-size: 1.1rem;
+	line-height: 1.45;
+}
+.essay-list a:hover .essay-title {
+	color: var(--cyan);
+}
+.essay-date {
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.8rem;
+	color: var(--muted);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+/* Notes stream: a different shape from essays, so the two read as two things */
+.note-list {
+	list-style: none;
+}
+.note-item {
+	border-top: 1px solid var(--rule);
+	padding: 1.1rem 0 1.2rem;
+}
+.note-list .note-item:last-child {
+	border-bottom: 1px solid var(--rule);
+}
+.note-meta {
+	display: flex;
+	gap: 0.75rem;
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.75rem;
+	color: var(--muted);
+	margin-bottom: 0.35rem;
+}
+.note-claim {
+	display: block;
+	color: var(--ice);
+	font-size: 1.02rem;
+	line-height: 1.55;
+}
+.note-claim:hover {
+	color: var(--cyan);
+}
+.note-title-small {
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.75rem;
+}
+.tag {
+	border: 1px solid var(--rule);
+	border-radius: 3px;
+	padding: 0 0.4rem;
+	font-size: 0.7rem;
+}
+
+/* Essay page */
+.essay {
+	padding-top: 2rem;
+}
+.essay-hero {
+	width: 100%;
+	max-height: 400px;
+	object-fit: contain;
+	border-radius: 6px;
+	margin-bottom: 1.5rem;
+	display: block;
+}
+.essay h1 {
+	font-size: 1.55rem;
+	font-weight: 400;
+	margin-bottom: 0.5rem;
+}
+.essay-meta {
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.85rem;
+	color: var(--muted);
+}
+
+.essay-body {
+	font-family: var(--font-serif), Georgia, serif;
+	font-weight: 400;
+	font-size: 1rem;
+	line-height: 1.75;
+	color: var(--muted);
+	overflow-wrap: break-word;
+}
+.essay-body p {
+	margin-bottom: 1.5rem;
+}
+.essay-body > :last-child {
+	margin-bottom: 0;
+}
+.essay-body h2 {
+	font-size: 1.25rem;
+	font-weight: 400;
+	margin: 2.5rem 0 1rem;
+}
+.essay-body h3 {
+	font-size: 1.1rem;
+	font-weight: 400;
+	margin: 2rem 0 0.75rem;
+}
+.essay-body strong {
+	color: var(--ice);
+	font-weight: 600;
+}
+.essay-body img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 4px;
+	margin: 2rem 0;
+	display: block;
+}
+.essay-body blockquote {
+	border-left: 2px solid var(--rule);
+	padding-left: 1.25rem;
+	margin: 1.5rem 0;
+	color: var(--muted);
+	font-style: italic;
+}
+.essay-body blockquote p {
+	margin-bottom: 0.75rem;
+}
+.essay-body ul,
+.essay-body ol {
+	margin-bottom: 1.5rem;
+	padding-left: 1.5rem;
+}
+.essay-body li {
+	margin-bottom: 0.5rem;
+}
+.essay-body code {
+	font-family: var(--font-mono), monospace;
+	font-size: 0.85em;
+	background: var(--rule);
+	padding: 0.15em 0.4em;
+	border-radius: 3px;
+}
+.essay-body pre {
+	background: var(--rule);
+	padding: 1.25rem;
+	border-radius: 4px;
+	overflow-x: auto;
+	margin: 1.5rem 0;
+}
+.essay-body pre code {
+	background: none;
+	padding: 0;
+}
+.essay-body .emdash-break {
+	margin: 2rem 0;
+}
+.essay-body table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1.5rem 0;
+	font-size: 0.92rem;
+}
+.essay-body th,
+.essay-body td {
+	text-align: left;
+	padding: 0.5rem 0.75rem;
+	border-bottom: 1px solid var(--rule);
+}
+.essay-body th {
+	color: var(--ice);
+	font-weight: 400;
+}
+
+.back-link {
+	display: inline-block;
+	margin-top: 3rem;
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.85rem;
+	color: var(--muted);
+}
+
+/* Note page */
+.note-page .note-claim-lede {
+	color: var(--ice);
+	font-size: 1.3rem;
+	line-height: 1.5;
+	font-weight: 300;
+	margin: 0.75rem 0 1.5rem;
+}
+.note-source {
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.8rem;
+	color: var(--muted);
+	border-left: 2px solid var(--rule);
+	padding-left: 0.9rem;
+	margin-bottom: 1.5rem;
+}
+.promoted {
+	margin-top: 2rem;
+	padding: 1rem 1.1rem;
+	border: 1px solid var(--rule);
+	border-radius: 6px;
+	font-family: var(--font-mono), monospace;
+	font-weight: 300;
+	font-size: 0.85rem;
+}
+.promoted a {
+	font-family: var(--font-serif), Georgia, serif;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+/* Chart block */
+.chart-block {
+	background: var(--surface);
+	border: 1px solid var(--rule);
+	border-radius: 6px;
+	padding: 1.5rem 1.25rem 1rem;
+	margin: 2.5rem 0;
+}
+.chart-title {
+	font-family: var(--font-mono), monospace;
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin-bottom: 1rem;
+}
+.chart-svg {
+	display: block;
+	overflow: visible;
+}
+.chart-grid {
+	stroke: rgba(255, 255, 255, 0.07);
+	stroke-width: 1;
+}
+.chart-tick {
+	fill: var(--muted);
+	font: 300 11px var(--font-mono), monospace;
+}
+.chart-value {
+	fill: var(--ice);
+	font: 400 10.5px var(--font-mono), monospace;
+}
+.chart-direct {
+	font: 400 11px var(--font-mono), monospace;
+	fill: var(--ice);
+	opacity: 0.85;
+}
+.chart-key {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem 1.1rem;
+	margin: 0.9rem 0 0;
+	padding: 0;
+	font: 300 11px var(--font-mono), monospace;
+	color: var(--muted);
+}
+.chart-key li {
+	display: flex;
+	align-items: center;
+	gap: 0.45rem;
+	margin: 0;
+}
+.chart-source {
+	font-family: var(--font-mono), monospace;
+	font-size: 10px;
+	color: var(--muted);
+	margin: 0.75rem 0 0 !important;
+	line-height: 1.6;
+}
+.chart-error {
+	font-family: var(--font-mono), monospace;
+	font-size: 12px;
+	color: var(--ice);
+	padding: 1rem;
+	border: 1px dashed var(--muted);
+	border-radius: 4px;
+}
+
+
+/* Interactive chart layer (client.ts) */
+.chart-canvas.is-live {
+	display: grid;
+	gap: 0.75rem;
+}
+.chart-stage {
+	position: relative;
+	touch-action: pan-y;
+	cursor: crosshair;
+	border-radius: 4px;
+}
+.chart-stage:focus-visible {
+	outline: 2px solid var(--cyan);
+	outline-offset: 4px;
+}
+.chart-stage svg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+.chart-tip {
+	position: absolute;
+	top: 8px;
+	min-width: 9rem;
+	max-width: min(20rem, 80%);
+	padding: 0.55rem 0.7rem;
+	background: #0f1215;
+	border: 1px solid var(--rule);
+	border-radius: 6px;
+	font: 300 11px var(--font-mono), monospace;
+	color: var(--muted);
+	pointer-events: none;
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+	z-index: 2;
+}
+.chart-tip-head {
+	color: var(--ice);
+	margin-bottom: 0.35rem;
+}
+.chart-tip-row {
+	display: grid;
+	grid-template-columns: auto auto 1fr;
+	align-items: center;
+	gap: 0.5rem;
+	line-height: 1.6;
+}
+.chart-tip-row strong {
+	color: var(--ice);
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	text-align: right;
+	min-width: 3.2em;
+}
+.chart-tip-row span {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.chart-key.is-live {
+	margin: 0;
+	gap: 0.35rem 0.4rem;
+}
+.chart-key-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	padding: 0.2rem 0.5rem 0.2rem 0.35rem;
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	font: 300 11px var(--font-mono), monospace;
+	color: var(--muted);
+	cursor: pointer;
+}
+.chart-key-item:hover {
+	border-color: var(--rule);
+	color: var(--ice);
+}
+.chart-key-item:focus-visible {
+	outline: 2px solid var(--cyan);
+	outline-offset: 1px;
+}
+.chart-key-item[aria-pressed="false"] {
+	opacity: 0.45;
+	text-decoration: line-through;
+}
+.chart-foot {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 0.5rem 1rem;
+	margin-top: 0.75rem;
+}
+.chart-foot .chart-source {
+	flex: 1 1 18rem;
+	min-width: 0;
+	margin: 0 !important;
+}
+.chart-actions {
+	display: flex;
+	gap: 0.9rem;
+	margin-left: auto;
+}
+.chart-action {
+	background: none;
+	border: none;
+	padding: 0;
+	font: 300 11px var(--font-mono), monospace;
+	color: var(--muted);
+	text-decoration: underline;
+	text-decoration-color: var(--rule);
+	text-underline-offset: 3px;
+	cursor: pointer;
+}
+.chart-action:hover {
+	color: var(--cyan);
+}
+.chart-action[hidden] {
+	display: none;
+}
+.chart-table {
+	overflow-x: auto;
+	max-height: 18rem;
+	overflow-y: auto;
+	border: 1px solid var(--rule);
+	border-radius: 4px;
+}
+.chart-table[hidden] {
+	display: none;
+}
+.essay-body .chart-table table {
+	margin: 0;
+	font: 300 11px var(--font-mono), monospace;
+	font-variant-numeric: tabular-nums;
+}
+.essay-body .chart-table caption {
+	text-align: left;
+	padding: 0.5rem 0.75rem;
+	color: var(--muted);
+}
+.essay-body .chart-table th,
+.essay-body .chart-table td {
+	padding: 0.3rem 0.75rem;
+	white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+	.header-nav {
+		gap: 1rem;
+	}
+	.essay-list a {
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+	.chart-block {
+		padding: 1rem 0.75rem 0.75rem;
+		margin-left: -0.5rem;
+		margin-right: -0.5rem;
+	}
+	/* Direct labels get cramped on a phone; the key below carries them. */
+	.chart-direct {
+		display: none;
+	}
+	/* SVG text scales down with the viewBox; size it back up in user units. */
+	.chart-tick {
+		font-size: 19px;
+	}
+	.chart-value {
+		font-size: 17px;
+	}
+}

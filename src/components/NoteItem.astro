@@ -1,0 +1,18 @@
+---
+import { dayMonth } from "../lib/content";
+
+interface Props {
+	note: { id: string; data: Record<string, any> };
+	promoted?: boolean;
+}
+const { note, promoted } = Astro.props;
+---
+
+<li class="note-item">
+	<div class="note-meta">
+		<time datetime={note.data.date ? new Date(note.data.date).toISOString() : undefined}>{dayMonth(note.data.date)}</time>
+		<span class="note-title-small">{note.data.title}</span>
+		{promoted && <span class="tag">became an essay</span>}
+	</div>
+	<a class="note-claim" href={`/notes/${note.id}`}>{note.data.claim || note.data.title}</a>
+</li>

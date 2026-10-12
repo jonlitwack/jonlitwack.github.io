@@ -1,0 +1,98 @@
+---
+import { getMenuWithCacheHint, getSiteSettingsWithCacheHint } from "emdash";
+import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import "../styles/site.css";
+
+interface Props {
+	title: string;
+	description?: string | null;
+	image?: string | null;
+	type?: "website" | "article";
+	publishedTime?: string | null;
+	content?: { collection: string; id: string; slug?: string | null };
+}
+
+const { title, description, image, type = "website", publishedTime, content } = Astro.props;
+
+const [settingsResult, menuResult] = await Promise.all([
+	getSiteSettingsWithCacheHint(),
+	getMenuWithCacheHint("primary"),
+]);
+if (Astro.cache?.enabled) {
+	Astro.cache.set(settingsResult.cacheHint);
+	Astro.cache.set(menuResult.cacheHint);
+}
+
+const siteTitle = settingsResult.data?.title || "Jon Litwack";
+const siteTagline = settingsResult.data?.tagline || "";
+const fullTitle = title === siteTitle ? title : `${title} — ${siteTitle}`;
+const menu = menuResult.data;
+const path = Astro.url.pathname;
+const isCurrent = (url: string) =>
+	url === "/" ? path === "/" || path.startsWith("/essays") : path.startsWith(url);
+
+const ogImage = image ? new URL(image, Astro.site ?? Astro.url.origin).toString() : undefined;
+
+const pageCtx = createPublicPageContext({
+	Astro,
+	kind: content ? "content" : "custom",
+	pageType: type,
+	title: fullTitle,
+	pageTitle: title,
+	description: description ?? siteTagline,
+	image: ogImage,
+	content,
+	seo: { ogImage },
+	articleMeta: { publishedTime, author: "Jon Litwack" },
+	siteName: siteTitle,
+});
+const isLoggedIn = !!Astro.locals.user;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="theme-color" content="#161a1f" />
+		<title>{fullTitle}</title>
+		<link rel="alternate" type="application/rss+xml" title="Jon Litwack — everything" href="/rss.xml" />
+		<link rel="alternate" type="application/rss+xml" title="Jon Litwack — essays" href="/essays/rss.xml" />
+		<link rel="alternate" type="application/rss+xml" title="Jon Litwack — notes" href="/notes/rss.xml" />
+		<EmDashHead page={pageCtx} />
+	</head>
+	<body>
+		<EmDashBodyStart page={pageCtx} />
+		<header class="site-header">
+			<div class="container header-row">
+				<a href="/" class="wordmark">{siteTitle}</a>
+				<nav class="header-nav" aria-label="Primary">
+					{
+						menu?.items.map((item) => (
+							<a href={item.url} aria-current={isCurrent(item.url) ? "page" : undefined}>
+								{item.label}
+							</a>
+						))
+					}
+					{isLoggedIn && <a href="/_emdash/admin">Admin</a>}
+				</nav>
+			</div>
+		</header>
+		<main>
+			<slot />
+		</main>
+		<footer class="site-footer">
+			<div class="container">
+				<div class="footer-links">
+					<a href="mailto:jon@jonlitwack.com">jon@jonlitwack.com</a>
+					<span class="footer-separator" aria-hidden="true">·</span>
+					<a href="https://linkedin.com/in/jonlitwack" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+					<span class="footer-separator" aria-hidden="true">·</span>
+					<a href="/rss.xml">RSS</a>
+				</div>
+			</div>
+		</footer>
+		<EmDashBodyEnd page={pageCtx} />
+	</body>
+</html>

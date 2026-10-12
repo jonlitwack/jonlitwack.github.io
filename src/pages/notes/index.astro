@@ -1,0 +1,23 @@
+---
+import { getEmDashCollection } from "emdash";
+import Base from "../../layouts/Base.astro";
+import NoteItem from "../../components/NoteItem.astro";
+import { sortByDate } from "../../lib/content";
+
+const { entries, cacheHint } = await getEmDashCollection("notes", { status: "published", limit: 500 });
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+const notes = sortByDate(entries);
+---
+
+<Base title="Notes" description="Short notes. Where ideas show up before they become essays.">
+	<div class="container">
+		<section class="intro">
+			<h1 class="sr-only">Notes</h1>
+			<p class="tagline">Short notes. Where ideas show up before they become essays.</p>
+		</section>
+		<ul class="note-list">
+			{notes.map((note) => <NoteItem note={note} promoted={!!note.data.promoted_to} />)}
+		</ul>
+		<a href="/" class="back-link">← Essays</a>
+	</div>
+</Base>

@@ -1,0 +1,200 @@
+{
+	"$schema": "https://emdashcms.com/seed.schema.json",
+	"version": "1",
+	"meta": {
+		"name": "jonlitwack.com",
+		"description": "Essays and notes by Jon Litwack",
+		"author": "Jon Litwack"
+	},
+	"settings": {
+		"title": "Jon Litwack",
+		"tagline": "Ideas about collaboration, code as a shared medium, and what happens when more people can touch the material."
+	},
+	"collections": [
+		{
+			"slug": "essays",
+			"label": "Essays",
+			"labelSingular": "Essay",
+			"urlPattern": "/essays/{slug}",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview",
+				"scheduling",
+				"search",
+				"seo"
+			],
+			"sortOrder": 1,
+			"dateField": "date",
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "date",
+					"label": "Date",
+					"type": "datetime",
+					"required": true
+				},
+				{
+					"slug": "description",
+					"label": "Description",
+					"type": "text",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "lead_image",
+					"label": "Lead image URL",
+					"type": "url"
+				},
+				{
+					"slug": "body",
+					"label": "Body",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		},
+		{
+			"slug": "notes",
+			"label": "Notes",
+			"labelSingular": "Note",
+			"urlPattern": "/notes/{slug}",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview",
+				"search"
+			],
+			"sortOrder": 2,
+			"dateField": "date",
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "date",
+					"label": "Date",
+					"type": "datetime"
+				},
+				{
+					"slug": "claim",
+					"label": "Claim (the one-line point)",
+					"type": "string",
+					"searchable": true
+				},
+				{
+					"slug": "source_context",
+					"label": "Where this came from (public)",
+					"type": "string"
+				},
+				{
+					"slug": "body",
+					"label": "Body",
+					"type": "portableText",
+					"searchable": true
+				},
+				{
+					"slug": "promoted_to",
+					"label": "Promoted to essay",
+					"type": "reference",
+					"validation": {
+						"targetCollection": "essays"
+					}
+				}
+			]
+		},
+		{
+			"slug": "pages",
+			"label": "Pages",
+			"labelSingular": "Page",
+			"urlPattern": "/{slug}",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview"
+			],
+			"sortOrder": 3,
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true
+				},
+				{
+					"slug": "body",
+					"label": "Body",
+					"type": "portableText"
+				}
+			]
+		},
+		{
+			"slug": "datasets",
+			"label": "Datasets",
+			"labelSingular": "Dataset",
+			"routable": true,
+			"description": "Tables that charts read from. Edit the CSV here and every chart using it updates.",
+			"supports": [
+				"revisions"
+			],
+			"sortOrder": 4,
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true
+				},
+				{
+					"slug": "csv",
+					"label": "CSV (first row is the header)",
+					"type": "text",
+					"required": true
+				},
+				{
+					"slug": "source",
+					"label": "Source / citation",
+					"type": "text"
+				},
+				{
+					"slug": "notes",
+					"label": "Notes",
+					"type": "text"
+				}
+			]
+		}
+	],
+	"menus": [
+		{
+			"name": "primary",
+			"label": "Primary Navigation",
+			"items": [
+				{
+					"type": "custom",
+					"label": "Writing",
+					"url": "/"
+				},
+				{
+					"type": "custom",
+					"label": "Notes",
+					"url": "/notes"
+				},
+				{
+					"type": "custom",
+					"label": "About",
+					"url": "/about"
+				}
+			]
+		}
+	]
+}

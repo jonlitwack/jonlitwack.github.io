@@ -1,0 +1,58 @@
+---
+import { getEmDashCollection, getSiteSettingsWithCacheHint } from "emdash";
+import Base from "../layouts/Base.astro";
+import NoteItem from "../components/NoteItem.astro";
+import { monthYear, sortByDate } from "../lib/content";
+
+const [essaysResult, notesResult, settings] = await Promise.all([
+	getEmDashCollection("essays", { status: "published", limit: 100 }),
+	getEmDashCollection("notes", { status: "published", limit: 100 }),
+	getSiteSettingsWithCacheHint(),
+]);
+if (Astro.cache?.enabled) {
+	Astro.cache.set(essaysResult.cacheHint);
+	Astro.cache.set(notesResult.cacheHint);
+}
+
+const essays = sortByDate(essaysResult.entries);
+const notes = sortByDate(notesResult.entries).slice(0, 5);
+const tagline = settings.data?.tagline;
+---
+
+<Base title={settings.data?.title || "Jon Litwack"} description={tagline}>
+	<div class="container">
+		<section class="intro">
+			<p class="tagline">{tagline}</p>
+		</section>
+
+		<h2 class="section-label" id="essays">Essays</h2>
+		<ul class="essay-list" aria-labelledby="essays">
+			{
+				essays.map((essay) => (
+					<li>
+						<a href={`/essays/${essay.id}`}>
+							<span class="essay-title">{essay.data.title}</span>
+							<span class="essay-date">{monthYear(essay.data.date)}</span>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+
+		{
+			notes.length > 0 && (
+				<>
+					<h2 class="section-label" id="notes">
+						<span>Notes</span>
+						<a href="/notes">All notes →</a>
+					</h2>
+					<ul class="note-list" aria-labelledby="notes">
+						{notes.map((note) => (
+							<NoteItem note={note} promoted={!!note.data.promoted_to} />
+						))}
+					</ul>
+				</>
+			)
+		}
+	</div>
+</Base>

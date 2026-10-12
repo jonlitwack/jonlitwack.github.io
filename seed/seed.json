@@ -1,0 +1,4358 @@
+{
+	"$schema": "https://emdashcms.com/seed.schema.json",
+	"version": "1",
+	"meta": {
+		"name": "jonlitwack.com",
+		"description": "Essays and notes by Jon Litwack",
+		"author": "Jon Litwack"
+	},
+	"settings": {
+		"title": "Jon Litwack",
+		"tagline": "Ideas about collaboration, code as a shared medium, and what happens when more people can touch the material."
+	},
+	"collections": [
+		{
+			"slug": "essays",
+			"label": "Essays",
+			"labelSingular": "Essay",
+			"urlPattern": "/essays/{slug}",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview",
+				"scheduling",
+				"search",
+				"seo"
+			],
+			"sortOrder": 1,
+			"dateField": "date",
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "date",
+					"label": "Date",
+					"type": "datetime",
+					"required": true
+				},
+				{
+					"slug": "description",
+					"label": "Description",
+					"type": "text",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "lead_image",
+					"label": "Lead image URL",
+					"type": "url"
+				},
+				{
+					"slug": "body",
+					"label": "Body",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		},
+		{
+			"slug": "notes",
+			"label": "Notes",
+			"labelSingular": "Note",
+			"urlPattern": "/notes/{slug}",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview",
+				"search"
+			],
+			"sortOrder": 2,
+			"dateField": "date",
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "date",
+					"label": "Date",
+					"type": "datetime"
+				},
+				{
+					"slug": "claim",
+					"label": "Claim (the one-line point)",
+					"type": "string",
+					"searchable": true
+				},
+				{
+					"slug": "source_context",
+					"label": "Where this came from (public)",
+					"type": "string"
+				},
+				{
+					"slug": "body",
+					"label": "Body",
+					"type": "portableText",
+					"searchable": true
+				},
+				{
+					"slug": "promoted_to",
+					"label": "Promoted to essay",
+					"type": "reference",
+					"validation": {
+						"targetCollection": "essays"
+					}
+				}
+			]
+		},
+		{
+			"slug": "pages",
+			"label": "Pages",
+			"labelSingular": "Page",
+			"urlPattern": "/{slug}",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview"
+			],
+			"sortOrder": 3,
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true
+				},
+				{
+					"slug": "body",
+					"label": "Body",
+					"type": "portableText"
+				}
+			]
+		},
+		{
+			"slug": "datasets",
+			"label": "Datasets",
+			"labelSingular": "Dataset",
+			"routable": true,
+			"description": "Tables that charts read from. Edit the CSV here and every chart using it updates.",
+			"supports": [
+				"revisions"
+			],
+			"sortOrder": 4,
+			"fields": [
+				{
+					"slug": "title",
+					"label": "Title",
+					"type": "string",
+					"required": true
+				},
+				{
+					"slug": "csv",
+					"label": "CSV (first row is the header)",
+					"type": "text",
+					"required": true
+				},
+				{
+					"slug": "source",
+					"label": "Source / citation",
+					"type": "text"
+				},
+				{
+					"slug": "notes",
+					"label": "Notes",
+					"type": "text"
+				}
+			]
+		}
+	],
+	"menus": [
+		{
+			"name": "primary",
+			"label": "Primary Navigation",
+			"items": [
+				{
+					"type": "custom",
+					"label": "Writing",
+					"url": "/"
+				},
+				{
+					"type": "custom",
+					"label": "Notes",
+					"url": "/notes"
+				},
+				{
+					"type": "custom",
+					"label": "About",
+					"url": "/about"
+				}
+			]
+		}
+	],
+	"content": {
+		"essays": [
+			{
+				"id": "essay-code-is-a-medium",
+				"slug": "code-is-a-medium",
+				"status": "published",
+				"data": {
+					"title": "Code Is a Medium",
+					"date": "2026-03-23T04:14:56.777Z",
+					"description": "Last month I sat in a room with a dozen designers. Nobody would call themselves a developer. We opened VS Code, opened Claude Code, and I said: \"Build…",
+					"lead_image": "/images/1774238983250-code-is-a-medium.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "k1",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k0",
+									"text": "Last month I sat in a room with a dozen designers. Nobody would call themselves a developer. We opened VS Code, opened Claude Code, and I said: \"Build something. Anything. You have an hour.\"",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2",
+									"text": "One person built a Pokédex. Another built a personal finance tracker. Someone else made a working quiz app for their kid. These weren't mockups. These weren't prototypes that approximate the experience. These were real, running, interactive applications — and the people who built them had never written a line of code in their lives.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4",
+									"text": "I've been thinking about that room ever since, because what happened in it wasn't a parlor trick. It was a medium shift.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6",
+									"text": "For most of software's history, code has been a trade skill. You learned the syntax, internalized the patterns, spent years building fluency — and then you could make things. Everyone else described what they wanted and hoped the translation held. That's not a knock on engineers. It's a description of a constraint. Code was hard to work in, so working in it required dedication, and dedication created specialization, and specialization created a divide between the people who understood problems and the people who could shape solutions.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8",
+									"text": "We built entire industries around managing that divide. Product management. Business analysis. Requirements documentation. Design handoffs. Sprint planning. All of it, fundamentally, is translation infrastructure — the machinery we invented to move intent from one side to the other.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kb",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ka",
+									"text": "What's changing isn't that everyone learned to code. It's that the medium itself changed.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kd",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kc",
+									"text": "When I describe what I want to build in natural language and an AI agent produces working code, I'm not \"coding\" in any traditional sense. I'm working in code the way a filmmaker works in footage — shaping the material directly, seeing it back, adjusting. The feedback loop went from days to seconds. The translation layer disappeared.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kf",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ke",
+									"text": "This is what it looks like when a medium becomes accessible. Not dumbed down — opened up.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kh",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kg",
+									"text": "The distinction matters. Accessible media don't produce worse work. They produce different work, because different people can finally touch the material. When cameras became portable, we didn't get worse photography. We got street photography, war photography, photojournalism — entire genres that couldn't exist when the medium required a studio and a fifteen-minute exposure. When desktop publishing arrived, professional typesetters didn't disappear. But the relationship between writing and typography changed permanently. The people shaping the words could now shape how the words looked.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kj",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ki",
+									"text": "Here's what a typical session looks like for me now. I open VS Code. I open a terminal with Claude Code. I describe what I'm trying to build — not in technical specifications, but in the language of the problem I'm solving. The agent produces code. I run it. I see what works and what doesn't. I adjust. I iterate.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kl",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kk",
+									"text": "The critical thing isn't that the AI writes the code. It's that I'm in the material. I'm not describing a prototype to someone who will build it. I'm not creating a mockup that approximates the experience. I'm shaping the actual thing — the real, running, interactive thing — and I can feel when it's right the same way I can feel when a layout is right or a sentence lands.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kn",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "km",
+									"text": "And here's what surprised me: the skills that matter most in this mode aren't technical. They're editorial. Knowing what to build. Knowing when something feels right and when it feels off. Knowing how to describe a problem clearly enough that the solution emerges cleanly. Knowing when to push for more and when to ship what you have.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kp",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ko",
+									"text": "These are design skills. Product skills. Craft skills. They're the skills that were always supposed to matter most, but couldn't — because the bottleneck was implementation, and implementation required a different fluency entirely.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kr",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kq",
+									"text": "Now the bottleneck is judgment. The hardest part isn't making the thing. It's knowing what the thing should be.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kt",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ks",
+									"text": "Engineers have always known this, by the way. The best engineers were never just translating specs — they were making design decisions constantly, filling in the gaps that no specification could fully cover. What's changed is that now the people who own the intent can participate in those decisions directly, in real time, in the actual material. Not instead of engineers. Alongside them. Each bringing distinct fluency to the same surface.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kv",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ku",
+									"text": "I think back to that room of designers. The absorption was total — because they were finally touching the thing, not describing it. That's the shift. Not that code got easier. That code became a medium anyone with taste and intent can work in.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kx",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kw",
+									"text": "The designers who learn to work in it won't replace engineers. The operators who start building their own tools won't eliminate the need for architecture. But the line between who has ideas and who implements them is going to blur until it's unrecognizable. And the things we build on the other side of that blur are going to be better. Not because the tools got faster. Because more kinds of intelligence are finally touching the material.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kz",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ky",
+									"text": "Code isn't just a trade skill anymore. It's a medium. And the most interesting work is going to come from the people who just got access to it.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-collaboration-through-code",
+				"slug": "collaboration-through-code",
+				"status": "published",
+				"data": {
+					"title": "Collaboration Through Code",
+					"date": "2026-03-01T00:00:00.000Z",
+					"description": "For a long time, code was a wall. You either spoke the language or you waited. And if you waited, you translated — your ideas into tickets, tickets into…",
+					"lead_image": "/images/1774239006165-collaboration-through-code.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "k11",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k10",
+									"text": "For a long time, code was a wall. You either spoke the language or you waited. And if you waited, you translated — your ideas into tickets, tickets into estimates, estimates into sprints, sprints into something that didn't quite match what you had in your head. The wall didn't just slow things down. It changed what got built.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k13",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k12",
+									"text": "I spent a lot of years on the design side of that wall. I understood the problem better than most people in the room, but I couldn't touch the solution. I could describe it, sketch it, argue for it — but then I had to hand it off and hope the translation held.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k15",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k14",
+									"text": "What's changed isn't that the wall is gone. It's that it's become optional.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k17",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k16",
+									"text": "I was in a room recently with a group of designers. Nobody would call themselves a developer. We opened VS Code, opened Claude Code, and started building. In an hour, people had made a Pokédex, a personal data management tool, a native mobile prototype. Real things. Things that worked. The absorption in the room was total — because they were finally touching the thing, not describing it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1b",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k18",
+									"text": "That's what I mean by collaboration through code. Not that everyone should learn to code. Not that AI replaces engineers. But that code is becoming a shared medium — something you can work ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k19",
+									"text": "in",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "k1a",
+									"text": " together, the way musicians work in sound or architects work in space. And when more perspectives can touch the material, the material gets better.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "k1c",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "k1e",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1d",
+									"text": "The best products I've seen built in the last two years weren't built faster because the engineers got faster. They were built better because the distance between the person who understood the problem and the person shaping the solution collapsed. The domain expert was in the code. The designer was running the prototype. The product thinker was changing the logic directly, not filing a ticket.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1i",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1f",
+									"text": "There's a word for when a medium becomes accessible enough that non-specialists start working in it: ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k1g",
+									"text": "democratization",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "k1h",
+									"text": ". But that word makes it sound like a policy. What actually happens is more interesting. When more kinds of people work in a medium, the medium itself changes. Jazz happened when brass instruments became cheap. Punk happened when three-chord progressions became teachable. The medium doesn't just reach more people — it goes somewhere new.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1k",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1j",
+									"text": "I think that's what's happening with code right now. And I think the people who are going to shape where it goes aren't just the engineers. They're the designers who finally get to build what they imagine. The operators who can finally fix the thing that's been annoying them for three years. The domain experts who can finally make the tool that only they knew was missing.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1m",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1l",
+									"text": "The wall is coming down. The question is what we build on the other side.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-context-engineering",
+				"slug": "context-engineering",
+				"status": "published",
+				"data": {
+					"title": "Context Engineering",
+					"date": "2026-03-22T00:00:00.000Z",
+					"description": "A few months ago I was building a client demo with Claude Code — a working prototype of a dashboard for their internal operations team. The first pass was…",
+					"lead_image": "/images/1774239025225-context-engineering.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "k1o",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1n",
+									"text": "A few months ago I was building a client demo with Claude Code — a working prototype of a dashboard for their internal operations team. The first pass was fine. Functional. Generic. It looked like every other dashboard I'd ever seen.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1q",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1p",
+									"text": "So I fed the agent their brand guidelines. Then their Figma files. Then the Jira tickets describing what their ops team actually needed. Then the user research interviews I'd pulled from their last discovery sprint. Same prompt. Same model. Radically different output. The thing it built the second time wasn't just better-looking — it understood what it was building and why.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1s",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1r",
+									"text": "That gap between the first pass and the second is the entire game right now. And the thing that closed the gap wasn't a better prompt. It was better context.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1u",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1t",
+									"text": "There's a phrase I keep using in conversations with product teams: context engineering. It's not a formal discipline yet — nobody has a certification in it — but it's becoming the single most important skill in AI-powered development. And almost nobody is talking about it clearly.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1w",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1v",
+									"text": "Here's the basic insight. When you ask an AI agent to build something, the output is only as good as the context the agent has access to. Give it a vague prompt, get a vague result. Give it your Figma files, your Jira backlog, your architecture diagrams, your brand guidelines, and your user research — and you get something that actually understands what it's building and why.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k1y",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1x",
+									"text": "This sounds obvious. It isn't. Because most teams are still treating AI like a faster version of their existing workflow. They type a prompt. They get output. They iterate through conversation. They're using the most powerful tools ever built for software development the same way they'd use autocomplete.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k20",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k1z",
+									"text": "Context engineering is the practice of deliberately structuring and feeding information to AI systems so they can do their best work. It's the difference between \"build me a dashboard\" and giving the agent access to your design system, your data schema, your user personas, your performance requirements, and your last three sprint retros. Same tool. Radically different output.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k22",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k21",
+									"text": "The reason this matters now is MCP — Model Context Protocol. I've started calling it the USB-C of AI, because that's essentially what it is: a universal standard for connecting AI models to external tools and data sources. Before MCP, getting context into an AI agent was manual. You'd copy-paste, you'd upload files, you'd describe things in prose. It worked, but it was like plugging every device into your computer with a different proprietary cable.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k24",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k23",
+									"text": "MCP changes that. It lets an AI agent pull from your Figma files directly. Read your Jira tickets. Query your database. Access your documentation. The context isn't something you manually prepare — it's something the agent accesses natively, in real time, as part of its workflow. And MCP became the fastest-adopted standard I've ever seen. Within months of its release, every major tool had an integration. That speed tells you something about how badly the ecosystem needed a universal context layer.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k26",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k25",
+									"text": "But here's the part that doesn't get enough attention: having access to context and knowing which context matters are two different problems. The first is a technical problem — MCP largely solves it. The second is a craft problem. It requires judgment.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k28",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k27",
+									"text": "When I'm working with Claude Code on a complex build, I spend as much time thinking about context as I do about the thing I'm building. Which files does the agent need to see? What's the right level of architectural guidance versus letting the agent make its own decisions? When do I give it the full picture and when do I constrain its scope? I've learned the hard way that dumping everything into the context window is almost as bad as giving it nothing — the agent gets overwhelmed, starts making weird connections, loses the thread. There's an art to knowing what to include and what to leave out.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2a",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k29",
+									"text": "These are editorial decisions. They're the same kind of judgment calls that a good creative director makes — not doing the work, but shaping the conditions under which the work happens.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2c",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2b",
+									"text": "This is why context engineering is a design skill, not just a technical skill. It's about understanding what the agent needs to know, in what order, at what level of detail, to produce work that's actually good. And \"good\" here doesn't mean \"technically correct.\" It means coherent, intentional, aligned with the larger vision. The same skills that make someone a great design leader — the ability to set direction, to provide the right constraints, to know when to be specific and when to be open-ended — are exactly the skills that make someone great at context engineering.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2e",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2d",
+									"text": "The teams that are getting the most out of AI right now aren't the ones with the best prompts. They're the ones with the best context architectures. They've thought about what information lives where, how it connects, and how to make it available to AI agents at the moment of need. They've turned context from an afterthought into infrastructure.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2g",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2f",
+									"text": "If your AI output feels generic, the problem probably isn't the model. It's the context. And the fix isn't a better prompt — it's a better understanding of what the agent needs to know to do work that actually matters.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-design-as-governance",
+				"slug": "design-as-governance",
+				"status": "published",
+				"data": {
+					"title": "Design as Governance",
+					"date": "2026-03-22T00:00:00.000Z",
+					"description": "I was on a call last year with a VP of customer experience at a large financial services company. They'd just rolled out an AI agent to handle first-tier…",
+					"lead_image": "/images/1774239040854-design-as-governance.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "k2i",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2h",
+									"text": "I was on a call last year with a VP of customer experience at a large financial services company. They'd just rolled out an AI agent to handle first-tier support — account questions, balance inquiries, basic troubleshooting. The agent was technically solid. Fast. Accurate. Handled eighty percent of volume without escalation.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2k",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2j",
+									"text": "But the NPS scores tanked.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2m",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2l",
+									"text": "When they dug in, they found the problem wasn't accuracy. It was tone. The agent was resolving issues efficiently but coldly. It would approve a fee reversal and then immediately pivot to the next issue without acknowledging that the customer had been frustrated. It would explain a policy correctly but in language that felt like a legal brief. It was right about everything and wrong about the experience.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2o",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2n",
+									"text": "The VP asked me: \"Who owns this? It's not a bug. It's not a policy violation. It's not a design problem in the traditional sense — there's no interface to redesign. It's just... the AI doesn't behave like us.\"",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2q",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2p",
+									"text": "That question has been stuck in my head ever since. Because the answer, honestly, is that nobody owns it. Not yet.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2s",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2r",
+									"text": "For twenty years, the enterprise design conversation was about making things easier to use. Better interfaces. Smoother workflows. Fewer clicks. That conversation mattered — and it's basically over. Not because we solved usability, but because the thing being governed changed underneath us.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2u",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2t",
+									"text": "Enterprises don't just have digital products anymore. They have AI agents acting on behalf of customers. They have automated decision systems approving loans, routing shipments, escalating support tickets. They have models making judgment calls thousands of times a second that used to require a human being with context and discretion.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2w",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2v",
+									"text": "The question isn't \"is the interface easy to use?\" anymore. The question is \"does this system behave in a way that's coherent, trustworthy, and aligned with what the organization actually intends?\" That's a governance question. And it's a design question. They're the same question.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k2y",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2x",
+									"text": "When an AI agent handles a customer complaint, it's not just executing a workflow. It's making a series of micro-decisions about tone, priority, escalation, compensation — decisions that collectively define the customer's experience of the entire organization. Who designs those decisions? Who decides what \"good\" looks like when the system is making ten thousand of them an hour? Who notices when the pattern drifts?",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k30",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k2z",
+									"text": "Right now, mostly nobody. Engineers build the systems. Product managers define the requirements. Legal sets the guardrails. But the holistic question — \"what experience is this organization actually delivering, across every touchpoint, human and automated?\" — that question falls between every chair in the room.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k32",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k31",
+									"text": "That's the governance gap. And designers are the people best equipped to fill it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k34",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k33",
+									"text": "Not because designers know more about compliance or risk management than lawyers do. But because designers are trained to hold the human experience as the organizing principle. They're trained to think across systems, to notice when the seams between two perfectly functional components create a terrible experience, to ask \"what does this feel like from the other side?\"",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k36",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k35",
+									"text": "That skill — the ability to evaluate a complex system from the perspective of the person it affects — is exactly what AI governance needs and mostly doesn't have.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k38",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k37",
+									"text": "Think about what governance looks like today in most enterprises. It's policy documents. It's review boards. It's checklists that get applied after the system is built. It's a compliance exercise, not a design exercise. And the result is predictable: systems that are technically compliant but experientially incoherent. The agent follows the rules but the customer feels like they're talking to a bureaucracy. The automated decision is within policy but the person on the receiving end has no idea why it happened or what to do about it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3a",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k39",
+									"text": "That VP I talked to — they didn't have a technical problem. They had a design problem that nobody in their organization had the language for. The AI agent needed what any customer-facing employee needs: not just rules, but judgment. Not just accuracy, but empathy. And the only people in most organizations who think professionally about judgment and empathy at scale are designers.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3c",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3b",
+									"text": "I've started calling this \"design as governance\" because I think the framing matters. If you call it governance, you get compliance teams and policy documents. If you call it design, you get people who are obsessed with coherence, who notice when the system's behavior contradicts its stated values, who can hold the whole picture in their head and spot the places where it breaks.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3e",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3d",
+									"text": "The enterprises that figure this out are going to have a massive advantage. Not because their AI is better — the models are commoditizing fast — but because their AI behaves in a way that feels intentional. Trustworthy. Human. That's not an engineering problem. It's not a legal problem. It's a design problem at organizational scale.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3g",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3f",
+									"text": "And it's the most important design problem of the next decade.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-the-agent-hype-is-1999-build-like-its-2003",
+				"slug": "the-agent-hype-is-1999-build-like-its-2003",
+				"status": "published",
+				"data": {
+					"title": "The Agent Hype Is 1999. Build Like It's 2003.",
+					"date": "2026-04-04T22:34:01.139Z",
+					"description": "In 1999, Pets.com raised $82.5 million in an IPO. Nine months later it was gone. The internet was real. The business model wasn't. The mistake wasn't…",
+					"lead_image": "/images/1775342040363-og-the-agent-hype-is-1999-build-like-its-2003.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "k3i",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3h",
+									"text": "In 1999, Pets.com raised $82.5 million in an IPO. Nine months later it was gone. The internet was real. The business model wasn't. The mistake wasn't believing in the technology — it was believing the trust and infrastructure would catch up on the schedule the pitch deck required.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3k",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3j",
+									"text": "I keep thinking about Pets.com when I hear people talk about autonomous AI agents.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3m",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3l",
+									"text": "Not because agents aren't real. They are. I've been building with them for two years — for enterprises, for logistics platforms, for my own products. They're genuinely transformative. But the mental model driving most of the hype right now is the same category of wrong that took down most of the dot-com era: confusing a correct vision with a present reality.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3o",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3n",
+									"text": "Here's what I mean.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3q",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3p",
+									"text": "The core confusion",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3s",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3r",
+									"text": "When people say \"agent,\" what they picture is automation. Deploy it, walk away, collect the output. Set it and forget it. The dream is a bot that runs your workflows while you sleep — deterministic, reliable, unsupervised.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3u",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3t",
+									"text": "That's not what agents are.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3x",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3v",
+									"text": "Automation is deterministic. You encode a process, it runs the process, same output every time. That's the whole value proposition — consistency. Predictability. You trust it to run unsupervised ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k3w",
+									"text": "because it does the same thing every time.",
+									"marks": [
+										"em"
+									]
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k3z",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k3y",
+									"text": "Agents are probabilistic. They are, at their core, giant probability machines. Every output is a best estimate given context. Two identical inputs can produce meaningfully different outputs. Exceptions aren't handled explicitly — they're guessed at.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k41",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k40",
+									"text": "That's not a flaw. It's what makes them extraordinary. But it also means the mental model of \"automation, but smarter\" isn't just wrong — it's the kind of wrong that compounds.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k43",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k42",
+									"text": "The math nobody wants to look at",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k45",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k44",
+									"text": "When I was building with Cline and watching the context window fill up, I learned something visceral about how these systems fail. It's not one dramatic crash. It's a thousand small wrong turns, each one looking reasonable in isolation.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "chart",
+							"_key": "k46",
+							"json": "{\n  \"title\": \"Process success rate by step count\",\n  \"source\": \"Compound probability: success rate = reliability ^ steps. Even optimistic assumptions collapse over multi-step processes.\",\n  \"type\": \"line\",\n  \"height\": 260,\n  \"xLabels\": [\"0\",\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\"],\n  \"xSuffix\": \" steps\",\n  \"ySuffix\": \"%\",\n  \"yMin\": 0,\n  \"yMax\": 100,\n  \"datasets\": [\n    {\n      \"label\": \"99% per-step reliability\",\n      \"color\": \"#e8e6df\",\n      \"width\": 2.5,\n      \"data\": [100,99,98,97,96.1,95.1,94.1,93.2,92.3,91.4,90.4,89.5,88.6,87.8,86.9,86,85.1,84.3,83.5,82.6,81.8]\n    },\n    {\n      \"label\": \"95% per-step reliability\",\n      \"color\": \"#888780\",\n      \"width\": 2.5,\n      \"data\": [100,95,90.3,85.7,81.5,77.4,73.5,69.8,66.3,63,59.9,56.9,54,51.3,48.8,46.3,44,41.8,39.7,37.7,35.8]\n    },\n    {\n      \"label\": \"90% per-step reliability\",\n      \"color\": \"#c84b2a\",\n      \"width\": 2.5,\n      \"data\": [100,90,81,72.9,65.6,59,53.1,47.8,43,38.7,34.9,31.4,28.2,25.4,22.9,20.6,18.5,16.7,15,13.5,12.2]\n    }\n  ]\n}"
+						},
+						{
+							"_type": "block",
+							"_key": "k4c",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k47",
+									"text": "A 20-step agentic process at 95% per-step reliability — optimistic — only succeeds ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k48",
+									"text": "36% of the time",
+									"marks": [
+										"strong"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "k49",
+									"text": ". Demis Hassabis put it plainly: ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k4a",
+									"text": "\"If your AI model has a 1% error rate and you plan over 5,000 steps, that 1% compounds like compound interest.\"",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "k4b",
+									"text": " By the time you notice, the agent has been confidently wrong for a long time.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k4g",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4d",
+									"text": "I watched this in my own work. The model would declare a feature complete. I'd go look at it. Something was subtly off — not broken, just ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k4e",
+									"text": "wrong",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "k4f",
+									"text": " — in a way that only became obvious three features later when everything built on top of it stopped making sense. The agent had no idea. It was already on to the next thing.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k4i",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4h",
+									"text": "Only 15% of technology leaders are actually deploying autonomous agents in production. The rest are stuck in pilot mode — running demos that look impressive and never make it past testing. That gap between demo and production isn't a capability problem. It's a reliability problem that the autonomy framing makes impossible to solve.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k4k",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4j",
+									"text": "The signals that were flashing in 1999",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k4m",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4l",
+									"text": "Here's the thing about the dot-com crash: the internet was real. The vision was correct. Amazon, Google, eBay — they're exactly what the boosters said the internet would produce. The mistake wasn't the vision. It was the assumption that trust and infrastructure would follow capability on the venture timeline.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k4o",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4n",
+									"text": "The data on internet trust adoption tells this story clearly.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "chart",
+							"_key": "k4p",
+							"json": "{\n  \"hero\":true,\n  \"title\": \"The trust arc — % of US adults by category, 1995–2026\",\n  \"source\": \"Internet: Pew Research Center adoption surveys (1995–2015); US Census Bureau e-commerce data (1999–2014); Pew online banking surveys (2000–2013). AI: Pew ChatGPT usage surveys (2023–2025); Fed Reserve Bank of St. Louis generative AI data (2024–2025).\",\n  \"type\": \"line\",\n  \"height\": 300,\n  \"xLabels\": [\"1995\",\"1996\",\"1997\",\"1998\",\"1999\",\"2000\",\"2001\",\"2002\",\"2003\",\"2004\",\"2005\",\"2006\",\"2007\",\"2008\",\"2009\",\"2010\",\"2011\",\"2012\",\"2013\",\"2014\",\"2015\",\"2016\",\"2017\",\"2018\",\"2019\",\"2020\",\"2021\",\"2022\",\"2023\",\"2024\",\"2025\",\"2026\"],\n  \"ySuffix\": \"%\",\n  \"yMin\": 0,\n  \"yMax\": 100,\n  \"datasets\": [\n    {\n      \"label\": \"Information (internet)\",\n      \"color\": \"#888780\",\n      \"width\": 2.5,\n      \"data\": [14,18,22,31.5,41,46,57,60,63,65.5,68,70.5,73,75,77,79,80,81,85,87,null,null,null,null,null,null,null,null,null,null,null,null]\n    },\n    {\n      \"label\": \"ID & Access (internet)\",\n      \"color\": \"#1D9E75\",\n      \"width\": 2.5,\n      \"data\": [null,null,null,null,null,null,null,null,null,null,5,8,14.5,21,37,46,50,55,57,58,65,null,null,null,null,null,null,null,null,null,null,null]\n    },\n    {\n      \"label\": \"Logistics (internet)\",\n      \"color\": \"#378ADD\",\n      \"width\": 2.5,\n      \"data\": [null,null,null,null,4,6,8.5,11,12.5,14,17,20,22.5,25,27,29,32.5,36,41,46,null,null,null,null,null,null,null,null,null,null,null,null]\n    },\n    {\n      \"label\": \"Finance (internet)\",\n      \"color\": \"#c84b2a\",\n      \"width\": 2.5,\n      \"data\": [null,null,null,null,null,8,11,14,18,22,28,32,34,36,41,46,48,49.5,51,53,null,null,null,null,null,null,null,null,null,null,null,null]\n    },\n    {\n      \"label\": \"Information (AI)\",\n      \"color\": \"#c0bfba\",\n      \"width\": 2,\n      \"data\": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,5,17,23,34,45]\n    },\n    {\n      \"label\": \"ID & Access (AI)\",\n      \"color\": \"#7ecfb0\",\n      \"width\": 2,\n      \"data\": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1,4,9,16,26]\n    },\n    {\n      \"label\": \"Logistics (AI)\",\n      \"color\": \"#8fc5e8\",\n      \"width\": 2,\n      \"data\": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,1,3,7,13]\n    },\n    {\n      \"label\": \"Finance (AI)\",\n      \"color\": \"#e8a882\",\n      \"width\": 2,\n      \"data\": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,0,0,1,3,6]\n    }\n  ]\n}"
+						},
+						{
+							"_type": "block",
+							"_key": "k4t",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4q",
+									"text": "In 1998, 13% of internet users had ever banked online — not because it didn't work, but because trust doesn't follow capability. It accumulates in stages: information first, then identity, then logistics, then money. By 2013 — ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k4r",
+									"text": "eighteen years",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "k4s",
+									"text": " after the web went mainstream — 51% of US adults banked online. That's the full arc. And the technology was ready years before the trust was.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k4v",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4u",
+									"text": "We are at year four of that arc with AI. The information rung is climbing fast — AI chatbot use hit ~45% of US adults in 2026. But ID, logistics, and finance are barely off zero. Autonomous agents require trust rung four. We are at rung one. The companies burning capital on autonomous agent deployments right now are Pets.com. The infrastructure isn't there. The trust isn't there. The timeline the pitch deck requires does not exist.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k4x",
+							"style": "blockquote",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4w",
+									"text": "The companies that survived the dot-com crash weren't the ones with the boldest vision. They were the ones who built for where trust actually was.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k4z",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k4y",
+									"text": "Amazon's stock fell 90% in the crash. It survived because it was building real infrastructure for real customer behavior — not projecting trust that hadn't been earned yet. Pets.com died because its business model assumed a trust level that was years away. The product was fine. The timing was delusional.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k51",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k50",
+									"text": "But the shock is what should worry you",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k53",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k52",
+									"text": "Here's the part the dot-com parallel makes genuinely unsettling. Trust gaps don't close gradually. They close suddenly, forced by something external nobody planned for.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k55",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k54",
+									"text": "E-commerce grew at roughly one percentage point of retail share per year for two decades. Steady. Predictable. And then COVID hit.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "chart",
+							"_key": "k56",
+							"json": "{\n  \"title\": \"E-commerce as % of US retail sales — the COVID shock\",\n  \"source\": \"Source: US Census Bureau Quarterly Retail E-Commerce Sales. IBM US Retail Index (2020) estimated COVID accelerated digital adoption by five years in a single quarter.\",\n  \"type\": \"bar\",\n  \"height\": 240,\n  \"xLabels\": [\"2016\",\"2017\",\"2018\",\"2019\",\"2020\",\"2021\",\"2022\",\"2023\",\"2024\"],\n  \"ySuffix\": \"%\",\n  \"yMin\": 0,\n  \"yMax\": 20,\n  \"datasets\": [\n    {\n      \"label\": \"E-commerce % of retail\",\n      \"color\": \"#c84b2a\",\n      \"fill\": true,\n      \"data\": [8.0,8.9,9.7,11.0,14.3,13.2,14.6,15.4,16.1],\n      \"colors\": [\"#c0bfba\",\"#c0bfba\",\"#c0bfba\",\"#c0bfba\",\"#c84b2a\",\"#e8a882\",\"#e8a882\",\"#e8a882\",\"#e8a882\"]\n    }\n  ]\n}"
+						},
+						{
+							"_type": "block",
+							"_key": "k58",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k57",
+									"text": "E-commerce sales jumped 43% in 2020 alone — $244 billion added in a single year. IBM estimated the pandemic accelerated digital adoption by five years. Not because the technology improved. Because an external shock removed the alternative.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5a",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k59",
+									"text": "Something will do this to AI. A competitive shock. A labor event. Something nobody sees coming. And when the trust gap closes suddenly, every organization that designed their workflows around the autonomy model — unsupervised, no checkpoints, probabilistic systems treated as deterministic ones — is going to face cascading failures at a scale they weren't built to handle. The dot-com survivors had infrastructure. The ones who didn't were already gone.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5c",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5b",
+									"text": "What the survivors did differently",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5g",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5d",
+									"text": "The question everyone is asking is: ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k5e",
+									"text": "how do we make agents more autonomous?",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "k5f",
+									"text": " Wrong question.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5j",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5h",
+									"text": "The right question is: ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "k5i",
+									"text": "how do we make humans radically more productive with agents in the loop?",
+									"marks": [
+										"strong"
+									]
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5l",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5k",
+									"text": "I learned this building Protogen. The breakthrough wasn't removing humans from the process. It was getting the right humans closer to the material, faster. The agent handles speed and volume. The human handles judgment and consequence. The loop stays tight. You never let the model run far enough ahead that catching an error means unwinding a cascade.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5n",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5m",
+									"text": "In my own workflow, the things that actually matter — intent, context, craft, speed of evaluation, taste — none of them come from the agent. They all come from the human directing it. The agent is the engine. The human is the driver. You don't remove the driver because the engine got more powerful.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5p",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5o",
+									"text": "The dot-com survivors built for where users actually were, not where the pitch deck said they'd be. Amazon built fulfillment infrastructure. Google built search that worked. They didn't wait for users to trust the internet with their money before they had a working business. They built real value at the rung where trust already existed, and grew with the arc.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5r",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5q",
+									"text": "That's the play. Build real productivity at rung one and two. Design your checkpoints. Measure human output, not agent autonomy. Get your infrastructure right before the shock arrives — because when it does, you won't have time to build it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "k5s",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "k5u",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5t",
+									"text": "Two years ago I thought agents were automation — smarter, faster, but fundamentally the same category of tool. I was wrong about that.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5w",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5v",
+									"text": "What they actually are is something we don't have a clean mental model for yet — probabilistic collaborators that need a human close enough to catch what they miss. Not as a workaround. As the design.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k5y",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5x",
+									"text": "The dot-com crash didn't happen because the internet wasn't real. It happened because people mistook a correct vision for a present reality and built businesses that depended on trust that hadn't been earned.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k60",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k5z",
+									"text": "The agent correction will happen for exactly the same reason.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k62",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k61",
+									"text": "The question is whether you're building for the crash, or building through it.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-the-emergent-future",
+				"slug": "the-emergent-future",
+				"status": "published",
+				"data": {
+					"title": "The Emergent Future of Product Development",
+					"date": "2025-04-24T00:00:00.000Z",
+					"description": "I've been on an adventure. I wrote this as a result of six months of equal parts successes and failures with what people now call vibe coding — a term that…",
+					"lead_image": "/images/1774239092083-the-emergent-future.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "k64",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k63",
+									"text": "I've been on an adventure.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k66",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k65",
+									"text": "I wrote this as a result of six months of equal parts successes and failures with what people now call vibe coding — a term that wouldn't come into existence until three-quarters of the way through this story. My goal is to break down the evolution of this new development process into the atomic ingredients that make it work.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k68",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k67",
+									"text": "Two years ago, if you asked me what I thought of AI, I'd tell you it's what VR was in the 90s. Sounds really cool, and I'm glad ChatGPT is fun, but I just didn't see the broader application beyond content generation. For product development in particular, I could see the benefits, but only in the ways AI would make things \"better.\" Not different. Sure, I could create the things I've always created faster than before, but I was still fundamentally doing the same job.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6a",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k69",
+									"text": "In May 2024, that all changed.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6c",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6b",
+									"text": "I fell in love with Claude. Specifically Sonnet 3.5 — the very first model that could write elegant code and reason with a full codebase without completely crapping its pants. I was struggling with how to build an app, so I decided to ask Sonnet for advice. But it did me one better. It just went ahead and built the damn thing for me.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6e",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6d",
+									"text": "This was a game changer. I went from taking months or years focusing on just one idea to doing it in minutes or days. By June, I was staying up until ungodly hours of the night building little apps — video transcription scripts, data visualizations, purpose-built content generators. All running on my machine, costing me nothing, violating no InfoSec policies. The world felt like it did in the early 2000s when tech was simpler. My lack of understanding of AWS, or the latest CI/CD pipelines — little of that mattered anymore. With this new partnership, I had access to knowledge of these things in my back pocket. As long as I was curious enough and tenacious enough, I could build almost anything.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6g",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6f",
+									"text": "With new tools came new challenges. I challenged myself to build something bigger — something I'd normally need a full team for. And of course, it was harder. I was literally copying and pasting code from the Claude Desktop app into VS Code. The initial app that Claude would build would usually break with just one or two new asks. My productivity with the AI component dropped to about 50% useful. Errors piled up. I found myself asking the same question over and over: \"Why isn't this working?\" This got tedious.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6i",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6h",
+									"text": "Not only was this not fun anymore — this approach wasn't scalable into real products.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6k",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6j",
+									"text": "Enter the integrated AI editor. Cursor, Cline, Windsurf — which one do I pick? In July 2024, I'm talking to a former coworker who's gone to a small boutique shop. I ask if it's any different there, and immediately he says: \"Oh yeah — we're using AI for everything. Have you checked out Cursor?\"",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6m",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6l",
+									"text": "Within the first few hours, Cursor fixed most of the issues with my last app. Within the first few days, I hated Cursor. I started swearing at it. It was creating workaround code and bloating the codebase with unnecessary junk. But it showed promise. Maybe if I knew what was going on under the covers, I could improve it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6o",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6n",
+									"text": "After some Reddit lurking, the tool of choice for the emerging underground of AI coding folk was Cline. Like all great open source tools, it offered a \"you get what you put into it\" experience. And what I loved immediately was the transparency — a clear view into what's going on with the model. Tokens going up and down. Cache usage. And critically, the context window.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6q",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6p",
+									"text": "The context window was the game changer. I like to think of it as \"thinking capacity.\" Get too close to the limit and the model runs out of room to think. It does stupid stuff — deleting code, writing unnecessary junk. Just like Cursor was doing. This transparency into how the data moved opened my brain up to what was really happening. Or more concretely — WHY Cursor, Claude, and every other tool would eventually choke and spit out garbage.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6s",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6r",
+									"text": "But understanding the problem didn't solve it. If you're building anything beyond a simple to-do list, you're going to need more than one context window. Starting a new chat means starting from scratch — all that context from the previous chat, gone. And models don't tell you \"Wait, I have no idea what you're talking about.\" They happily generate more code and tell you the task is complete.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6u",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6t",
+									"text": "So I went back to Reddit and found a concept catching on: memory banks. A place to bank the memory of previous chats. The most popular approach looked something like this — create four files in your codebase that keep an ongoing reference to project context: a project roadmap, current task, tech stack, and codebase summary. Give your AI editor instructions to read these documents before generating code, and to update them after completing a task. A full loop — I could use Claude Desktop to talk through the product idea and generate these documents, then hand them off to the editor.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6w",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6v",
+									"text": "Which brings me to the most recent chapter.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k6y",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6x",
+									"text": "It's February 2025 and despite fewer hallucinations, the work starts to feel tedious again. I'd become a slave to the AI machine — just there to copy and paste errors out of my terminal and dump them into the chat. It got to the point where Cline was the plant in Little Shop of Horrors yelling \"FEED ME SEYMOUR!\"",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k70",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k6z",
+									"text": "Then I found MCP. Model Context Protocol. The USB-C of AI.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k72",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k71",
+									"text": "MCP is basically like adding plugins to a model — and I want to pause here to pronounce the magnitude of this. Anthropic and OpenAI are effectively the Coke and Pepsi of AI, and OpenAI adopted MCP as a protocol just weeks after its announcement. This was the fastest standard creation I know of in history. Imagine if Sony, who created Betamax, looked at what JVC was doing with VHS and just said: \"Nope. You have it. We're not gonna bother. Well done.\"",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k74",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k73",
+									"text": "In just a few months, there are hundreds — maybe thousands — of MCP servers you can use like lego bricks to fully automate your product development lifecycle. Designers can use the Figma MCP server to read their design work and generate production-grade frontend components. Product owners can use the Jira MCP server to automate work distribution and analysis. Engineers can use the Playwright MCP server to run user testing before the AI erroneously declares a feature complete.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k76",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k75",
+									"text": "All the baton tosses and gaps between bits of context we've held in our own heads as unique capabilities or disciplines can now be mashed together into powerful prompts and outputs. If I already have a Figma file, a backlog in Jira, and an architecture diagram in LucidCharts, I can feed that all as context into an LLM and have it spit out what I want.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k78",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k77",
+									"text": "This brings me to what's actually changing about product development — and why I think we're on the verge of something that makes Agile obsolete.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7a",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k79",
+									"text": "Let me be careful here, because \"Agile is dead\" is a tired take and that's not what this is. Agile was the right answer to a real problem. It introduced feedback loops, iteration, collaboration. It made software better. But Agile was designed for a world where the bottleneck was implementation — where writing code was slow and expensive. Sprints, story points, velocity — all of it is machinery for managing a scarce resource: engineering time. What happens when that resource isn't scarce anymore?",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7c",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7b",
+									"text": "Here's the contrast. In June 2024, a client had an idea and wanted to know if it was worth pursuing. That meant initial market sizing and persona definition, wireframing, architectural assumptions, prototyping, and presenting to stakeholders. Total timeline: 4–12 weeks.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7e",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7d",
+									"text": "Yesterday, a client asked me to help them pitch a concept. I asked them to recite the idea out loud while I recorded them. I looked for some UI concepts that mapped to the idea. Uploaded the recording and the UI concepts into Cline. Guided the development. Deployed a working demo so they could show it off internally. Total timeline: 10 minutes to 2 weeks.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7g",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7f",
+									"text": "The biggest change between these timelines is that I'm moving the initial research we'd typically perform from the beginning to well after this process. Those were ingredients we needed to get right BEFORE we got funding for a PoC, which could cost thousands to hundreds of thousands of dollars. Today, I can generate a PoC for nearly nothing. Which means I can skip the last few bits of the traditional process and THEN get funding for the actual build.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7i",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7h",
+									"text": "Here's what I've seen emerge as the atomic ingredients of this new process.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7k",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7j",
+									"text": "The first is intent. You have to know what you're trying to build and why. This sounds trivial but it's the hardest part, because the safety net of a two-week sprint — where you could figure it out as you went — is gone. When you can build anything in minutes, the question \"what should we build?\" becomes urgent in a way it never was before.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7m",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7l",
+									"text": "The second is context. The quality of what the agent produces is directly proportional to the context you give it. Design files, architecture decisions, user research, business constraints — all of it needs to be accessible to the agent, ideally through MCP rather than manual copy-paste. Context engineering is becoming a discipline in its own right.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7o",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7n",
+									"text": "The third is craft. The agent writes code, but someone still needs to know whether the code is good. Not just \"does it work\" but \"is this the right architecture? Will this scale? Does this feel right?\" That judgment doesn't come from the agent. It comes from the people directing it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7q",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7p",
+									"text": "The fourth is speed of evaluation. When you can produce working software in minutes, the bottleneck shifts to how fast you can evaluate it. Can you look at the thing, understand what's working and what isn't, and articulate the next iteration? This is closer to editorial judgment than engineering skill. The people who are best at it tend to be the ones with the broadest understanding of the problem — not necessarily the deepest technical knowledge.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7s",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7r",
+									"text": "The fifth is taste. I keep coming back to this word because nothing else captures it. When the cost of building drops to near zero, the differentiator is what you choose to build. What separates great work from mediocre work is the same thing it's always been — someone with a strong point of view about what the thing should be.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7u",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7t",
+									"text": "The coolest part of all this? We're on the cusp of a massive SDLC evolution. In Waterfall, a BA and a Designer would work together to come up with the product, then bring in a Developer — but the Developer wasn't included in concept development. In Agile, everyone's included, but the opposite happens: user stories become the basis for the product and we lose sight of the overall vision.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7w",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7v",
+									"text": "Whatever this is — it represents the ability for the whole team to work directly on the product. A scrum master can be IN the code rather than ask a developer how they're doing. A designer can be IN the code — creating feature branches and having lead devs run PRs. And yes, a lot of developers are uncomfortable with this. They're right to be. There's risk without the right guardrails and training. But there was risk in all the previous forms of software development too.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k7y",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7x",
+									"text": "Those of us that figure this out fastest, and move from anxiety to creativity, will be the winners in this new race.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-the-enterprise-designer",
+				"slug": "the-enterprise-designer",
+				"status": "published",
+				"data": {
+					"title": "The Enterprise Designer",
+					"date": "2026-03-22T00:00:00.000Z",
+					"description": "There's a pattern hiding in plain sight inside design's title history. We've been so busy debating methodologies and tools that we missed the signal the…",
+					"lead_image": "/images/1774239056989-the-enterprise-designer.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "k80",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k7z",
+									"text": "There's a pattern hiding in plain sight inside design's title history. We've been so busy debating methodologies and tools that we missed the signal the titles were sending the whole time. It's not about the designer. It was never about the designer. It was always about the thing being designed.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k82",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k81",
+									"text": "Look at the progression. Graphic Designer — designing graphics. Web Designer — designing the web. UI Designer — designing the interface. UX Designer — designing the experience. Product Designer — designing the product. Each title marked a moment when a new material entered the picture. A new surface, a new scope, a new thing that needed to be designed — and couldn't be designed well by the people who came before, because they didn't have the right fluency.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k84",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k83",
+									"text": "Graphic designers were masters of visual communication. But the web wasn't a poster. It was an information space. You needed people who understood library science, human factors, cognitive load — people who could think about how humans navigate information, not just how they read it. Then software became the material. Apps weren't just websites. They had state, behavior, constraints, affordances. Design had to go deeper than the surface. Product design was born from the need to think in the material — to understand software well enough to design with it, not just on top of it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k86",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k85",
+									"text": "Every transition followed the same logic: new material enters, existing design practice is insufficient, a new role crystallizes around the fluency required.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k88",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k87",
+									"text": "Which brings us to now.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8a",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k89",
+									"text": "For the last twenty years, there's been a gap that product design couldn't close. Not for lack of talent — for lack of reach. The gap lived between products. In the seams between systems. In the handoff from one department's software to another's. The customer who had to re-explain their problem when they got transferred. The employee who toggled between four applications to complete one task. The data that lived in one system but was needed in another.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8c",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8b",
+									"text": "I've spent most of my career watching designers bang their heads against this gap. We'd map the end-to-end journey. We'd identify every pain point in the seam between systems. We'd present beautiful service blueprints showing exactly where the experience broke. And then we'd hit the same wall: the systems are different. The teams are different. The budgets are different. The technology stacks don't talk to each other. The designer's role — for all its evolution — still ended at the edge of the product.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8e",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8d",
+									"text": "What AI actually changes isn't what most of the noise suggests. There's a lot of talk about faster prototyping, generative UI, automated handoffs. That's real, but it's not the point. The deeper change is this: for the first time, the seam is designable. When experience can be orchestrated across systems through intelligent agents — when natural language can bridge SAP and Salesforce and your customer portal and your service team's workflow — the gap between products is no longer a fixed constraint. It's a design surface.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8g",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8f",
+									"text": "And this changes what \"the thing being designed\" actually is. It's not the interface. It's not the product. It's not even the end-to-end service journey — though that's closer. It's the enterprise itself. The whole organism. Every touchpoint, every handoff, every moment where a human being encounters the organization's intent — whether through a screen, a conversation with an agent, an automated decision, or a human employee whose workflow was shaped by systems a designer never touched.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8i",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8h",
+									"text": "This is what I mean by \"enterprise designer.\" Not a new job title to put on LinkedIn. A recognition that design's material has expanded again — and this time, the material is the organization. The person who can hold the full picture of how an enterprise behaves as a human experience, and who has the fluency to shape that behavior through AI-enabled systems, is practicing a form of design that didn't exist five years ago.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8k",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8j",
+									"text": "It requires everything that came before. You still need visual communication skills. You still need to understand information architecture, interaction patterns, software behavior. You still need product thinking. But you also need something that the previous roles never required: the ability to design across organizational boundaries, to think in systems that span departments and technologies, and to shape AI agent behavior in ways that feel coherent from the outside even when the inside is a mess of legacy systems and competing priorities.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8m",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8l",
+									"text": "There's another shift happening alongside this scope expansion, and it's just as significant. For most of design's history, the relationship between designer and engineer had a fundamental asymmetry: designers specified, engineers built. The designer produced artifacts — wireframes, prototypes, specs, redlines — and handed them over. What got built was always a translation of the designer's intent, filtered through someone else's execution. This created entire practices oriented around influencing the build rather than doing it. Over-the-shoulder art direction. Dev-ready design. Design systems as a way of constraining engineer decisions.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8o",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8n",
+									"text": "That constraint is collapsing. Not because designers are becoming engineers. But because the material is becoming responsive to design intent directly. When you can instantiate a functional, interactive prototype by describing what you want — when the gap between \"this is what it should feel like\" and \"this is what it does\" shrinks to minutes — the designer's relationship to the material changes fundamentally.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8q",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8p",
+									"text": "I've seen this firsthand at Slalom. Designers who never wrote code are now building working applications, creating feature branches, collaborating with engineers in the same material. The best of them aren't just producing faster outputs — they're developing a new kind of fluency where design judgment and technical capability merge. They're not designers who learned to prompt AI tools faster. They're the ones who recognized that their years of cross-disciplinary thinking — the ability to hold a user's mental model, a system's behavior, and a business's constraints simultaneously — is exactly the fluency required to work with generative, agentic material.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8s",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8r",
+									"text": "The designers who are struggling are the ones waiting for the tools to stabilize before adapting. They're treating this like a tool transition — like the shift from Photoshop to Sketch, or Sketch to Figma. It's not. It's a scope transition. The tools are just the signal.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8u",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8t",
+									"text": "For design leaders, this means the team you're building looks different. You're not hiring five specialists and hoping they collaborate. You're looking for people with genuine range — who can think in systems and craft a moment, who understand enterprise architecture and care deeply about a single user's frustration, who can build alongside an engineer without losing their design perspective.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8w",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8v",
+									"text": "For organizations, this means design is no longer a service function that decorates products other people have decided to build. Design is the practice that determines whether your enterprise, as a human experience, actually works. That's a strategic function. It belongs at the center of product and technology decisions, not downstream of them.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k8y",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8x",
+									"text": "And for designers — the ones reading this, wondering whether their skills are becoming obsolete — here's what I want you to hear: everything you've learned still matters. The empathy. The systems thinking. The craft. The ability to hold complexity and find the essential thing. That's not being automated away. That's becoming more valuable, because for the first time, it can actually operate at the scale it always deserved.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k90",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k8z",
+									"text": "You were always supposed to design the whole thing. Now you can.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k92",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k91",
+									"text": "The progression isn't over. It just got a lot more interesting.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-were-as-close-to-flash-as-weve-ever-been",
+				"slug": "were-as-close-to-flash-as-weve-ever-been",
+				"status": "published",
+				"data": {
+					"title": "We're as Close to Flash as We've Ever Been",
+					"date": "2026-04-17T00:37:09.836Z",
+					"description": "There was a time when the internet felt handmade. Not in the rough, unfinished way—in the way that you could tell a human being had stayed up until 3am…",
+					"lead_image": "/images/1776386153566-rip-flash.jpg",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "k94",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k93",
+									"text": "There was a time when the internet felt handmade.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k96",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k95",
+									"text": "Not in the rough, unfinished way—in the way that you could tell a human being had stayed up until 3am making something because they couldn't stop. You'd land on a site and it would do something unexpected. Something would move. Something would respond to your cursor. Music would start playing that you didn't ask for and somehow you didn't mind. Someone had made a decision—an expressive, unnecessary, wonderful decision—and you were experiencing it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k98",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k97",
+									"text": "That was Flash. And if you were a certain age, in a certain part of the internet, in the late nineties and early two-thousands, it was everything.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9a",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k99",
+									"text": "I was in my late teens. Tutorials came on DVDs. You found things on Napster you weren't supposed to find. There was this whole underground of people building and sharing and teaching each other, not because anyone was paying them, but because the tool had unlocked something and they couldn't keep it to themselves. Flash wasn't software. It was a creative frequency. If you were tuned to it, you felt it immediately—this sense that what you could imagine and what you could actually make had suddenly gotten very close to each other.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9c",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9b",
+									"text": "That feeling has a name. It's called freedom of expression.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9e",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9d",
+									"text": "Keith Peters—bit-101—was one of the people broadcasting on that frequency. When he published a tutorial connecting Flash to the Twitter API, it looked like a technical exercise. It wasn't. What he was showing was that Flash had graduated. It wasn't just motion and beauty anymore. It was a genuine interface to complex systems. You could design your own window onto the world's data. You could make it look and feel like anything you wanted.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9g",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9f",
+									"text": "The tool had become a medium.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9i",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9h",
+									"text": "I've been thinking about that a lot lately.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9k",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9j",
+									"text": "Because something is happening right now that feels like that frequency again. Not identical—nothing ever is—but recognizable. The same hum. The same sense that the distance between what you can imagine and what you can actually build has gotten very, very small.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9m",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9l",
+									"text": "AI-assisted coding did that. Not for everyone—I want to be honest about that, because the fantasy being sold right now is democratization, and I don't think that's quite right. The stack is still complex. The judgment required to build something real hasn't gone anywhere. You still need to understand what you're making and why.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9o",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9n",
+									"text": "But for a certain kind of person? The ceiling just got obliterated.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9q",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9p",
+									"text": "The builder-designer hybrid. The person who always had more vision than implementation bandwidth. The one who could see the whole thing—the interface, the logic, the experience—but kept hitting the wall of what was technically within reach on any given day. That person used to have to choose: slow down the vision, or hire around the gap.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9s",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9r",
+									"text": "That gap is closing.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9u",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9t",
+									"text": "Flash gave that person a medium that matched how they thought. Immediate. Visual. Expressive. You could feel the feedback in real time—push something, see what happened, push it further. The tool didn't fight you. It wanted to know what you were trying to say.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9w",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9v",
+									"text": "That's what it feels like to build with AI right now. Not easier, exactly. Different. Like the canvas got bigger and the brushes got smarter and the thing you were reaching for is suddenly just slightly within your fingertips.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k9y",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9x",
+									"text": "We're not democratizing product creation. We're raising the ceiling for the people who were already standing on their toes.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "ka0",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k9z",
+									"text": "That's not a small thing. That's everything.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "ka2",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ka1",
+									"text": "I'll give you a concrete example from my own work.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "ka4",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ka3",
+									"text": "I've spent years developing something I call the Enterprise Designer framework—the idea that the most valuable practitioners in complex organizations aren't specialists, they're integrators. People who can hold the business problem, the user experience, the data model, and the technical architecture in their heads at the same time and make them coherent with each other.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kaa",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ka5",
+									"text": "For most of that time, the Enterprise Designer was a concept that outpaced the tools available to realize it. You could ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "ka6",
+									"text": "think",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "ka7",
+									"text": " across the whole stack. Actually ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "ka8",
+									"text": "building",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "ka9",
+									"text": " across it was another matter. You needed engineers for this, data people for that, designers for the other thing. The vision was yours but the execution was distributed, and something always got lost in translation.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kac",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kab",
+									"text": "Not anymore.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kae",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kad",
+									"text": "Right now I'm building things that would have required a team six months ago. A pipeline intelligence tool that pulls from Salesforce data, surfaces the right signals, and presents them in an interface I designed myself—end to end, one person, one coherent point of view. No translation layer. No briefing a developer on what I meant. No waiting.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kag",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kaf",
+									"text": "That's the single pane of glass. Not just as a UI metaphor but as a way of working. One mind, one canvas, the whole system visible and shapeable at once.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kai",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kah",
+									"text": "This is what Flash promised that generation of creative technologists. Not just prettier websites—a medium that could hold a complete thought. A tool that didn't make you choose between expression and function.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kak",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kaj",
+									"text": "But here's the thing I keep coming back to.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kam",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kal",
+									"text": "The limit isn't imagination. The limit is simply that we haven't figured out what the extent of this thing actually is yet. And we've all got to experiment to figure it out.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kao",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kan",
+									"text": "There's no iPhone of our moment yet. That device was the convergence point—the moment when cloud, the web, mobile, and touch all came together and suddenly everyone understood what was possible. Before that, you had all the pieces scattered across different tools and platforms. People were building beautiful things, but the shape of the future wasn't visible yet.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kaq",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kap",
+									"text": "We're in that scatter phase again.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kas",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kar",
+									"text": "There's a convergence waiting to happen here. Some combination of capabilities and culture and tools that we haven't quite assembled yet. Some way of working that will feel as obvious in retrospect as the smartphone feels now. But we can't see it from the inside. We can only play. Experiment. Keep pushing the canvas in different directions until something clicks and suddenly everyone feels it at once.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kau",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kat",
+									"text": "That's what the Flash community was really doing. Not just making pretty websites. They were playing with a new medium until its true shape emerged. Some of them became the web designers of the 2010s. Some of them became creative coders. Some of them just loved the feeling of being part of something that was being invented in real time.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kaw",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kav",
+									"text": "We're in that invention phase again. The tools are good enough. The practitioners are tuned to the frequency. The canvas is there.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kay",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kax",
+									"text": "We just have to keep playing until we find what we're actually looking for.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-what-protogen-is",
+				"slug": "what-protogen-is",
+				"status": "published",
+				"data": {
+					"title": "What Protogen Is",
+					"date": "2026-01-15T00:00:00.000Z",
+					"description": "There's a pattern I keep seeing. A C-level product leader pulls me aside at a conference or on a call and says some version of the same thing: \"I expected…",
+					"lead_image": "/images/1774239072630-what-protogen-is.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "kb0",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kaz",
+									"text": "There's a pattern I keep seeing. A C-level product leader pulls me aside at a conference or on a call and says some version of the same thing: \"I expected my design team to be further along by now.\"",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kb2",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kb1",
+									"text": "They're not talking about tools. They're talking about a posture. Their engineers adopted Copilot, then Cursor, then agent-based workflows. Their data teams are building with AI daily. And their designers — the people who are supposed to be closest to the human experience — are still working the way they worked in 2023.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kb4",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kb3",
+									"text": "This isn't a failure of individual designers. It's a failure of how we've been framing the transition.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kb6",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kb5",
+									"text": "Most AI training for designers looks like this: here's a tool, here's what it does, here are some prompts to try. Go be more productive. It doesn't work. Not because the tools aren't good — they are. But because the change isn't about tools. It's about how you work. It's about your relationship to the material, your process, your instinct for when to reach for AI and when to trust your own judgment. You can't teach that in a workshop about prompt engineering. You have to teach it the way you teach any craft — by doing the work, in the new medium, with guidance from someone who's already been through the transition.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kb8",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kb7",
+									"text": "That's what Protogen is.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kba",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kb9",
+									"text": "Protogen is a training program I created at Slalom to bring designers into the agentic era. Not by lecturing them about AI, but by putting them in front of the material and letting them build.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbc",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbb",
+									"text": "A typical session looks like this. A room full of designers — none of whom would call themselves developers. We open VS Code. We open Claude Code. And I say: build something. Anything. You have an hour.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbe",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbd",
+									"text": "The first fifteen minutes are always the same. Nervous laughter. People poking at the terminal like it might bite them. Someone asks \"wait, do I just... type what I want?\" Yes. That's exactly what you do.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbg",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbf",
+									"text": "Then something clicks. One person asks Claude to build a Pokédex — a searchable database of Pokémon with images and stats. They have a working app in twenty minutes and they're grinning like a kid. Another person builds a personal data management tool — something they've wanted at work for months but could never get prioritized in the backlog. Someone else makes a native mobile prototype for a side project they'd been sketching in Figma for a year. Real things. Things that work. Things they can show people.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbi",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbh",
+									"text": "The absorption in the room is total. People stop checking their phones. They stop talking to each other. They're leaning into their screens because they're finally touching the thing, not describing it. I've run this session dozens of times now, and that moment — when the room goes quiet because everyone is deep in the material — never gets old.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbk",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbj",
+									"text": "But here's what I care about more than the output. It's what happens to people's sense of what's possible. That's the first shift Protogen is designed to trigger — an identity shift. Most designers have spent their careers on one side of a divide: the people who envision things, and the people who build them. Protogen puts them on both sides at once. You're not a designer who's learning to code. You're a designer who can now build. That distinction matters. It changes what you think your job is. It changes what you think you're allowed to do.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbm",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbl",
+									"text": "The second shift is craft. Building with AI isn't like building by hand, and it's not like handing specs to a developer either. It's a new mode that requires new instincts. You have to learn when the agent is confidently wrong versus usefully wrong. You have to learn to read code well enough to know if the architecture makes sense, even if you couldn't write it yourself. You have to learn that the first output is almost never the right output — and that the interesting work is in the iteration. Prototyping at almost no cost. But working in code requires different instincts than working in design tools. You have to learn to think in systems, to debug with intent, to iterate on the real thing instead of a representation of the thing.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbo",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbn",
+									"text": "The third shift is collaboration. When designers can build, the relationship with engineering changes fundamentally. You're not handing off specs. You're not arguing about feasibility in a sprint planning meeting. You're sitting side by side, working in the same material, making decisions together in real time. I've seen designers at Slalom start creating feature branches, with lead devs running PRs to take that code into the main codebase. Six months ago, neither side would have believed that sentence.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbq",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbp",
+									"text": "There's a reason I built Protogen and didn't just write a blog post about it. The gap between design teams that adopt agentic workflows and those that don't is going to become unbridgeable. Not in five years — in the next twelve months. The teams that learn to work in this new way will move at a fundamentally different speed and produce fundamentally different quality. The teams that wait will find themselves unable to catch up, because the gap compounds.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbs",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbr",
+									"text": "This isn't about replacing any part of what designers do. The empathy, the systems thinking, the craft, the ability to hold a user's mental model while navigating organizational constraints — all of that is more important than ever. What Protogen does is give designers the fluency to apply those skills directly, in the material, at the speed the work now demands.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbu",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbt",
+									"text": "Every generation of designers has faced a medium transition. Print to web. Web to mobile. Static screens to living systems. Each one required letting go of old muscle memory and building new fluency. This transition is bigger than any of those. But the pattern is the same. The designers who lean in, who get their hands in the material, who tolerate the discomfort of being a beginner again — they're the ones who'll define what design looks like on the other side.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kbw",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbv",
+									"text": "That's what Protogen is for. Getting designers to the other side.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "essay-why-we-measured-the-wrong-thing-for-20-years",
+				"slug": "why-we-measured-the-wrong-thing-for-20-years",
+				"status": "published",
+				"data": {
+					"title": "Why We Measured the Wrong Thing for 20 Years",
+					"date": "2026-04-12T15:49:53.434Z",
+					"description": "Everyone's trying to adopt agents. Most are failing. The instinct is to blame the tools, the training, the team's readiness. But the failure is upstream of…",
+					"lead_image": "/images/1776008992932-og-why-we-measured-the-wrong-thing-for-20-years.png",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "kby",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbx",
+									"text": "Everyone's trying to adopt agents. Most are failing. The instinct is to blame the tools, the training, the team's readiness. But the failure is upstream of all of that.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kc0",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kbz",
+									"text": "It's the metric.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "kc1",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "kc3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kc2",
+									"text": "For two decades, we've measured velocity. Story points per sprint. Tickets closed. Output per unit time.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kc7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kc4",
+									"text": "Not because velocity was the right thing to measure. Because it was the only thing we ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kc5",
+									"text": "could",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kc6",
+									"text": " measure.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kc9",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kc8",
+									"text": "Think about why velocity exists. A feature ships. Three months later, maybe you learn if it worked. Did users adopt it? Did it move the number? Did it solve the actual problem?",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kcd",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kca",
+									"text": "Three months is too long to wait. You can't run a team on a quarterly feedback loop. You need a signal ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kcb",
+									"text": "now",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kcc",
+									"text": " — something you can track weekly, act on immediately, use to steer.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kcf",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kce",
+									"text": "So we invented velocity. A proxy metric. A leading indicator that correlated (we hoped) with eventual outcomes.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kch",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kcg",
+									"text": "It was never the goal. It was the best hack we had given the constraints.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "kci",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "kck",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kcj",
+									"text": "Then we forgot it was a hack.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kcm",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kcl",
+									"text": "Velocity became the thing. We built sprint rituals around it. Performance reviews. Entire roles exist to measure and optimize it. Teams compete on it. Careers are made on it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kcq",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kcn",
+									"text": "The proxy became reified. We stopped asking what it was ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kco",
+									"text": "for",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kcp",
+									"text": ".",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "kcr",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "kct",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kcs",
+									"text": "Here's what changed: the constraint that created velocity just disappeared.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kcx",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kcu",
+									"text": "You can ship to production in hours now, not months. CI/CD, feature flags, staged rollouts — the infrastructure is solved. And if you can ship in hours, you can ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kcv",
+									"text": "learn",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kcw",
+									"text": " in hours. Instrument it. Watch the behavior. See if it worked.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kcz",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kcy",
+									"text": "Time-to-learning used to be measured in quarters. Now it can be measured in days. Sometimes hours.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kd3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kd0",
+									"text": "The latency problem that ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kd1",
+									"text": "created",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kd2",
+									"text": " velocity is gone. But we kept the metric.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "kd4",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "kd6",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kd5",
+									"text": "This is not a small problem. Teams that keep measuring velocity in an agent-accelerated world will optimize for exactly the wrong thing.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kdc",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kd7",
+									"text": "They'll ship more tickets faster. Velocity will look great. And they'll still miss outcomes — because nobody's checking if the work ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kd8",
+									"text": "mattered",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kd9",
+									"text": ", only that it ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kda",
+									"text": "happened",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kdb",
+									"text": ".",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kdg",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kdd",
+									"text": "I recently heard about an organization that incentivizes engineers on the number of APIs they create each quarter. Think about that for a moment. The metric rewards ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kde",
+									"text": "more APIs",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kdf",
+									"text": ". Not APIs that get called. Not APIs that solve problems. Just... more of them.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kdi",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kdh",
+									"text": "How many APIs could you possibly need? What are you really measuring? You're measuring activity. You could have 200 APIs and zero value. You could have 3 APIs powering the entire business. The metric can't tell the difference.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kdo",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kdj",
+									"text": "This is velocity logic taken to its absurd conclusion: the metric incentivizes ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kdk",
+									"text": "more",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kdl",
+									"text": ", but the business needs ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kdm",
+									"text": "better",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kdn",
+									"text": ".",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "chart",
+							"_key": "kdp",
+							"json": "{\n  \"type\": \"line\",\n  \"title\": \"The disconnect\",\n  \"height\": 320,\n  \"xLabels\": [\"Sprint 1\", \"Sprint 2\", \"Sprint 3\", \"Sprint 4\", \"Sprint 5\", \"Sprint 6\", \"Sprint 7\", \"Sprint 8\"],\n  \"datasets\": [\n    {\n      \"label\": \"Velocity (story points)\",\n      \"color\": \"#534AB7\",\n      \"width\": 2.5,\n      \"data\": [24, 28, 31, 36, 42, 45, 48, 52]\n    },\n    {\n      \"label\": \"User adoption (%)\",\n      \"color\": \"#0F6E56\",\n      \"width\": 2.5,\n      \"dash\": [6, 4],\n      \"data\": [12, 12.5, 13, 12.8, 13.2, 13, 13.5, 14]\n    }\n  ]\n}"
+						},
+						{
+							"_type": "block",
+							"_key": "kdr",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kdq",
+									"text": "Velocity doubled. Adoption moved 2 points. The team was rewarded for shipping features nobody used.",
+									"marks": [
+										"em"
+									]
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kdt",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kds",
+									"text": "Agents make this worse, not better. Agents can blast through tickets. They're output machines. If your metric is output, agents will help you produce more of what you weren't supposed to be producing in the first place.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kdv",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kdu",
+									"text": "The metric becomes the blocker.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "kdw",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "kdy",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kdx",
+									"text": "The shift isn't \"adopt agents.\"",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "ke0",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kdz",
+									"text": "The shift is: stop measuring output, start measuring learning.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "ke2",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ke1",
+									"text": "Time-to-learning. How long from \"we had an idea\" to \"we know if it works\"? That's the metric that matters now. That's the metric that was always supposed to matter. We just couldn't see it fast enough before.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "ke3",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "ke5",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ke4",
+									"text": "Once you change the metric, everything downstream breaks. In a good way.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "ke8",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ke6",
+									"text": "Formation has to change.",
+									"marks": [
+										"strong"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "ke7",
+									"text": " You can't have handoffs and approval chains when you're measuring time-to-learning. Every handoff is latency. Every approval is delay. The only structure that survives is tight, embedded teams — designer and engineer, in the room with business, building and testing in the same motion. Not because it's philosophically nice. Because it's the only way to hit the number.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "keb",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ke9",
+									"text": "Context has to change.",
+									"marks": [
+										"strong"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kea",
+									"text": " When the right people are in the room, context actually gets captured. Not as documentation no one reads — as living artifacts that agents can use. Context engineering isn't a discipline you layer on top. It's what becomes possible when formation is right.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kee",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kec",
+									"text": "Then — and only then — agents work.",
+									"marks": [
+										"strong"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "ked",
+									"text": " Because they have the context. The humans are structured to supervise them. The metrics reward outcomes instead of output. The system is finally coherent.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "break",
+							"_key": "kef",
+							"style": "line"
+						},
+						{
+							"_type": "block",
+							"_key": "keh",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "keg",
+									"text": "Everyone wants to start with agents. That's the mistake.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kej",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kei",
+									"text": "Agents are the last domino, not the first. You can't buy your way into agent adoption. You can't pilot your way there. You have to change the metric, which changes the formation, which changes the context, which makes agents useful.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kel",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kek",
+									"text": "Tip the first domino. The rest will fall.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "ken",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kem",
+									"text": "Or keep measuring velocity. Keep shipping faster. Keep missing the point.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"notes": [
+			{
+				"id": "note-sample-dataset-charts",
+				"slug": "sample-dataset-charts",
+				"status": "published",
+				"data": {
+					"title": "Sample note: one dataset, two charts",
+					"date": "2026-10-12T00:00:00.000Z",
+					"claim": "Both charts below read the same table. Change a number once and both update.",
+					"source_context": "Placeholder written for the prototype to demo dataset-backed charts. Replace before launch.",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "ker",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "keo",
+									"text": "Placeholder. The full trust arc, drawn from the ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kep",
+									"text": "trust-arc",
+									"marks": [
+										"strong"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "keq",
+									"text": " dataset:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "chart",
+							"_key": "kes",
+							"json": "{\n  \"dataset\": \"trust-arc\",\n  \"x\": \"year\",\n  \"y\": \"pct\",\n  \"series\": \"category\",\n  \"type\": \"line\",\n  \"title\": \"The trust arc — % of US adults by category, 1995–2026\",\n  \"ySuffix\": \"%\",\n  \"yMin\": 0,\n  \"yMax\": 100,\n  \"height\": 300,\n  \"colors\": {\n    \"Information (internet)\": \"#888780\",\n    \"ID & Access (internet)\": \"#1D9E75\",\n    \"Logistics (internet)\": \"#378ADD\",\n    \"Finance (internet)\": \"#c84b2a\",\n    \"Information (AI)\": \"#c0bfba\",\n    \"ID & Access (AI)\": \"#7ecfb0\",\n    \"Logistics (AI)\": \"#8fc5e8\",\n    \"Finance (AI)\": \"#e8a882\"\n  }\n}"
+						},
+						{
+							"_type": "block",
+							"_key": "keu",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "ket",
+									"text": "The same dataset, filtered to two series:",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "chart",
+							"_key": "kev",
+							"json": "{\n  \"dataset\": \"trust-arc\",\n  \"x\": \"year\",\n  \"y\": \"pct\",\n  \"series\": \"category\",\n  \"type\": \"line\",\n  \"title\": \"Finance only: internet vs AI\",\n  \"ySuffix\": \"%\",\n  \"yMin\": 0,\n  \"yMax\": 60,\n  \"height\": 240,\n  \"include\": [\n    \"Finance (internet)\",\n    \"Finance (AI)\"\n  ],\n  \"colors\": {\n    \"Finance (internet)\": \"#c84b2a\",\n    \"Finance (AI)\": \"#e8a882\"\n  }\n}"
+						}
+					]
+				}
+			},
+			{
+				"id": "note-sample-drafts-not-publishing",
+				"slug": "sample-drafts-not-publishing",
+				"status": "published",
+				"data": {
+					"title": "Sample note: the agent files drafts, I publish",
+					"date": "2026-10-10T00:00:00.000Z",
+					"claim": "The pipeline from my notes to this site can file a draft. It can't publish one.",
+					"source_context": "Placeholder written for the prototype. Replace before launch.",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "kex",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kew",
+									"text": "Another placeholder. In the real setup, captures tagged for publishing get rewritten into a draft here by an agent signed in with a role that can create content and nothing else. I review every one and publish by hand.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "note-sample-how-notes-work",
+				"slug": "sample-how-notes-work",
+				"status": "published",
+				"data": {
+					"title": "Sample note: how notes work",
+					"date": "2026-10-12T00:00:00.000Z",
+					"claim": "Notes are where an idea shows up first. The strong ones graduate into essays.",
+					"source_context": "Placeholder written for the prototype. Replace before launch.",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "kez",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "key",
+									"text": "This is a placeholder so the feed has something to show. A real note is short: one claim, where it came from, and what I'd do about it.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kf1",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kf0",
+									"text": "When a note grows into an essay, the note links forward to it.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "note-sample-promoted",
+				"slug": "sample-promoted",
+				"status": "published",
+				"data": {
+					"title": "Sample note: promoted to an essay",
+					"date": "2026-03-20T00:00:00.000Z",
+					"claim": "This shows what a note looks like after it graduates.",
+					"source_context": "Placeholder written for the prototype. Replace before launch.",
+					"promoted_to": "$ref:essay-code-is-a-medium",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "kf3",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kf2",
+									"text": "Placeholder showing the forward link a note gets once it becomes an essay.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"pages": [
+			{
+				"id": "page-about",
+				"slug": "about",
+				"status": "published",
+				"data": {
+					"title": "About",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "kf5",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kf4",
+									"text": "I’m Jon Litwack. I lead experience design at the intersection of data strategy and AI-powered development.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kf7",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kf6",
+									"text": "For most of my career, I worked on the design side of a wall. I understood the problem better than most people in the room, but I couldn’t touch the solution. I could describe it, sketch it, argue for it — then hand it off and hope the translation held.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kfb",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kf8",
+									"text": "That wall is coming down. Code is becoming a shared medium — something designers, operators, and domain experts can work ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kf9",
+									"text": "in",
+									"marks": [
+										"em"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kfa",
+									"text": " together, the way musicians work in sound. I write about what happens when more perspectives can touch the material.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kfd",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kfc",
+									"text": "These essays are where that thinking lives and grows.",
+									"marks": []
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "kfj",
+							"style": "normal",
+							"markDefs": [
+								{
+									"_key": "kfe",
+									"_type": "link",
+									"href": "mailto:jon@jonlitwack.com"
+								},
+								{
+									"_key": "kfh",
+									"_type": "link",
+									"href": "https://linkedin.com/in/jonlitwack"
+								}
+							],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kff",
+									"text": "jon@jonlitwack.com",
+									"marks": [
+										"kfe"
+									]
+								},
+								{
+									"_type": "span",
+									"_key": "kfg",
+									"text": " · ",
+									"marks": []
+								},
+								{
+									"_type": "span",
+									"_key": "kfi",
+									"text": "LinkedIn",
+									"marks": [
+										"kfh"
+									]
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-speaking",
+				"slug": "speaking",
+				"status": "draft",
+				"data": {
+					"title": "Speaking",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "kfl",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kfk",
+									"text": "Speaking — draft, not yet written.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-projects",
+				"slug": "projects",
+				"status": "draft",
+				"data": {
+					"title": "Projects",
+					"body": [
+						{
+							"_type": "block",
+							"_key": "kfn",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "kfm",
+									"text": "Projects — draft, not yet written.",
+									"marks": []
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"datasets": [
+			{
+				"id": "dataset-trust-arc",
+				"slug": "trust-arc",
+				"status": "published",
+				"data": {
+					"title": "The trust arc: % of US adults by category, 1995–2026",
+					"csv": "year,category,pct\n1995,\"Information (internet)\",14\n1996,\"Information (internet)\",18\n1997,\"Information (internet)\",22\n1998,\"Information (internet)\",31.5\n1999,\"Information (internet)\",41\n2000,\"Information (internet)\",46\n2001,\"Information (internet)\",57\n2002,\"Information (internet)\",60\n2003,\"Information (internet)\",63\n2004,\"Information (internet)\",65.5\n2005,\"Information (internet)\",68\n2006,\"Information (internet)\",70.5\n2007,\"Information (internet)\",73\n2008,\"Information (internet)\",75\n2009,\"Information (internet)\",77\n2010,\"Information (internet)\",79\n2011,\"Information (internet)\",80\n2012,\"Information (internet)\",81\n2013,\"Information (internet)\",85\n2014,\"Information (internet)\",87\n2005,\"ID & Access (internet)\",5\n2006,\"ID & Access (internet)\",8\n2007,\"ID & Access (internet)\",14.5\n2008,\"ID & Access (internet)\",21\n2009,\"ID & Access (internet)\",37\n2010,\"ID & Access (internet)\",46\n2011,\"ID & Access (internet)\",50\n2012,\"ID & Access (internet)\",55\n2013,\"ID & Access (internet)\",57\n2014,\"ID & Access (internet)\",58\n2015,\"ID & Access (internet)\",65\n1999,\"Logistics (internet)\",4\n2000,\"Logistics (internet)\",6\n2001,\"Logistics (internet)\",8.5\n2002,\"Logistics (internet)\",11\n2003,\"Logistics (internet)\",12.5\n2004,\"Logistics (internet)\",14\n2005,\"Logistics (internet)\",17\n2006,\"Logistics (internet)\",20\n2007,\"Logistics (internet)\",22.5\n2008,\"Logistics (internet)\",25\n2009,\"Logistics (internet)\",27\n2010,\"Logistics (internet)\",29\n2011,\"Logistics (internet)\",32.5\n2012,\"Logistics (internet)\",36\n2013,\"Logistics (internet)\",41\n2014,\"Logistics (internet)\",46\n2000,\"Finance (internet)\",8\n2001,\"Finance (internet)\",11\n2002,\"Finance (internet)\",14\n2003,\"Finance (internet)\",18\n2004,\"Finance (internet)\",22\n2005,\"Finance (internet)\",28\n2006,\"Finance (internet)\",32\n2007,\"Finance (internet)\",34\n2008,\"Finance (internet)\",36\n2009,\"Finance (internet)\",41\n2010,\"Finance (internet)\",46\n2011,\"Finance (internet)\",48\n2012,\"Finance (internet)\",49.5\n2013,\"Finance (internet)\",51\n2014,\"Finance (internet)\",53\n2022,\"Information (AI)\",5\n2023,\"Information (AI)\",17\n2024,\"Information (AI)\",23\n2025,\"Information (AI)\",34\n2026,\"Information (AI)\",45\n2022,\"ID & Access (AI)\",1\n2023,\"ID & Access (AI)\",4\n2024,\"ID & Access (AI)\",9\n2025,\"ID & Access (AI)\",16\n2026,\"ID & Access (AI)\",26\n2022,\"Logistics (AI)\",0\n2023,\"Logistics (AI)\",1\n2024,\"Logistics (AI)\",3\n2025,\"Logistics (AI)\",7\n2026,\"Logistics (AI)\",13\n2022,\"Finance (AI)\",0\n2023,\"Finance (AI)\",0\n2024,\"Finance (AI)\",1\n2025,\"Finance (AI)\",3\n2026,\"Finance (AI)\",6\n",
+					"source": "Internet: Pew Research Center adoption surveys (1995–2015); US Census Bureau e-commerce data (1999–2014); Pew online banking surveys (2000–2013). AI: Pew ChatGPT usage surveys (2023–2025); Fed Reserve Bank of St. Louis generative AI data (2024–2025).",
+					"notes": "Extracted from the chart in “The Agent Hype Is 1999. Build Like It's 2003.” Long format: one row per year and category."
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,26 @@
+---
+// Standalone pages: /about, and /speaking and /projects once published.
+import { getEmDashEntry } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../layouts/Base.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+
+const { entry: page, cacheHint } = await getEmDashEntry("pages", slug);
+if (!page) return Astro.rewrite("/404");
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+---
+
+<Base title={page.data.title} content={{ collection: "pages", id: page.data.id, slug }}>
+	<div class="container">
+		<article class="essay">
+			<h1 {...page.edit.title}>{page.data.title}</h1>
+			<hr />
+			<div class="essay-body" {...page.edit.body}>
+				<PortableText value={page.data.body} />
+			</div>
+			<a href="/" class="back-link">← Essays</a>
+		</article>
+	</div>
+</Base>

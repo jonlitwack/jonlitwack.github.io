@@ -1,0 +1,53 @@
+---
+import { getEmDashEntry, getEmDashCollection } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import { dayMonth } from "../../lib/content";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite("/404");
+
+const { entry: note, cacheHint } = await getEmDashEntry("notes", slug);
+if (!note) return Astro.rewrite("/404");
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+
+const { title, date, claim, source_context, body, promoted_to } = note.data;
+
+// promoted_to stores the essay's ID; resolve it to a link.
+let promoted: { id: string; title: string } | null = null;
+if (promoted_to) {
+	const { entries } = await getEmDashCollection("essays", { status: "published", limit: 500 });
+	const hit = entries.find((e) => e.data.id === promoted_to || e.id === promoted_to);
+	if (hit) promoted = { id: hit.id, title: hit.data.title };
+}
+---
+
+<Base
+	title={title}
+	description={claim}
+	type="article"
+	publishedTime={date ? new Date(date).toISOString() : null}
+	content={{ collection: "notes", id: note.data.id, slug }}
+>
+	<article class="container essay note-page">
+		<p class="essay-meta">
+			<a href="/notes">Note</a><span aria-hidden="true"> · </span>
+			<time datetime={date ? new Date(date).toISOString() : undefined}>{dayMonth(date)}</time>
+		</p>
+		<h1 {...note.edit.title}>{title}</h1>
+		{claim && <p class="note-claim-lede" {...note.edit.claim}>{claim}</p>}
+		{source_context && <p class="note-source">{source_context}</p>}
+		<div class="essay-body" {...note.edit.body}>
+			<PortableText value={body} />
+		</div>
+		{
+			promoted && (
+				<p class="promoted">
+					This note became an essay:<br />
+					<a href={`/essays/${promoted.id}`}>{promoted.title} →</a>
+				</p>
+			)
+		}
+		<a href="/notes" class="back-link">← All notes</a>
+	</article>
+</Base>
