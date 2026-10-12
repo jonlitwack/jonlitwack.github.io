@@ -14,7 +14,7 @@ const id = `subscribe-${Math.random().toString(36).slice(2, 8)}`;
 		<div class="subscribe-trap" aria-hidden="true">
 			<label>Website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
 		</div>
-		<label for={`${id}-email`} class="visually-hidden">Email address</label>
+		<label for={`${id}-email`} class="sr-only">Email address</label>
 		<div class="subscribe-row">
 			<input
 				id={`${id}-email`}

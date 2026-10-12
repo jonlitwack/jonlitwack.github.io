@@ -130,7 +130,7 @@ hr {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 1rem 0;
+	padding-block: 1rem;
 	gap: 1rem;
 }
 .wordmark {
@@ -768,14 +768,6 @@ hr {
 	width: 1px;
 	height: 1px;
 	overflow: hidden;
-}
-.visually-hidden {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-	clip: rect(0 0 0 0);
-	white-space: nowrap;
 }
 .subscribed-text {
 	margin-top: 1rem;
