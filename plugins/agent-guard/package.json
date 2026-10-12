@@ -1,0 +1,13 @@
+{
+  "name": "@jonlitwack/plugin-agent-guard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Restricts users below Author (the OB1 pipeline agent is a Contributor) to creating drafts in the notes collection.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "peerDependencies": {
+    "emdash": "^1.0.1"
+  }
+}

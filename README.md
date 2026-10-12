@@ -56,10 +56,27 @@ Datasets hold CSV (long or wide). Many charts can read one dataset, and editing 
 
 Limit: EmDash's editor shows plugin blocks as a summary card, so you see the chart via Preview, not inline in the editor.
 
+## OB1 agent access
+
+The pipeline's agent is a **Contributor** with a `content:read content:write` token. The role already stops it editing, deleting or publishing anything, including its own drafts, so each note has to be filed in one `content_create` call. The `agent-guard` plugin (`plugins/agent-guard`) adds the Notes-only restriction: a `content:beforeSave` hook rejects any save outside `notes` by a user below Author. It covers MCP and REST alike. Your Admin writes aren't affected.
+
+Local:
+
+```bash
+node scripts/setup-local-agent.mjs        # Contributor user + token → .env.agent.local (ignored)
+npm run dev
+node --env-file=.env.agent.local scripts/test-agent-permissions.mjs
+```
+
+The test checks each refusal's exact error code, so it fails if the role or token is widened, not only if a call succeeds. Each run leaves one draft note behind; the agent can't delete it.
+
+Staging (not done yet): invite the agent's email as a Contributor in the admin, get it a token, and run the test with `EMDASH_URL` and `EMDASH_AGENT_TOKEN` set. The script refuses to run against jonlitwack.com.
+
+Open question: `emdash login` uses the device flow, which caps scopes at the role. For a Contributor that still includes `media:write`, which the test rejects. Find out whether the device flow can request `content:read content:write` only before relying on it.
+
 ## Not done yet (from the spec)
 
-- **OB1 agent access**: create the Contributor user, issue a `content:read content:write` token, and run the permission tests (create succeeds on Notes; publish, update, schedule, delete, schema, settings, menu and taxonomy calls all refused).
-- **Collection restriction**: EmDash roles don't scope by collection. A Contributor can create Essays too. Needs a hook or a wrapper.
+- **OB1 agent access on staging**: done locally (see above). Repeat on staging once it exists.
 - **Sanitizer**: OB1-side, fail-closed denylist + LLM traceability check, denylist kept out of the repo.
 - **Email capture**: needs your decision (forms plugin vs a D1 route).
 - **Lead images** are stored as URL strings pointing at `/public/images`. Move them into the media library (R2) when you migrate.

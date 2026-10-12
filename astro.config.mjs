@@ -5,6 +5,7 @@ import react from "@astrojs/react";
 import { defineConfig } from "astro/config";
 import emdash, { local } from "emdash/astro";
 import { sqlite } from "emdash/db";
+import { agentGuardPlugin } from "@jonlitwack/plugin-agent-guard";
 import { chartPlugin } from "@jonlitwack/plugin-chart";
 
 export default defineConfig({
@@ -19,7 +20,7 @@ export default defineConfig({
 				directory: "./uploads",
 				baseUrl: "/_emdash/api/media/file",
 			}),
-			plugins: [chartPlugin()],
+			plugins: [agentGuardPlugin(), chartPlugin()],
 		}),
 	],
 	devToolbar: { enabled: false },
