@@ -173,6 +173,15 @@ function describe(pt) {
 
 const isoDate = (d) => new Date(d).toISOString();
 
+// Lead images go into the media library. `emdash seed` downloads each `$media`
+// URL and won't fetch from localhost, so they come from the live site, which
+// serves the same files from public/images. Override with SEED_MEDIA_BASE.
+const MEDIA_BASE = (process.env.SEED_MEDIA_BASE || "https://www.jonlitwack.com").replace(/\/$/, "");
+const leadImage = (path) => {
+	const file = path.split("/images/").pop();
+	return { $media: { url: `${MEDIA_BASE}/images/${file}`, alt: "", filename: file } };
+};
+
 // ---------- build ----------
 const schema = JSON.parse(read("seed/schema.json"));
 const content = { essays: [], notes: [], pages: [], datasets: [] };
@@ -181,7 +190,7 @@ for (const f of readdirSync(join(root, "content/essays")).filter((f) => f.endsWi
 	const { data, body } = frontmatter(read(`content/essays/${f}`));
 	const slug = basename(f, ".md");
 	const pt = toPT(body);
-	const image = data.image ? `/images/${data.image.split("/images/").pop()}` : undefined;
+	const image = data.image ? leadImage(data.image) : undefined;
 	content.essays.push({
 		id: `essay-${slug}`,
 		slug,

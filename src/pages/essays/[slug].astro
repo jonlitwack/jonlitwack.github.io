@@ -3,7 +3,7 @@ import { getEmDashEntry } from "emdash";
 import { PortableText } from "emdash/ui";
 import Base from "../../layouts/Base.astro";
 import Subscribe from "../../components/Subscribe.astro";
-import { monthYear, readingMinutes } from "../../lib/content";
+import { mediaUrl, monthYear, readingMinutes, type MediaValue } from "../../lib/content";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.rewrite("/404");
@@ -13,18 +13,31 @@ if (!essay) return Astro.rewrite("/404");
 if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 
 const { title, date, description, lead_image, body } = essay.data;
+const lead = lead_image as MediaValue | null | undefined;
+const leadUrl = mediaUrl(lead, Astro.locals);
 ---
 
 <Base
 	title={title}
 	description={description}
-	image={lead_image}
+	image={leadUrl}
 	type="article"
 	publishedTime={date ? new Date(date).toISOString() : null}
 	content={{ collection: "essays", id: essay.data.id, slug }}
 >
 	<article class="container essay">
-		{lead_image && <img src={lead_image} alt="" class="essay-hero" />}
+		{
+			leadUrl && (
+				<img
+					src={leadUrl}
+					alt={lead?.alt ?? ""}
+					width={lead?.width}
+					height={lead?.height}
+					class="essay-hero"
+					fetchpriority="high"
+				/>
+			)
+		}
 		<h1 {...essay.edit.title}>{title}</h1>
 		<p class="essay-meta">
 			<time datetime={date ? new Date(date).toISOString() : undefined}>{monthYear(date, "long")}</time>

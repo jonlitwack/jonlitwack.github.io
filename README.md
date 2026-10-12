@@ -89,7 +89,7 @@ Open question: `emdash login` uses the device flow, which caps scopes at the rol
 
 - **OB1 agent access on staging**: done locally (see above). Repeat on staging once it exists.
 - **Sanitizer**: OB1-side, fail-closed denylist + LLM traceability check, denylist kept out of the repo.
-- **Lead images** are stored as URL strings pointing at `/public/images`. Move them into the media library (R2) when you migrate.
+- **Lead image alt text** is empty (the source had none). Add it per essay in the admin.
 - **Descriptions** were empty in the source, so the importer uses the first 160 characters, the same rule the live site applies. Rewrite them in the admin.
 - **Cutover**: staging subdomain, proxy Worker with fallback, DNS last.
 - **Backups and git export** of published content.

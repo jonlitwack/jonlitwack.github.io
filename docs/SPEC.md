@@ -47,7 +47,7 @@ Built as our own native plugin (`plugins/subscribe`), not Bulletin or a forms pl
 ## 5. Authoring improvements
 
 - The EmDash editor shows plugin blocks as a summary card, with no inline chart. Build a field widget (native plugin `adminEntry`, `fieldWidgets`) for the Datasets `csv` field: an editable grid plus a live chart preview using `client.ts`.
-- Move lead images from URL strings (`/images/...`) into the media library (R2) and switch `lead_image` to an `image` field. Update `Base.astro` and the essay page together.
+- ~~Move lead images into the media library and switch `lead_image` to an `image` field.~~ Done 2026-10-12. `build-seed.mjs` emits `$media` references; `emdash seed` downloads them from the live site (`SEED_MEDIA_BASE` overrides), so seeding needs the live site up. `public/images/` stays so old image URLs keep working.
 - Rewrite essay descriptions. They currently default to the first 160 characters. Flag them for Jon; don't write them.
 
 ## 6. Cloudflare staging

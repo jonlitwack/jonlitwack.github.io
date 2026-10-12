@@ -49,8 +49,15 @@
 				},
 				{
 					"slug": "lead_image",
-					"label": "Lead image URL",
-					"type": "url"
+					"label": "Lead image",
+					"type": "image",
+					"validation": {
+						"allowedMimeTypes": [
+							"image/png",
+							"image/jpeg",
+							"image/webp"
+						]
+					}
 				},
 				{
 					"slug": "body",
@@ -207,7 +214,13 @@
 					"title": "Code Is a Medium",
 					"date": "2026-03-23T04:14:56.777Z",
 					"description": "Last month I sat in a room with a dozen designers. Nobody would call themselves a developer. We opened VS Code, opened Claude Code, and I said: \"Build…",
-					"lead_image": "/images/1774238983250-code-is-a-medium.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1774238983250-code-is-a-medium.png",
+							"alt": "",
+							"filename": "1774238983250-code-is-a-medium.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -472,7 +485,13 @@
 					"title": "Collaboration Through Code",
 					"date": "2026-03-01T00:00:00.000Z",
 					"description": "For a long time, code was a wall. You either spoke the language or you waited. And if you waited, you translated — your ideas into tickets, tickets into…",
-					"lead_image": "/images/1774239006165-collaboration-through-code.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1774239006165-collaboration-through-code.png",
+							"alt": "",
+							"filename": "1774239006165-collaboration-through-code.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -644,7 +663,13 @@
 					"title": "Context Engineering",
 					"date": "2026-03-22T00:00:00.000Z",
 					"description": "A few months ago I was building a client demo with Claude Code — a working prototype of a dashboard for their internal operations team. The first pass was…",
-					"lead_image": "/images/1774239025225-context-engineering.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1774239025225-context-engineering.png",
+							"alt": "",
+							"filename": "1774239025225-context-engineering.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -867,7 +892,13 @@
 					"title": "Design as Governance",
 					"date": "2026-03-22T00:00:00.000Z",
 					"description": "I was on a call last year with a VP of customer experience at a large financial services company. They'd just rolled out an AI agent to handle first-tier…",
-					"lead_image": "/images/1774239040854-design-as-governance.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1774239040854-design-as-governance.png",
+							"alt": "",
+							"filename": "1774239040854-design-as-governance.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -1132,7 +1163,13 @@
 					"title": "The Agent Hype Is 1999. Build Like It's 2003.",
 					"date": "2026-04-04T22:34:01.139Z",
 					"description": "In 1999, Pets.com raised $82.5 million in an IPO. Nine months later it was gone. The internet was real. The business model wasn't. The mistake wasn't…",
-					"lead_image": "/images/1775342040363-og-the-agent-hype-is-1999-build-like-its-2003.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1775342040363-og-the-agent-hype-is-1999-build-like-its-2003.png",
+							"alt": "",
+							"filename": "1775342040363-og-the-agent-hype-is-1999-build-like-its-2003.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -1797,7 +1834,13 @@
 					"title": "The Emergent Future of Product Development",
 					"date": "2025-04-24T00:00:00.000Z",
 					"description": "I've been on an adventure. I wrote this as a result of six months of equal parts successes and failures with what people now call vibe coding — a term that…",
-					"lead_image": "/images/1774239092083-the-emergent-future.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1774239092083-the-emergent-future.png",
+							"alt": "",
+							"filename": "1774239092083-the-emergent-future.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -2286,7 +2329,13 @@
 					"title": "The Enterprise Designer",
 					"date": "2026-03-22T00:00:00.000Z",
 					"description": "There's a pattern hiding in plain sight inside design's title history. We've been so busy debating methodologies and tools that we missed the signal the…",
-					"lead_image": "/images/1774239056989-the-enterprise-designer.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1774239056989-the-enterprise-designer.png",
+							"alt": "",
+							"filename": "1774239056989-the-enterprise-designer.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -2579,7 +2628,13 @@
 					"title": "We're as Close to Flash as We've Ever Been",
 					"date": "2026-04-17T00:37:09.836Z",
 					"description": "There was a time when the internet felt handmade. Not in the rough, unfinished way—in the way that you could tell a human being had stayed up until 3am…",
-					"lead_image": "/images/1776386153566-rip-flash.jpg",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1776386153566-rip-flash.jpg",
+							"alt": "",
+							"filename": "1776386153566-rip-flash.jpg"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -3068,7 +3123,13 @@
 					"title": "What Protogen Is",
 					"date": "2026-01-15T00:00:00.000Z",
 					"description": "There's a pattern I keep seeing. A C-level product leader pulls me aside at a conference or on a call and says some version of the same thing: \"I expected…",
-					"lead_image": "/images/1774239072630-what-protogen-is.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1774239072630-what-protogen-is.png",
+							"alt": "",
+							"filename": "1774239072630-what-protogen-is.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",
@@ -3319,7 +3380,13 @@
 					"title": "Why We Measured the Wrong Thing for 20 Years",
 					"date": "2026-04-12T15:49:53.434Z",
 					"description": "Everyone's trying to adopt agents. Most are failing. The instinct is to blame the tools, the training, the team's readiness. But the failure is upstream of…",
-					"lead_image": "/images/1776008992932-og-why-we-measured-the-wrong-thing-for-20-years.png",
+					"lead_image": {
+						"$media": {
+							"url": "https://www.jonlitwack.com/images/1776008992932-og-why-we-measured-the-wrong-thing-for-20-years.png",
+							"alt": "",
+							"filename": "1776008992932-og-why-we-measured-the-wrong-thing-for-20-years.png"
+						}
+					},
 					"body": [
 						{
 							"_type": "block",

@@ -49,8 +49,9 @@
 				},
 				{
 					"slug": "lead_image",
-					"label": "Lead image URL",
-					"type": "url"
+					"label": "Lead image",
+					"type": "image",
+					"validation": { "allowedMimeTypes": ["image/png", "image/jpeg", "image/webp"] }
 				},
 				{
 					"slug": "body",
