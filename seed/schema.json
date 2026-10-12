@@ -158,9 +158,10 @@
 				},
 				{
 					"slug": "csv",
-					"label": "CSV (first row is the header)",
+					"label": "Data",
 					"type": "text",
-					"required": true
+					"required": true,
+					"widget": "jonlitwack-chart:dataset-csv"
 				},
 				{
 					"slug": "source",

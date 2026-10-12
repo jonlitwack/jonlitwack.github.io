@@ -46,9 +46,9 @@ Built as our own native plugin (`plugins/subscribe`), not Bulletin or a forms pl
 
 ## 5. Authoring improvements
 
-- The EmDash editor shows plugin blocks as a summary card, with no inline chart. Build a field widget (native plugin `adminEntry`, `fieldWidgets`) for the Datasets `csv` field: an editable grid plus a live chart preview using `client.ts`.
+- ~~Field widget for the Datasets `csv` field: editable grid plus live chart preview.~~ Done 2026-10-12 (`plugins/chart/src/admin.tsx`, widget `jonlitwack-chart:dataset-csv`). Chart blocks inside essays still show as a summary card in the editor; use Preview to see them.
 - ~~Move lead images into the media library and switch `lead_image` to an `image` field.~~ Done 2026-10-12. `build-seed.mjs` emits `$media` references; `emdash seed` downloads them from the live site (`SEED_MEDIA_BASE` overrides), so seeding needs the live site up. `public/images/` stays so old image URLs keep working.
-- Rewrite essay descriptions. They currently default to the first 160 characters. Flag them for Jon; don't write them.
+- Rewrite essay descriptions. They currently default to the first 160 characters. Flagged to Jon 2026-10-12: all ten essays use the fallback; none has a written description. Don't write them.
 
 ## 6. Cloudflare staging
 

@@ -53,8 +53,8 @@ export function readBlockJson(node: unknown): { json?: BlockJson; error?: string
 
 export const isRef = (j: BlockJson): j is DatasetRef => typeof (j as DatasetRef).dataset === "string";
 
-/** Small RFC-4180-ish CSV parser (quoted fields, escaped quotes, CRLF). */
-export function parseCsv(text: string): Record<string, string>[] {
+/** Small RFC-4180-ish CSV parser (quoted fields, escaped quotes, CRLF). Returns raw rows, header first. */
+export function parseCsvRows(text: string): string[][] {
 	const rows: string[][] = [];
 	let row: string[] = [];
 	let field = "";
@@ -76,10 +76,39 @@ export function parseCsv(text: string): Record<string, string>[] {
 	}
 	row.push(field);
 	if (row.some((v) => v !== "")) rows.push(row);
-	const [head, ...body] = rows;
+	return rows;
+}
+
+/** CSV rows as objects keyed by the (trimmed) header. */
+export function parseCsv(text: string): Record<string, string>[] {
+	const [head, ...body] = parseCsvRows(text);
 	if (!head) return [];
 	const keys = head.map((h) => h.trim());
 	return body.map((r) => Object.fromEntries(keys.map((k, i) => [k, (r[i] ?? "").trim()])));
+}
+
+/** Rows back to CSV text. Quotes only the cells that need it. */
+export function toCsv(rows: string[][]): string {
+	const cell = (v: string) => (/[",\r\n]/.test(v) || v !== v.trim() ? `"${v.replace(/"/g, '""')}"` : v);
+	return rows.map((r) => r.map(cell).join(",")).join("\n") + "\n";
+}
+
+/**
+ * Best-guess chart reference for a bare CSV, for the editor preview.
+ * Long format (x, a text column, one number column) → series from the text
+ * column. Otherwise wide: first column is x, every other column is a series.
+ */
+export function guessRef(rows: Record<string, string>[]): DatasetRef | null {
+	if (!rows.length) return null;
+	const cols = Object.keys(rows[0]);
+	if (cols.length < 2) return null;
+	const [x, ...rest] = cols;
+	const numeric = (c: string) => rows.every((r) => r[c] === "" || Number.isFinite(Number(r[c])));
+	const text = rest.filter((c) => !numeric(c));
+	const nums = rest.filter(numeric);
+	if (text.length === 1 && nums.length === 1) return { dataset: "preview", x, series: text[0], y: nums[0] };
+	if (!nums.length) return null;
+	return { dataset: "preview", x, include: nums };
 }
 
 const num = (v: string | undefined) => (v === undefined || v === "" ? null : Number(v));

@@ -20,6 +20,7 @@ export function chartPlugin(): PluginDescriptor {
 		format: "native",
 		entrypoint: "@jonlitwack/plugin-chart",
 		componentsEntry: "@jonlitwack/plugin-chart/astro",
+		adminEntry: "@jonlitwack/plugin-chart/admin",
 		options: {},
 	};
 }
@@ -29,6 +30,8 @@ export function createPlugin() {
 		id: "jonlitwack-chart",
 		version: "1.0.0",
 		admin: {
+			// Field widget "dataset-csv" (admin.tsx): grid + live preview for Datasets.csv.
+			entry: "@jonlitwack/plugin-chart/admin",
 			portableTextBlocks: [
 				{
 					type: "chart",

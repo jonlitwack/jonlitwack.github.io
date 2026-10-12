@@ -6,7 +6,9 @@
   "description": "Chart block for jonlitwack.com: registers a `chart` Portable Text block in the EmDash editor and renders it as accessible SVG on the site.",
   "exports": {
     ".": "./src/index.ts",
-    "./astro": "./src/astro/index.ts"
+    "./astro": "./src/astro/index.ts",
+    "./chart.css": "./src/chart.css",
+    "./admin": "./src/admin.tsx"
   },
   "peerDependencies": {
     "emdash": "^1.0.1"

@@ -54,7 +54,7 @@ A block's JSON is either the old inline format (unchanged) or a reference to a *
 
 Datasets hold CSV (long or wide). Many charts can read one dataset, and editing it updates every chart with no rebuild. `/data/{slug}.csv` serves the raw numbers.
 
-Limit: EmDash's editor shows plugin blocks as a summary card, so you see the chart via Preview, not inline in the editor.
+Editing a Dataset gives you a grid (paste straight from a spreadsheet, or switch to plain text) with a live preview drawn by the same code as the site. The preview guesses the shape: long (x, series, value) or wide (x, then a column per series). Chart blocks inside essays still show as a summary card in the editor, so check those with Preview.
 
 ## Email signups
 
