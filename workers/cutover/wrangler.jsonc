@@ -1,0 +1,29 @@
+{
+	"$schema": "../../node_modules/wrangler/config-schema.json",
+	// Default (no --env): a TEST copy on workers.dev, in front of staging, with
+	// the live Vercel site as the old origin. Touches nothing on jonlitwack.com.
+	"name": "jonlitwack-cutover-test",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-02-24",
+	"workers_dev": true,
+	"services": [{ "binding": "SITE", "service": "jonlitwack-site-staging" }],
+	"vars": {
+		"NEW_PERCENT": "50",
+		"OLD_ORIGIN": "https://www.jonlitwack.com",
+	},
+	"env": {
+		// The real proxy on www.jonlitwack.com. Deploy with
+		// `npx wrangler deploy --env production` from this directory.
+		// Raise NEW_PERCENT in steps; 0 still sends new-only paths (/_emdash,
+		// notes, feeds) to EmDash.
+		"production": {
+			"name": "jonlitwack-cutover",
+			"workers_dev": false,
+			"routes": [{ "pattern": "www.jonlitwack.com/*", "zone_name": "jonlitwack.com" }],
+			"services": [{ "binding": "SITE", "service": "jonlitwack-site" }],
+			"vars": {
+				"NEW_PERCENT": "0",
+			},
+		},
+	},
+}

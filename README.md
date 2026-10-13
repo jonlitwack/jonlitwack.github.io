@@ -101,6 +101,28 @@ Caching: public routes are listed in `routeRules` in `astro.config.cloudflare.mj
 
 Fallback if the wizard path fails: `npx emdash site export` from a local instance and `site import` into staging (see the EmDash site transfer guide).
 
+## Cutover to www.jonlitwack.com
+
+jonlitwack.com's DNS is already on Cloudflare: `www` is a proxied record pointing at Vercel, and the apex redirects to `www` from Vercel. The cutover puts a proxy Worker (`workers/cutover`) on the `www` route, in front of Vercel:
+
+- `/write`, `/api/*`, `/_next/*` (old site only) always go to Vercel.
+- `/_emdash/*`, `/_astro/*`, notes, feeds, `/data/*` (new site only) always go to EmDash.
+- Shared pages go by a `jl_site` cookie; `NEW_PERCENT` sets the share of new visitors. Responses carry `X-Site: new|old`.
+- A 5xx or exception from EmDash is answered by Vercel instead.
+
+The production Worker (`jonlitwack-site`) has no workers.dev URL; it's reached only through the proxy's service binding, so the admin passkey belongs to www.jonlitwack.com.
+
+1. `npm run deploy`: production Worker, D1, R2 and KV (created on first deploy).
+2. `npm run deploy:cutover`: the proxy at `NEW_PERCENT` 0. Visitors still see Vercel; `/_emdash` now reaches EmDash.
+3. Straight away, open https://www.jonlitwack.com/_emdash/admin and run the setup wizard with **include sample content** (until it's done, anyone could claim the first admin). If it says "Could not load dashboard data", see the migration-lock note under staging.
+4. Check the new site on the real domain by setting the cookie `jl_site=new` (or `curl -H 'Cookie: jl_site=new'`).
+5. Raise `NEW_PERCENT` in `workers/cutover/wrangler.jsonc` (10 → 50 → 100) and `npm run deploy:cutover` each time. Lowering it to 0 is the rollback; visitors already pinned to `new` keep their cookie for up to a week, so for a hard rollback also change the cookie name.
+6. Once at 100% and stable: point `www` straight at `jonlitwack-site` (custom domain), remove the proxy, keep Vercel live two weeks. **Check in with Jon before this step.**
+
+`npm run deploy:cutover:test` deploys a copy on workers.dev in front of staging, with the live Vercel site as the old origin, for testing proxy changes.
+
+During the canary, don't publish essays with the old `/write` editor: they'd only reach Vercel.
+
 ## Not done yet (from the spec)
 
 - **Sanitizer**: OB1-side, fail-closed denylist + LLM traceability check, denylist kept out of the repo.

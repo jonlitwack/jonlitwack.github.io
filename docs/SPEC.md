@@ -69,6 +69,8 @@ Status 2026-10-12: deployed to https://jonlitwack-site-staging.jon-1f6.workers.d
 - Keep the Vercel deployment of `main` live for at least two weeks as rollback.
 - After cutover, the old `/write` editor on `main` stops being the way essays are published. Essays are written in the EmDash admin.
 
+Status 2026-10-13: DNS is already on Cloudflare (`www` proxied to Vercel), so "move DNS" means pointing `www` at the Worker directly, not changing nameservers. Proxy written (`workers/cutover`) and tested on workers.dev in front of staging: path routing, 50/50 split, sticky cookie, and fallback to Vercel on a 503 and on a thrown exception. Runbook in the README ("Cutover to www.jonlitwack.com"). Production deploys are run by Jon.
+
 **Check in** before moving DNS.
 
 ## 8. Backups

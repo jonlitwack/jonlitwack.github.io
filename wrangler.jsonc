@@ -4,6 +4,11 @@
 	"main": "./src/worker.ts",
 	"compatibility_date": "2026-02-24",
 	"compatibility_flags": ["nodejs_compat"],
+	// Production has no public URL of its own: it's reached only through the
+	// cutover proxy (workers/cutover) on www.jonlitwack.com, so the passkey and
+	// site URL belong to the real domain.
+	"workers_dev": false,
+	"preview_urls": false,
 	"d1_databases": [
 		{
 			"binding": "DB",
@@ -34,6 +39,7 @@
 	"env": {
 		"staging": {
 			"name": "jonlitwack-site-staging",
+			"workers_dev": true,
 			"d1_databases": [
 				{
 					"binding": "DB",
