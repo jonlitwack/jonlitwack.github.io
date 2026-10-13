@@ -38,8 +38,9 @@ EmDash docs are an MCP server (`.mcp.json` → `https://docs.emdashcms.com/mcp`)
 | `content/about.md` | About page. |
 | `seed/schema.json` | Collections, fields, settings, menu. **Edit this, never `seed/seed.json`** (generated). |
 | `scripts/build-seed.mjs` | Markdown → Portable Text importer. ```` ```chart ```` fences become `chart` blocks. |
-| `plugins/chart/` | Native EmDash plugin: `chart` block type (editor + renderer), chart styles (`chart.css`, imported by `site.css`), and the Datasets grid editor (`admin.tsx`). |
+| `plugins/chart/` | Native EmDash plugin: `chart` block type (editor + renderer, plus a save hook turning ```` ```chart ```` code blocks into chart blocks), chart styles (`chart.css`, imported by `site.css`), and the Datasets grid editor (`admin.tsx`). |
 | `plugins/subscribe/` | Email signups: public subscribe route, admin Subscribers page. CSV export is `src/pages/subscribers.csv.ts`. |
+| `skills/jonlitwack-publish/` | Claude Desktop skill: file essays and notes via the MCP connector, publish on Jon's word. Zip with `npm run skill:zip`. |
 | `plugins/agent-guard/` | Restricts users below Author to the `notes` collection. Tested by `scripts/test-agent-permissions.mjs`. |
 | `src/layouts/Base.astro`, `src/pages/`, `src/styles/site.css` | The site. |
 | `astro.config.mjs` | Local (Node + SQLite). `astro.config.cloudflare.mjs` + `wrangler.jsonc` + `src/worker.ts` are production. Keep both configs' `plugins` in sync. |

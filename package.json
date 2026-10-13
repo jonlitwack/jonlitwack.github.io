@@ -18,7 +18,8 @@
     "build:cf:staging": "CLOUDFLARE_ENV=staging astro build --config astro.config.cloudflare.mjs",
     "deploy:staging": "npm run build:cf:staging && wrangler deploy",
     "deploy:cutover": "cd workers/cutover && wrangler deploy --config wrangler.jsonc --env production",
-    "deploy:cutover:test": "cd workers/cutover && wrangler deploy --config wrangler.jsonc --env=\"\""
+    "deploy:cutover:test": "cd workers/cutover && wrangler deploy --config wrangler.jsonc --env=\"\"",
+    "skill:zip": "mkdir -p dist && rm -f dist/jonlitwack-publish.zip && cd skills && zip -qr ../dist/jonlitwack-publish.zip jonlitwack-publish"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.4",

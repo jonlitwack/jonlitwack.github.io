@@ -101,6 +101,15 @@ Caching: public routes are listed in `routeRules` in `astro.config.cloudflare.mj
 
 Fallback if the wizard path fails: `npx emdash site export` from a local instance and `site import` into staging (see the EmDash site transfer guide).
 
+## Shipping from Claude Desktop
+
+`skills/jonlitwack-publish/` is a Claude skill for filing essays and notes through the site's MCP endpoint, and publishing them when Jon says so.
+
+1. Claude Desktop → Settings → Connectors → Add custom connector: URL `https://www.jonlitwack.com/_emdash/api/mcp` (staging's `/_emdash/api/mcp` until the cutover). Sign in with the passkey; on EmDash's permission screen keep only `content:read` and `content:write`.
+2. `npm run skill:zip`, then upload `dist/jonlitwack-publish.zip` under Settings → Capabilities → Skills. Re-zip and re-upload after editing the skill.
+
+The skill sends bodies as Portable Text, not Markdown: EmDash's Markdown converter drops `*italics*` and `---` dividers. After filing it reads the item back as Markdown and checks the wording matches. The chart plugin also turns a ```` ```chart ```` code block into a chart block on save, so fences survive the Markdown path too.
+
 ## Cutover to www.jonlitwack.com
 
 jonlitwack.com's DNS is already on Cloudflare: `www` is a proxied record pointing at Vercel, and the apex redirects to `www` from Vercel. The cutover puts a proxy Worker (`workers/cutover`) on the `www` route, in front of Vercel:
