@@ -97,6 +97,8 @@ Staging is a separate Worker (`jonlitwack-site-staging`) with its own D1 databas
    **If the admin says "Could not load dashboard data"** on a brand-new database: the first request runs all of EmDash's core migrations (90 in 1.2) and can be cut off partway, leaving a migration lock held. The Worker logs (`npx wrangler tail jonlitwack-site-staging`) show `MigrationLockHeldError` with the lock id. Check `_emdash_migrations` stops growing, release it with `npx wrangler d1 execute <db> --env <env> --remote --command "UPDATE _emdash_migrations_lock SET is_locked = 0 WHERE is_locked = <lock id>"`, and reload: the next request finishes the rest. Before production, run `emdash migrate` from CI instead (see the EmDash core migrations guide). Happened on staging 2026-10-12, stopping after 59 of 90.
 4. The site URL comes from the request hostname. Set `EMDASH_SITE_URL` only if staging moves to a custom domain.
 
+Caching: public routes are listed in `routeRules` in `astro.config.cloudflare.mjs` and served from Cloudflare's edge cache; EmDash purges tagged pages on publish. A new public route needs either a `routeRules` entry or its own `Cache-Control` header, because Workers Cache stores responses without one for up to two hours. The KV object cache (`CACHE` binding) caches query results underneath.
+
 Fallback if the wizard path fails: `npx emdash site export` from a local instance and `site import` into staging (see the EmDash site transfer guide).
 
 ## Not done yet (from the spec)

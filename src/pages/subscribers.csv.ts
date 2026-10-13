@@ -16,7 +16,7 @@ function csvCell(value: string) {
 
 export const GET: APIRoute = async ({ locals }) => {
 	const { user, emdash } = locals;
-	if (!user || user.role < ADMIN || !emdash?.db) return new Response("Not found", { status: 404 });
+	if (!user || user.role < ADMIN || !emdash?.db) return new Response("Not found", { status: 404, headers: { "Cache-Control": "private, no-store" } });
 
 	const store = new PluginStorageRepository<Subscriber>(emdash.db, PLUGIN_ID, COLLECTION, INDEXES);
 	const lines = [["email", "signed_up", "page", "consent_version", "consent_text"].join(",")];
