@@ -103,7 +103,6 @@ Fallback if the wizard path fails: `npx emdash site export` from a local instanc
 
 ## Not done yet (from the spec)
 
-- **Agent permission test on staging**: the staging setup script is ready (see above). Run it, then the test.
 - **Sanitizer**: OB1-side, fail-closed denylist + LLM traceability check, denylist kept out of the repo.
 - **Lead image alt text** is empty (the source had none). Add it per essay in the admin.
 - **Descriptions** were empty in the source, so the importer uses the first 160 characters, the same rule the live site applies. Rewrite them in the admin.
