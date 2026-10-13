@@ -38,7 +38,7 @@ The sanitizer (step 2) and publish-time check (step 3) are parked. Notes are wri
 
 If this comes back, start from an opt-in design: Jon tags a capture (e.g. `publish-candidate`) and only tagged captures are ever filed as drafts, then run the denylist on those. OB1 is a Supabase project with an Edge Function, so the sanitizer would be another Edge Function there, holding the agent token and denylist as Supabase secrets. The original requirements are in git history (`e8879f4:docs/SPEC.md`).
 
-Step 1 is done and stays: the agent-guard plugin does nothing unless a user below Author exists. Open item from step 1: find a way to issue a staging token with only `content:read content:write` (the device flow also grants `media:write`).
+Step 1 is done and stays: the agent-guard plugin does nothing unless a user below Author exists. Staging tokens with only `content:read content:write` are issued by `scripts/setup-local-agent.mjs --staging`, which writes the token row directly instead of using the device flow (which also grants `media:write`).
 
 ## 4. Email capture: done (2026-10-12)
 
@@ -56,6 +56,8 @@ Built as our own native plugin (`plugins/subscribe`), not Bulletin or a forms pl
 - Recommend Workers Paid ($5 USD/month). The free plan's 10 ms CPU cap per request will fail some server-rendered pages. Turn on EmDash's object cache and Workers Cache (see the docs) to keep CPU low.
 - **Seeding D1:** the documented path is the setup wizard with "include sample content": the seed is bundled into the build and applied in Workers-sized batches. Proven locally on an empty database (2026-10-12); still to prove on staging. Runbook in the README ("Staging on Cloudflare"). Staging config is ready: `env.staging` in `wrangler.jsonc`, `npm run deploy:staging`.
 - Deploy to a staging subdomain. Check every essay URL against the live site, every chart at desktop and 390px, all three feeds, `/data/*.csv`, and the agent permission tests against staging.
+
+Status 2026-10-12: deployed to https://jonlitwack-site-staging.jon-1f6.workers.dev, wizard run by Jon (10 essays, 4 draft notes, 1 dataset, 10 images). Checked: all ten essay URLs match the live site (title, text, lead image); every chart at 1280px and 390px, no horizontal scroll; `/rss.xml` and `/essays/rss.xml` list 10, `/notes/rss.xml` 0 (notes are drafts); `/data/trust-arc.csv` matches `content/`; `/subscribers.csv` 404s signed out; the subscribe rate limit returns 429 on the sixth signup in an hour (test rows deleted). The first request left a migration lock held (README runbook). CPU per request: mostly 3–11 ms, cold spikes up to 33 ms, so the free plan's 10 ms cap is marginal: Workers Paid stays the recommendation. Still to run: agent permission test (`setup-local-agent.mjs --staging`, Jon runs it). Object cache and Workers Cache not turned on yet.
 
 **Check in** before anything touches the production domain.
 

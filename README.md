@@ -81,7 +81,7 @@ node --env-file=.env.agent.local scripts/test-agent-permissions.mjs
 
 The test checks each refusal's exact error code, so it fails if the role or token is widened, not only if a call succeeds. Each run leaves one draft note behind; the agent can't delete it.
 
-Staging (not done yet): invite the agent's email as a Contributor in the admin, get it a token, and run the test with `EMDASH_URL` and `EMDASH_AGENT_TOKEN` set. The script refuses to run against jonlitwack.com.
+Staging: `node scripts/setup-local-agent.mjs --staging` writes the same user and token into the staging D1 database (via Wrangler) and saves them to `.env.agent.staging`; then run the test with `--env-file=.env.agent.staging`. Don't use `emdash login` for the agent: the device flow grants every scope the role allows, which includes `media:write`. The test refuses to run against jonlitwack.com.
 
 Open question: `emdash login` uses the device flow, which caps scopes at the role. For a Contributor that still includes `media:write`, which the test rejects. Find out whether the device flow can request `content:read content:write` only before relying on it.
 
@@ -94,15 +94,16 @@ Staging is a separate Worker (`jonlitwack-site-staging`) with its own D1 databas
    Always use this script: the Astro adapter picks the environment at build time (`CLOUDFLARE_ENV=staging`), so `wrangler deploy --env staging` after a normal build would bind **production**.
 3. Open the workers.dev URL Wrangler prints, then `/_emdash/admin`. The setup wizard runs: keep the title and tagline, tick **include sample content**, and create your admin passkey.
    This is how content gets into D1. The seed (`seed/seed.json`) is bundled into the build, and the wizard applies it in batches (five image downloads per request) so it fits Workers limits. Lead images download from the live site, so www.jonlitwack.com must be up. Tested locally on an empty database: 10 essays, 4 notes, 1 dataset, 10 images, in three requests.
+   **If the admin says "Could not load dashboard data"** on a brand-new database: the first request runs all of EmDash's core migrations (90 in 1.2) and can be cut off partway, leaving a migration lock held. The Worker logs (`npx wrangler tail jonlitwack-site-staging`) show `MigrationLockHeldError` with the lock id. Check `_emdash_migrations` stops growing, release it with `npx wrangler d1 execute <db> --env <env> --remote --command "UPDATE _emdash_migrations_lock SET is_locked = 0 WHERE is_locked = <lock id>"`, and reload: the next request finishes the rest. Before production, run `emdash migrate` from CI instead (see the EmDash core migrations guide). Happened on staging 2026-10-12, stopping after 59 of 90.
 4. The site URL comes from the request hostname. Set `EMDASH_SITE_URL` only if staging moves to a custom domain.
 
 Fallback if the wizard path fails: `npx emdash site export` from a local instance and `site import` into staging (see the EmDash site transfer guide).
 
 ## Not done yet (from the spec)
 
-- **OB1 agent access on staging**: done locally (see above). Repeat on staging once it exists.
+- **Agent permission test on staging**: the staging setup script is ready (see above). Run it, then the test.
 - **Sanitizer**: OB1-side, fail-closed denylist + LLM traceability check, denylist kept out of the repo.
 - **Lead image alt text** is empty (the source had none). Add it per essay in the admin.
 - **Descriptions** were empty in the source, so the importer uses the first 160 characters, the same rule the live site applies. Rewrite them in the admin.
-- **Cutover**: staging subdomain, proxy Worker with fallback, DNS last.
+- **Cutover**: proxy Worker with fallback, DNS last. Staging is live at https://jonlitwack-site-staging.jon-1f6.workers.dev.
 - **Backups and git export** of published content.
