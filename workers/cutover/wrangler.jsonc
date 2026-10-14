@@ -22,7 +22,7 @@
 			"routes": [{ "pattern": "www.jonlitwack.com/*", "zone_name": "jonlitwack.com" }],
 			"services": [{ "binding": "SITE", "service": "jonlitwack-site" }],
 			"vars": {
-				"NEW_PERCENT": "0",
+				"NEW_PERCENT": "10",
 			},
 		},
 	},
