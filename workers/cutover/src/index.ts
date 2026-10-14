@@ -30,7 +30,7 @@ const COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 
 const ALWAYS_OLD = /^\/(?:_next|write|api)(?:\/|$)/;
 const ALWAYS_NEW =
-	/^\/(?:_emdash|_astro|_image|_server-islands|data|notes|subscribed)(?:\/|$)|^\/(?:rss\.xml|essays\/rss\.xml|subscribers\.csv|sitemap\.xml|robots\.txt)$/;
+	/^\/(?:_emdash|_astro|_image|_server-islands|data|notes|subscribed)(?:\/|$)|^\/\.well-known\/oauth-|^\/(?:rss\.xml|essays\/rss\.xml|subscribers\.csv|sitemap\.xml|robots\.txt)$/;
 
 type Site = "new" | "old";
 

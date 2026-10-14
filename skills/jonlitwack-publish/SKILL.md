@@ -12,7 +12,7 @@ Jon's site runs on EmDash. You reach it through a custom MCP connector (tools na
 1. Check the connector works: call `content_list` with `{ "collection": "essays", "limit": 1 }`.
    - No such tool: the connector isn't added or is turned off for this chat. Tell Jon to add it (see "Connector setup" below) and stop.
    - `INSUFFICIENT_SCOPE` or 401: the connector needs reconnecting with `content:read` and `content:write`.
-2. Note which site the connector points at: the staging workers.dev address or www.jonlitwack.com. Say it when you report a draft.
+2. The site is `https://www.jonlitwack.com`; that's `<site>` below. If the connector points anywhere else (an old staging workers.dev address), say so before filing anything.
 
 ## The rules
 
@@ -79,6 +79,6 @@ Only after Jon's explicit instruction.
 
 In Claude Desktop: **Settings → Connectors → Add custom connector**. Use:
 - Name: `jonlitwack.com`
-- URL: `https://www.jonlitwack.com/_emdash/api/mcp`, or before the cutover, the staging site's `/_emdash/api/mcp`.
+- URL: `https://www.jonlitwack.com/_emdash/api/mcp`
 
 Connect, sign in with the passkey, and on EmDash's permission screen **keep only `content:read` and `content:write`**: clear everything else.
